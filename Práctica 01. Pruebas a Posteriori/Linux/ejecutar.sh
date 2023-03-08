@@ -1,12 +1,11 @@
 #!/bin/sh
-# ejecutar.sh
-# Version 1.0 Octubre 2022
-# Autor: Darío Quiñones
+# compilar.sh
+# Version 1.0 marzo 2023
+# Autor: Juan Molina
+# Basado en el script de shell que implementó Darío Quiñones el semestre pasado en A y ED.
 
-# Un script de shell que ejecuta todos los algoritmos compilados en el directorio bin
-# utilizanddo los primeros 100 valores del archivo de entrada numeros1M.txt y
-# guardando los resultados en el directorio out, en archivos de texto con el mismo
-# nombre que el algoritmo correspondiente.
+# Un script de shell que ejecuta todos los archivos .c en el directorio bin con un argumento
+# y los guarda la salida en un archivo de texto en la carpeta out
 
 # Variables
 BIN_DIR=bin
