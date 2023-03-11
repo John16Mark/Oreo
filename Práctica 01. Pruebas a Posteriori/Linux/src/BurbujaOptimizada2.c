@@ -47,9 +47,6 @@ int main(int argc, char *argv[])
 
 	// Imprime el rendimiento de la ejecución del algoritmo
 	rendimiento(utime0, stime0, wtime0, utime1, stime1, wtime1);
-
-	// Imprime el arreglo
-	imprimir(A, n);
 	
 	return 1;
 }
