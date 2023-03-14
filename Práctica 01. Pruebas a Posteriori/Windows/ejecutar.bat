@@ -9,3 +9,4 @@ set OUT=Salidas
 ::%BIN%\burbujaopt2.exe 100000 < %SRC% > %OUT%\burbujaopt2.txt
 ::%BIN%\insercion.exe 100000 < %SRC% > %OUT%\insercion.txt
 %BIN%\seleccion.exe 100000 < %SRC% > %OUT%\seleccion.txt
+%BIN%\shell.exe 100000 < %SRC% > %OUT%\shell.txt
