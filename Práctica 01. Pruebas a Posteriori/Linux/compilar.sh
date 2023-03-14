@@ -1,6 +1,6 @@
 #!/bin/sh
 # compilar.sh
-# Version 1.0 marzo 2023
+# Version 1.5 marzo 2023
 # Autor: Juan Molina
 # Basado en el script de shell que implementó Darío Quiñones el semestre pasado en A y ED.
 
@@ -20,8 +20,11 @@ mkdir -p $BIN_DIR
 # Compilar todos los archivos .c en el directorio src y guardarlos en BIN_DIR
 for f in $SRC_DIR/*.c
 do
-    # Variable del nombre del archivo pero regresando un directorio
-    RET_DIR=${f##*/}
-    echo "  Compilando $RET_DIR"
+    RET_DIR=${f##*/} # nombre del archivo pero regresando un directorio
+    echo "  Compilando $RET_DIR" # Imprime el nombre del archivo que se está compilando
+    # $BIN_DIR/${RET_DIR%.*} El output lo genera en el directorio dado
+    # $f src/nombre del archivo
+    # $TIM_DIR librería para medición de tiempos.
     gcc -o $BIN_DIR/${RET_DIR%.*} $f $TIM_DIR
 done
+
