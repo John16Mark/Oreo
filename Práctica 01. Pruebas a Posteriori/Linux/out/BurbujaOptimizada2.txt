@@ -1,0 +1,336 @@
+
+
+    BURBUJA OPTIMIZADA 1
+    con 1000 números
+
+real (Tiempo total)  0.0073671341 s
+user (Tiempo de procesamiento en CPU) 0.0073840000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.2289344207 % 
+
+
+real (Tiempo total)  7.3671340942e-03 s
+user (Tiempo de procesamiento en CPU) 7.3840000000e-03 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.2289344207 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 2000 números
+
+real (Tiempo total)  0.0306520462 s
+user (Tiempo de procesamiento en CPU) 0.0306680000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0520480632 % 
+
+
+real (Tiempo total)  3.0652046204e-02 s
+user (Tiempo de procesamiento en CPU) 3.0668000000e-02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0520480632 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 3000 números
+
+real (Tiempo total)  0.0587849617 s
+user (Tiempo de procesamiento en CPU) 0.0587910000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0102718440 % 
+
+
+real (Tiempo total)  5.8784961700e-02 s
+user (Tiempo de procesamiento en CPU) 5.8791000000e-02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0102718440 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 4000 números
+
+real (Tiempo total)  0.0707070827 s
+user (Tiempo de procesamiento en CPU) 0.0706890000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   99.9744258316 % 
+
+
+real (Tiempo total)  7.0707082748e-02 s
+user (Tiempo de procesamiento en CPU) 7.0689000000e-02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   99.9744258316 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 5000 números
+
+real (Tiempo total)  0.1109910011 s
+user (Tiempo de procesamiento en CPU) 0.1109880000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   99.9972960608 % 
+
+
+real (Tiempo total)  1.1099100113e-01 s
+user (Tiempo de procesamiento en CPU) 1.1098800000e-01 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   99.9972960608 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 8000 números
+
+real (Tiempo total)  0.2645809650 s
+user (Tiempo de procesamiento en CPU) 0.2645580000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   99.9913202214 % 
+
+
+real (Tiempo total)  2.6458096504e-01 s
+user (Tiempo de procesamiento en CPU) 2.6455800000e-01 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   99.9913202214 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 10000 números
+
+real (Tiempo total)  0.3222439289 s
+user (Tiempo de procesamiento en CPU) 0.3222480000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0012633568 % 
+
+
+real (Tiempo total)  3.2224392891e-01 s
+user (Tiempo de procesamiento en CPU) 3.2224800000e-01 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0012633568 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 50000 números
+
+real (Tiempo total)  8.1858620644 s
+user (Tiempo de procesamiento en CPU) 8.1858390000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   99.9997182415 % 
+
+
+real (Tiempo total)  8.1858620644e+00 s
+user (Tiempo de procesamiento en CPU) 8.1858390000e+00 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   99.9997182415 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 100000 números
+
+real (Tiempo total)  32.8725638390 s
+user (Tiempo de procesamiento en CPU) 32.8723370000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   99.9993099444 % 
+
+
+real (Tiempo total)  3.2872563839e+01 s
+user (Tiempo de procesamiento en CPU) 3.2872337000e+01 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   99.9993099444 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 150000 números
+
+real (Tiempo total)  77.3643031120 s
+user (Tiempo de procesamiento en CPU) 77.3654790000 s
+sys (Tiempo en acciones de E/S)  0.0002040000 s
+CPU/Wall   100.0017836236 % 
+
+
+real (Tiempo total)  7.7364303112e+01 s
+user (Tiempo de procesamiento en CPU) 7.7365479000e+01 s
+sys (Tiempo en acciones de E/S)  2.0400000000e-04 s
+CPU/Wall   100.0017836236 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 200000 números
+
+real (Tiempo total)  153.4669628143 s
+user (Tiempo de procesamiento en CPU) 153.3561540000 s
+sys (Tiempo en acciones de E/S)  0.0199970000 s
+CPU/Wall   99.9408264732 % 
+
+
+real (Tiempo total)  1.5346696281e+02 s
+user (Tiempo de procesamiento en CPU) 1.5335615400e+02 s
+sys (Tiempo en acciones de E/S)  1.9997000000e-02 s
+CPU/Wall   99.9408264732 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 300000 números
+
+real (Tiempo total)  355.8314788342 s
+user (Tiempo de procesamiento en CPU) 355.7600320000 s
+sys (Tiempo en acciones de E/S)  0.0318080000 s
+CPU/Wall   99.9888602227 % 
+
+
+real (Tiempo total)  3.5583147883e+02 s
+user (Tiempo de procesamiento en CPU) 3.5576003200e+02 s
+sys (Tiempo en acciones de E/S)  3.1808000000e-02 s
+CPU/Wall   99.9888602227 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 400000 números
+
+real (Tiempo total)  622.8254959583 s
+user (Tiempo de procesamiento en CPU) 622.7948920000 s
+sys (Tiempo en acciones de E/S)  0.0000450000 s
+CPU/Wall   99.9950934959 % 
+
+
+real (Tiempo total)  6.2282549596e+02 s
+user (Tiempo de procesamiento en CPU) 6.2279489200e+02 s
+sys (Tiempo en acciones de E/S)  4.5000000000e-05 s
+CPU/Wall   99.9950934959 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 500000 números
+
+real (Tiempo total)  953.4456710815 s
+user (Tiempo de procesamiento en CPU) 953.4290220000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   99.9982537986 % 
+
+
+real (Tiempo total)  9.5344567108e+02 s
+user (Tiempo de procesamiento en CPU) 9.5342902200e+02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   99.9982537986 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 600000 números
+
+real (Tiempo total)  1378.8561389446 s
+user (Tiempo de procesamiento en CPU) 1378.8159440000 s
+sys (Tiempo en acciones de E/S)  0.0039320000 s
+CPU/Wall   99.9973700705 % 
+
+
+real (Tiempo total)  1.3788561389e+03 s
+user (Tiempo de procesamiento en CPU) 1.3788159440e+03 s
+sys (Tiempo en acciones de E/S)  3.9320000000e-03 s
+CPU/Wall   99.9973700705 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 700000 números
+
+real (Tiempo total)  1877.7838971615 s
+user (Tiempo de procesamiento en CPU) 1877.7186720000 s
+sys (Tiempo en acciones de E/S)  0.0160360000 s
+CPU/Wall   99.9973804674 % 
+
+
+real (Tiempo total)  1.8777838972e+03 s
+user (Tiempo de procesamiento en CPU) 1.8777186720e+03 s
+sys (Tiempo en acciones de E/S)  1.6036000000e-02 s
+CPU/Wall   99.9973804674 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 800000 números
+
+real (Tiempo total)  2455.8796379566 s
+user (Tiempo de procesamiento en CPU) 2455.7914180000 s
+sys (Tiempo en acciones de E/S)  0.0120160000 s
+CPU/Wall   99.9968970810 % 
+
+
+real (Tiempo total)  2.4558796380e+03 s
+user (Tiempo de procesamiento en CPU) 2.4557914180e+03 s
+sys (Tiempo en acciones de E/S)  1.2016000000e-02 s
+CPU/Wall   99.9968970810 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 900000 números
+
+real (Tiempo total)  3100.4005908966 s
+user (Tiempo de procesamiento en CPU) 3100.2544560000 s
+sys (Tiempo en acciones de E/S)  0.0039360000 s
+CPU/Wall   99.9954135315 % 
+
+
+real (Tiempo total)  3.1004005909e+03 s
+user (Tiempo de procesamiento en CPU) 3.1002544560e+03 s
+sys (Tiempo en acciones de E/S)  3.9360000000e-03 s
+CPU/Wall   99.9954135315 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 1000000 números
+
+real (Tiempo total)  3835.1842930317 s
+user (Tiempo de procesamiento en CPU) 3835.0364240000 s
+sys (Tiempo en acciones de E/S)  0.0159250000 s
+CPU/Wall   99.9965596430 % 
+
+
+real (Tiempo total)  3.8351842930e+03 s
+user (Tiempo de procesamiento en CPU) 3.8350364240e+03 s
+sys (Tiempo en acciones de E/S)  1.5925000000e-02 s
+CPU/Wall   99.9965596430 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 1500000 números
+
+real (Tiempo total)  8640.0684058666 s
+user (Tiempo de procesamiento en CPU) 8639.6367150000 s
+sys (Tiempo en acciones de E/S)  0.0599310000 s
+CPU/Wall   99.9956972578 % 
+
+
+real (Tiempo total)  8.6400684059e+03 s
+user (Tiempo de procesamiento en CPU) 8.6396367150e+03 s
+sys (Tiempo en acciones de E/S)  5.9931000000e-02 s
+CPU/Wall   99.9956972578 % 
+
+
+
+    BURBUJA OPTIMIZADA 1
+    con 2000000 números
+
+real (Tiempo total)  15286.8794679642 s
+user (Tiempo de procesamiento en CPU) 15285.9990040000 s
+sys (Tiempo en acciones de E/S)  0.0719450000 s
+CPU/Wall   99.9947110268 % 
+
+
+real (Tiempo total)  1.5286879468e+04 s
+user (Tiempo de procesamiento en CPU) 1.5285999004e+04 s
+sys (Tiempo en acciones de E/S)  7.1945000000e-02 s
+CPU/Wall   99.9947110268 % 
+

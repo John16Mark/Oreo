@@ -1,0 +1,320 @@
+
+
+    BURBUJA SIMPLE
+    con 1000 números
+
+real (Tiempo total)  0.0101270676 s
+user (Tiempo de procesamiento en CPU) 0.0101430000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.1573252472 % 
+
+
+real (Tiempo total)  1.0127067566e-02 s
+user (Tiempo de procesamiento en CPU) 1.0143000000e-02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.1573252472 % 
+
+
+
+    BURBUJA SIMPLE
+    con 2000 números
+
+real (Tiempo total)  0.0412690639 s
+user (Tiempo de procesamiento en CPU) 0.0412660000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   99.9925756746 % 
+
+
+real (Tiempo total)  4.1269063950e-02 s
+user (Tiempo de procesamiento en CPU) 4.1266000000e-02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   99.9925756746 % 
+
+
+
+    BURBUJA SIMPLE
+    con 3000 números
+
+real (Tiempo total)  0.0703771114 s
+user (Tiempo de procesamiento en CPU) 0.0703640000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   99.9813697455 % 
+
+
+real (Tiempo total)  7.0377111435e-02 s
+user (Tiempo de procesamiento en CPU) 7.0364000000e-02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   99.9813697455 % 
+
+
+
+    BURBUJA SIMPLE
+    con 4000 números
+
+real (Tiempo total)  0.0707769394 s
+user (Tiempo de procesamiento en CPU) 0.0707900000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0184531968 % 
+
+
+real (Tiempo total)  7.0776939392e-02 s
+user (Tiempo de procesamiento en CPU) 7.0790000000e-02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0184531968 % 
+
+
+
+    BURBUJA SIMPLE
+    con 5000 números
+
+real (Tiempo total)  0.1420559883 s
+user (Tiempo de procesamiento en CPU) 0.1420790000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0161990272 % 
+
+
+real (Tiempo total)  1.4205598831e-01 s
+user (Tiempo de procesamiento en CPU) 1.4207900000e-01 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0161990272 % 
+
+
+
+    BURBUJA SIMPLE
+    con 8000 números
+
+real (Tiempo total)  0.3257708549 s
+user (Tiempo de procesamiento en CPU) 0.3257760000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0015793463 % 
+
+
+real (Tiempo total)  3.2577085495e-01 s
+user (Tiempo de procesamiento en CPU) 3.2577600000e-01 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0015793463 % 
+
+
+
+    BURBUJA SIMPLE
+    con 10000 números
+
+real (Tiempo total)  0.4916520119 s
+user (Tiempo de procesamiento en CPU) 0.4916750000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0046756910 % 
+
+
+real (Tiempo total)  4.9165201187e-01 s
+user (Tiempo de procesamiento en CPU) 4.9167500000e-01 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0046756910 % 
+
+
+
+    BURBUJA SIMPLE
+    con 50000 números
+
+real (Tiempo total)  12.3120169640 s
+user (Tiempo de procesamiento en CPU) 12.3121690000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0012348589 % 
+
+
+real (Tiempo total)  1.2312016964e+01 s
+user (Tiempo de procesamiento en CPU) 1.2312169000e+01 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0012348589 % 
+
+
+
+    BURBUJA SIMPLE
+    con 100000 números
+
+real (Tiempo total)  50.0271229744 s
+user (Tiempo de procesamiento en CPU) 50.0276330000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0010194982 % 
+
+
+real (Tiempo total)  5.0027122974e+01 s
+user (Tiempo de procesamiento en CPU) 5.0027633000e+01 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0010194982 % 
+
+
+
+    BURBUJA SIMPLE
+    con 150000 números
+
+real (Tiempo total)  112.1099889278 s
+user (Tiempo de procesamiento en CPU) 112.1105310000 s
+sys (Tiempo en acciones de E/S)  0.0001710000 s
+CPU/Wall   100.0006360469 % 
+
+
+real (Tiempo total)  1.1210998893e+02 s
+user (Tiempo de procesamiento en CPU) 1.1211053100e+02 s
+sys (Tiempo en acciones de E/S)  1.7100000000e-04 s
+CPU/Wall   100.0006360469 % 
+
+
+
+    BURBUJA SIMPLE
+    con 200000 números
+
+real (Tiempo total)  201.8416581154 s
+user (Tiempo de procesamiento en CPU) 201.8439760000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0011483678 % 
+
+
+real (Tiempo total)  2.0184165812e+02 s
+user (Tiempo de procesamiento en CPU) 2.0184397600e+02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0011483678 % 
+
+
+
+    BURBUJA SIMPLE
+    con 300000 números
+
+real (Tiempo total)  451.8448300362 s
+user (Tiempo de procesamiento en CPU) 451.8438770000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   99.9997890789 % 
+
+
+real (Tiempo total)  4.5184483004e+02 s
+user (Tiempo de procesamiento en CPU) 4.5184387700e+02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   99.9997890789 % 
+
+
+
+    BURBUJA SIMPLE
+    con 400000 números
+
+real (Tiempo total)  805.4837319851 s
+user (Tiempo de procesamiento en CPU) 805.4711840000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   99.9984421802 % 
+
+
+real (Tiempo total)  8.0548373199e+02 s
+user (Tiempo de procesamiento en CPU) 8.0547118400e+02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   99.9984421802 % 
+
+
+
+    BURBUJA SIMPLE
+    con 500000 números
+
+real (Tiempo total)  1268.6553380489 s
+user (Tiempo de procesamiento en CPU) 1268.6384880000 s
+sys (Tiempo en acciones de E/S)  0.0039820000 s
+CPU/Wall   99.9989856939 % 
+
+
+real (Tiempo total)  1.2686553380e+03 s
+user (Tiempo de procesamiento en CPU) 1.2686384880e+03 s
+sys (Tiempo en acciones de E/S)  3.9820000000e-03 s
+CPU/Wall   99.9989856939 % 
+
+
+
+    BURBUJA SIMPLE
+    con 600000 números
+
+real (Tiempo total)  1838.3942060471 s
+user (Tiempo de procesamiento en CPU) 1838.3218940000 s
+sys (Tiempo en acciones de E/S)  0.0039930000 s
+CPU/Wall   99.9962837651 % 
+
+
+real (Tiempo total)  1.8383942060e+03 s
+user (Tiempo de procesamiento en CPU) 1.8383218940e+03 s
+sys (Tiempo en acciones de E/S)  3.9930000000e-03 s
+CPU/Wall   99.9962837651 % 
+
+
+
+    BURBUJA SIMPLE
+    con 700000 números
+
+real (Tiempo total)  2524.5730199814 s
+user (Tiempo de procesamiento en CPU) 2524.4469840000 s
+sys (Tiempo en acciones de E/S)  0.0319820000 s
+CPU/Wall   99.9962744599 % 
+
+
+real (Tiempo total)  2.5245730200e+03 s
+user (Tiempo de procesamiento en CPU) 2.5244469840e+03 s
+sys (Tiempo en acciones de E/S)  3.1982000000e-02 s
+CPU/Wall   99.9962744599 % 
+
+
+
+    BURBUJA SIMPLE
+    con 800000 números
+
+real (Tiempo total)  3299.2597908974 s
+user (Tiempo de procesamiento en CPU) 3299.1306500000 s
+sys (Tiempo en acciones de E/S)  0.0120470000 s
+CPU/Wall   99.9964509040 % 
+
+
+real (Tiempo total)  3.2992597909e+03 s
+user (Tiempo de procesamiento en CPU) 3.2991306500e+03 s
+sys (Tiempo en acciones de E/S)  1.2047000000e-02 s
+CPU/Wall   99.9964509040 % 
+
+
+
+    BURBUJA SIMPLE
+    con 900000 números
+
+real (Tiempo total)  4181.0647888184 s
+user (Tiempo de procesamiento en CPU) 4180.6936260000 s
+sys (Tiempo en acciones de E/S)  0.1799920000 s
+CPU/Wall   99.9954277002 % 
+
+
+real (Tiempo total)  4.1810647888e+03 s
+user (Tiempo de procesamiento en CPU) 4.1806936260e+03 s
+sys (Tiempo en acciones de E/S)  1.7999200000e-01 s
+CPU/Wall   99.9954277002 % 
+
+
+
+    BURBUJA SIMPLE
+    con 1000000 números
+
+real (Tiempo total)  5175.7398331165 s
+user (Tiempo de procesamiento en CPU) 5175.4636440000 s
+sys (Tiempo en acciones de E/S)  0.0078540000 s
+CPU/Wall   99.9948155215 % 
+
+
+real (Tiempo total)  5.1757398331e+03 s
+user (Tiempo de procesamiento en CPU) 5.1754636440e+03 s
+sys (Tiempo en acciones de E/S)  7.8540000000e-03 s
+CPU/Wall   99.9948155215 % 
+
+
+
+    BURBUJA SIMPLE
+    con 1500000 números
+
+real (Tiempo total)  11718.3600838184 s
+user (Tiempo de procesamiento en CPU) 11717.7240710000 s
+sys (Tiempo en acciones de E/S)  0.0760310000 s
+CPU/Wall   99.9952213295 % 
+
+
+real (Tiempo total)  1.1718360084e+04 s
+user (Tiempo de procesamiento en CPU) 1.1717724071e+04 s
+sys (Tiempo en acciones de E/S)  7.6031000000e-02 s
+CPU/Wall   99.9952213295 % 
+
