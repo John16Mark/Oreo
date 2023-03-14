@@ -14,3 +14,4 @@ gcc %BIN%/Insercion.c -o %EXE%/insercion.exe
 gcc %BIN%/Seleccion.c -o %EXE%/seleccion.exe
 gcc %BIN%/Shell.c -o %EXE%/shell.exe
 gcc %BIN%/Quicksort.c -o %EXE%/quicksort.exe
+gcc %BIN%/Mergesort.c -o %EXE%/mergesort.exe
