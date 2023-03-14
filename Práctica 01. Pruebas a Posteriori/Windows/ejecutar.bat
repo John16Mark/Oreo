@@ -11,3 +11,4 @@ set OUT=Salidas
 %BIN%\seleccion.exe 100000 < %SRC% > %OUT%\seleccion.txt
 %BIN%\shell.exe 100000 < %SRC% > %OUT%\shell.txt
 %BIN%\quicksort.exe 100000 < %SRC% > %OUT%\quicksot.txt
+%BIN%\mergesort.exe 100000 < %SRC% > %OUT%\mergesot.txt
