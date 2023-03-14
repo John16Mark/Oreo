@@ -12,4 +12,5 @@ gcc %BIN%/BurbujaOptimizada1.c -o %EXE%/burbujaopt1.exe
 gcc %BIN%/BurbujaOptimizada2.c -o %EXE%/burbujaopt2.exe
 gcc %BIN%/Insercion.c -o %EXE%/insercion.exe
 gcc %BIN%/Seleccion.c -o %EXE%/seleccion.exe
-gcc %BIN%/Shell.c -o %EXE%/shell.exe 
+gcc %BIN%/Shell.c -o %EXE%/shell.exe
+gcc %BIN%/Quicksort.c -o %EXE%/quicksort.exe
