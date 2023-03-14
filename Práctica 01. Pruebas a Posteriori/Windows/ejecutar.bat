@@ -10,3 +10,4 @@ set OUT=Salidas
 ::%BIN%\insercion.exe 100000 < %SRC% > %OUT%\insercion.txt
 %BIN%\seleccion.exe 100000 < %SRC% > %OUT%\seleccion.txt
 %BIN%\shell.exe 100000 < %SRC% > %OUT%\shell.txt
+%BIN%\quicksort.exe 100000 < %SRC% > %OUT%\quicksot.txt
