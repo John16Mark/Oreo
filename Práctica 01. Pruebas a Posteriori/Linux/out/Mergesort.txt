@@ -1,0 +1,336 @@
+
+
+    MEZCLA (MERGESORT)
+    con 1000 números
+
+real (Tiempo total)  0.0002670288 s
+user (Tiempo de procesamiento en CPU) 0.0002790000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   104.4831085714 % 
+
+
+real (Tiempo total)  2.6702880859e-04 s
+user (Tiempo de procesamiento en CPU) 2.7900000000e-04 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   104.4831085714 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 2000 números
+
+real (Tiempo total)  0.0004489422 s
+user (Tiempo de procesamiento en CPU) 0.0004620000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   102.9085739777 % 
+
+
+real (Tiempo total)  4.4894218445e-04 s
+user (Tiempo de procesamiento en CPU) 4.6200000000e-04 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   102.9085739777 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 3000 números
+
+real (Tiempo total)  0.0006961823 s
+user (Tiempo de procesamiento en CPU) 0.0007030000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.9793052055 % 
+
+
+real (Tiempo total)  6.9618225098e-04 s
+user (Tiempo de procesamiento en CPU) 7.0300000000e-04 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.9793052055 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 4000 números
+
+real (Tiempo total)  0.0009601116 s
+user (Tiempo de procesamiento en CPU) 0.0009660000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.6133018128 % 
+
+
+real (Tiempo total)  9.6011161804e-04 s
+user (Tiempo de procesamiento en CPU) 9.6600000000e-04 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.6133018128 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 5000 números
+
+real (Tiempo total)  0.0019807816 s
+user (Tiempo de procesamiento en CPU) 0.0019710000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   99.5061769860 % 
+
+
+real (Tiempo total)  1.9807815552e-03 s
+user (Tiempo de procesamiento en CPU) 1.9710000000e-03 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   99.5061769860 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 8000 números
+
+real (Tiempo total)  0.0025830269 s
+user (Tiempo de procesamiento en CPU) 0.0025910000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.3086732878 % 
+
+
+real (Tiempo total)  2.5830268860e-03 s
+user (Tiempo de procesamiento en CPU) 2.5910000000e-03 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.3086732878 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 10000 números
+
+real (Tiempo total)  0.0032870770 s
+user (Tiempo de procesamiento en CPU) 0.0032990000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.3627250018 % 
+
+
+real (Tiempo total)  3.2870769501e-03 s
+user (Tiempo de procesamiento en CPU) 3.2990000000e-03 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.3627250018 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 50000 números
+
+real (Tiempo total)  0.0186820030 s
+user (Tiempo de procesamiento en CPU) 0.0186930000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0588640241 % 
+
+
+real (Tiempo total)  1.8682003021e-02 s
+user (Tiempo de procesamiento en CPU) 1.8693000000e-02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0588640241 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 100000 números
+
+real (Tiempo total)  0.0316388607 s
+user (Tiempo de procesamiento en CPU) 0.0277270000 s
+sys (Tiempo en acciones de E/S)  0.0039160000 s
+CPU/Wall   100.0130829537 % 
+
+
+real (Tiempo total)  3.1638860703e-02 s
+user (Tiempo de procesamiento en CPU) 2.7727000000e-02 s
+sys (Tiempo en acciones de E/S)  3.9160000000e-03 s
+CPU/Wall   100.0130829537 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 150000 números
+
+real (Tiempo total)  0.0493900776 s
+user (Tiempo de procesamiento en CPU) 0.0494020000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0241392799 % 
+
+
+real (Tiempo total)  4.9390077591e-02 s
+user (Tiempo de procesamiento en CPU) 4.9402000000e-02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0241392799 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 200000 números
+
+real (Tiempo total)  0.0666520596 s
+user (Tiempo de procesamiento en CPU) 0.0666640000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0179145926 % 
+
+
+real (Tiempo total)  6.6652059555e-02 s
+user (Tiempo de procesamiento en CPU) 6.6664000000e-02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0179145926 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 300000 números
+
+real (Tiempo total)  0.0970070362 s
+user (Tiempo de procesamiento en CPU) 0.0928910000 s
+sys (Tiempo en acciones de E/S)  0.0040970000 s
+CPU/Wall   99.9803764656 % 
+
+
+real (Tiempo total)  9.7007036209e-02 s
+user (Tiempo de procesamiento en CPU) 9.2891000000e-02 s
+sys (Tiempo en acciones de E/S)  4.0970000000e-03 s
+CPU/Wall   99.9803764656 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 400000 números
+
+real (Tiempo total)  0.1080479622 s
+user (Tiempo de procesamiento en CPU) 0.1080620000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0129922036 % 
+
+
+real (Tiempo total)  1.0804796219e-01 s
+user (Tiempo de procesamiento en CPU) 1.0806200000e-01 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0129922036 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 500000 números
+
+real (Tiempo total)  0.1348879337 s
+user (Tiempo de procesamiento en CPU) 0.1309550000 s
+sys (Tiempo en acciones de E/S)  0.0039480000 s
+CPU/Wall   100.0111694712 % 
+
+
+real (Tiempo total)  1.3488793373e-01 s
+user (Tiempo de procesamiento en CPU) 1.3095500000e-01 s
+sys (Tiempo en acciones de E/S)  3.9480000000e-03 s
+CPU/Wall   100.0111694712 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 600000 números
+
+real (Tiempo total)  0.1711740494 s
+user (Tiempo de procesamiento en CPU) 0.1670330000 s
+sys (Tiempo en acciones de E/S)  0.0041350000 s
+CPU/Wall   99.9964659494 % 
+
+
+real (Tiempo total)  1.7117404938e-01 s
+user (Tiempo de procesamiento en CPU) 1.6703300000e-01 s
+sys (Tiempo en acciones de E/S)  4.1350000000e-03 s
+CPU/Wall   99.9964659494 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 700000 números
+
+real (Tiempo total)  0.2094199657 s
+user (Tiempo de procesamiento en CPU) 0.2054150000 s
+sys (Tiempo en acciones de E/S)  0.0040240000 s
+CPU/Wall   100.0090890360 % 
+
+
+real (Tiempo total)  2.0941996574e-01 s
+user (Tiempo de procesamiento en CPU) 2.0541500000e-01 s
+sys (Tiempo en acciones de E/S)  4.0240000000e-03 s
+CPU/Wall   100.0090890360 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 800000 números
+
+real (Tiempo total)  0.2451648712 s
+user (Tiempo de procesamiento en CPU) 0.2412570000 s
+sys (Tiempo en acciones de E/S)  0.0039080000 s
+CPU/Wall   100.0000525296 % 
+
+
+real (Tiempo total)  2.4516487122e-01 s
+user (Tiempo de procesamiento en CPU) 2.4125700000e-01 s
+sys (Tiempo en acciones de E/S)  3.9080000000e-03 s
+CPU/Wall   100.0000525296 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 900000 números
+
+real (Tiempo total)  0.2781350613 s
+user (Tiempo de procesamiento en CPU) 0.2778360000 s
+sys (Tiempo en acciones de E/S)  0.0003210000 s
+CPU/Wall   100.0078877995 % 
+
+
+real (Tiempo total)  2.7813506126e-01 s
+user (Tiempo de procesamiento en CPU) 2.7783600000e-01 s
+sys (Tiempo en acciones de E/S)  3.2100000000e-04 s
+CPU/Wall   100.0078877995 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 1000000 números
+
+real (Tiempo total)  0.3093750477 s
+user (Tiempo de procesamiento en CPU) 0.3013330000 s
+sys (Tiempo en acciones de E/S)  0.0080330000 s
+CPU/Wall   99.9970754966 % 
+
+
+real (Tiempo total)  3.0937504768e-01 s
+user (Tiempo de procesamiento en CPU) 3.0133300000e-01 s
+sys (Tiempo en acciones de E/S)  8.0330000000e-03 s
+CPU/Wall   99.9970754966 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 1500000 números
+
+real (Tiempo total)  0.4644730091 s
+user (Tiempo de procesamiento en CPU) 0.4524860000 s
+sys (Tiempo en acciones de E/S)  0.0120140000 s
+CPU/Wall   100.0058110784 % 
+
+
+real (Tiempo total)  4.6447300911e-01 s
+user (Tiempo de procesamiento en CPU) 4.5248600000e-01 s
+sys (Tiempo en acciones de E/S)  1.2014000000e-02 s
+CPU/Wall   100.0058110784 % 
+
+
+
+    MEZCLA (MERGESORT)
+    con 2000000 números
+
+real (Tiempo total)  0.6628260612 s
+user (Tiempo de procesamiento en CPU) 0.6548060000 s
+sys (Tiempo en acciones de E/S)  0.0080350000 s
+CPU/Wall   100.0022537966 % 
+
+
+real (Tiempo total)  6.6282606125e-01 s
+user (Tiempo de procesamiento en CPU) 6.5480600000e-01 s
+sys (Tiempo en acciones de E/S)  8.0350000000e-03 s
+CPU/Wall   100.0022537966 % 
+
