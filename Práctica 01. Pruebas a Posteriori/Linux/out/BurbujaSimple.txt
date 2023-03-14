@@ -318,3 +318,19 @@ user (Tiempo de procesamiento en CPU) 1.1717724071e+04 s
 sys (Tiempo en acciones de E/S)  7.6031000000e-02 s
 CPU/Wall   99.9952213295 % 
 
+
+
+    BURBUJA SIMPLE
+    con 2000000 números
+
+real (Tiempo total)  21554.9303050041 s
+user (Tiempo de procesamiento en CPU) 21548.6643640000 s
+sys (Tiempo en acciones de E/S)  2.1638160000 s
+CPU/Wall   99.9809689712 % 
+
+
+real (Tiempo total)  2.1554930305e+04 s
+user (Tiempo de procesamiento en CPU) 2.1548664364e+04 s
+sys (Tiempo en acciones de E/S)  2.1638160000e+00 s
+CPU/Wall   99.9809689712 % 
+
