@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 	uswtime(&utime0, &stime0, &wtime0);
 	// Ejecución del algoritmo de ordenamiento
 	HeapSort(A,n);
-	t// Termina la medición de tiempos
+	// Termina la medición de tiempos
 	uswtime(&utime1, &stime1, &wtime1);
 
 	// Imprime el rendimiento de la ejecución del algoritmo

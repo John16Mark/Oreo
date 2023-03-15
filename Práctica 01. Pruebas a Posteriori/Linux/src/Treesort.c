@@ -226,3 +226,49 @@ void inOrden(Nodo *n, int *A, int *i)
 		inOrden(n->der, A, i);
 	}
 }
+
+/*
+void imprimir(int *A, int n)
+Recibe:	*A: Dirección del arreglo original a ordenar
+		 n:	Cantidad/tamaño del arreglo a ordenar
+Imprime todos los elementos del arreglo recibido
+*/
+void imprimir(int *A, int n)
+{
+	int i, j;
+	printf("\n\n  ARREGLO ORDENADO:\n");
+	
+	for(i=0; i<n; i++)
+	{
+		printf("\n%d: %d",i,A[i]);
+	}
+}
+
+/*
+void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1)
+Recibe:	u0:	inicio tiempo usuario
+		s0:	inicio tiempo sistema
+		w0: inicio tiempo real
+		u1: final tiempo usuario
+		s1: final tiempo sistema
+		w1: final tiempo real
+Muestra los resultados del rendimiento temporal dentro de un espacio de tiempo acotado
+*/
+void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1)
+{
+	// Cálculo del tiempo de ejecución del programa
+	printf("\n");
+	printf("real (Tiempo total)  %.10f s\n",  w1 - w0);
+	printf("user (Tiempo de procesamiento en CPU) %.10f s\n",  u1 - u0);
+	printf("sys (Tiempo en acciones de E/S)  %.10f s\n",  s1 - s0);
+	printf("CPU/Wall   %.10f %% \n",100.0 * (u1 - u0 + s1 - s0) / (w1 - w0));
+	printf("\n");
+	
+	// Mostrar los tiempos en formato exponecial
+	printf("\n");
+	printf("real (Tiempo total)  %.10e s\n",  w1 - w0);
+	printf("user (Tiempo de procesamiento en CPU) %.10e s\n",  u1 - u0);
+	printf("sys (Tiempo en acciones de E/S)  %.10e s\n",  s1 - s0);
+	printf("CPU/Wall   %.10f %% \n",100.0 * (u1 - u0 + s1 - s0) / (w1 - w0));
+	printf("\n");
+}
