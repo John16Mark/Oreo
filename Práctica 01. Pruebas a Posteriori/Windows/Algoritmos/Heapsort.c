@@ -26,14 +26,15 @@ typedef struct Heap{
     int capacidad;
 } Heap;
 
-
-void HeapSort(int *A, int n);
+// Funciones del montículo
 void intercambiar(int* a, int* b);
 void heapify_down(Heap* heap, int i);
 void heapify_up(Heap* heap, int i);
 void insertar(Heap* heap, int valor);
 int extraer(Heap* heap);
-//void imprime_heap(Heap* heap);
+// Ordenamiento
+void HeapSort(int *A, int n);
+// Imprimir arreglo
 void imprimir(int *A, int n);
 
 int main(int argc, char *argv[])
@@ -71,7 +72,7 @@ int main(int argc, char *argv[])
 	printf("\n\nTiempo medido: %.8f segundos.\n", t_intervalo);
 	
 	// Imprime el arreglo
-	imprimir(A, n);
+	// imprimir(A, n);
 	
 	
 	return 1;
@@ -207,15 +208,3 @@ void imprimir(int *A, int n)
 		printf("\n%d: %d",i,A[i]);
 	}
 }
-
-/*
-void imprime_heap(Heap* heap) {
-    int i;
-	printf("Heap: ");
-
-    for (i = 0; i < heap->tam; i++) {
-        printf("%d ", heap->num[i]);
-    }
-
-    printf("\n");
-}*/

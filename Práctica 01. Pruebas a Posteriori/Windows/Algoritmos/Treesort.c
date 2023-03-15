@@ -22,24 +22,21 @@ Contiene:
 	int cont 			veces que se repite el número almacenado
 */
 typedef struct Nodo {
-	int v;									//Valor
-	struct Nodo *izq;					 	//hijo izquierdo
-	struct Nodo *der;						//hijo derecho
-	int cont;								//Numero de veces que se REPITE el valor en el arreglo
+	int v;
+	struct Nodo *izq;
+	struct Nodo *der;
+	int cont;
 } Nodo;
 
-//Funciones arbol
-
+// Funciones del árbol
 Nodo *nuevonodo(int v);
 void buscar(Nodo **r, int v, Nodo **actual, Nodo **anterior);
 void insertar(Nodo **r, int v);
 void procesarNodo(Nodo* n, int *A, int *i);
 void inOrden(Nodo* n, int *A, int *i);
-
-//Ordenamiento
+// Ordenamiento
 void TreeSort(int *A, int n);
-
-//Imprimir arreglo
+// Imprimir arreglo
 void imprimir(int *A, int n);
 
 int main(int argc, char *argv[])
@@ -47,9 +44,6 @@ int main(int argc, char *argv[])
 	// Variables para la medición de tiempos
 	clock_t t_inicio, t_final;
 	double t_intervalo;
-	
-	
-	
 	int i, n;
 	int *A;
 	
@@ -71,22 +65,16 @@ int main(int argc, char *argv[])
 	for (i = 0; i < n; i++)
 		scanf("%d", &A[i]);
 	printf("\n\n    TREESORT\n    con %d números\n",n);
+	
 	// Ejecución del algoritmo de ordenamiento
-	
-	
-	
 	t_inicio = clock();
 	TreeSort(A,n);
 	t_final = clock();
 	t_intervalo = (double)(t_final - t_inicio) / (CLOCKS_PER_SEC);
 	printf("\n\nTiempo medido: %.8f segundos.\n", t_intervalo);
 	
-	
-	
-	
 	// Imprime el arreglo
-	imprimir(A, n);
-	
+	// imprimir(A, n);
 	
 	return 1;
 }

@@ -1,3 +1,14 @@
+/*
+BurbujaSimple.c
+V 1.0 Marzo 2022
+Autor: Paola Reyes Francisco.
+
+Implementación del ordenamiento burbuja en C basada en el pseudocódigo proporcionado por el profesor.
+Toma n números enteros de la entrada estándar en la forma:
+> BurbujaSimple.exe n n0 n1 n2 n3 n4 ...  (en windows)
+Imprime el tiempo que tomó la ejecución del algoritmo e imprime el arreglo ordenado(opcional).
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -10,10 +21,6 @@ int main(int argc, char *argv[])
 	// Variables para la medición de tiempos
 	clock_t t_inicio, t_final;
 	double t_intervalo;
-	
-	
-	
-	
 	int i, n;
 	int *A;
 	
@@ -36,8 +43,6 @@ int main(int argc, char *argv[])
 		scanf("%d", &A[i]);
 	printf("\n\n    BURBUJA SIMPLE\n   con %d números",n);
 	
-	
-	
 	// Ejecución del algoritmo de ordenamiento
 	t_inicio = clock();
 	burbujaSimple(A, n);
@@ -46,12 +51,18 @@ int main(int argc, char *argv[])
 	printf("\n\nTiempo medido: %.8f segundos.\n", t_intervalo);
 	
 	// Imprime el arreglo
-	imprimir(A, n);
-	
+	// imprimir(A, n);
 	
 	return 1;
 }
 
+/*
+void burbujaSimple(int *A, int n)
+Recibe:	*A: Dirección del arreglo original a ordenar
+		 n:	Cantidad/tamaño del arreglo a ordenar
+Ordena el arreglo A de tamaño n mediante el algoritmo de la burbuja
+Complejidad: O(n^2)
+*/
 void burbujaSimple(int *A, int n)
 {
 	int i,j;
@@ -71,6 +82,12 @@ void burbujaSimple(int *A, int n)
 	}
 }
 
+/*
+void imprimir(int *A, int n)
+Recibe:	*A: Dirección del arreglo original a ordenar
+		 n:	Cantidad/tamaño del arreglo a ordenar
+Imprime todos los elementos del arreglo recibido
+*/
 void imprimir(int *A, int n)
 {
 	int i, j;
