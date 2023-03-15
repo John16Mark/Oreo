@@ -38,6 +38,8 @@ void inOrden(Nodo* n, int *A, int *i);
 void TreeSort(int *A, int n);
 // Imprimir arreglo
 void imprimir(int *A, int n);
+// Mostrar estadísticas
+void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1);
 
 int main(int argc, char *argv[])
 {
