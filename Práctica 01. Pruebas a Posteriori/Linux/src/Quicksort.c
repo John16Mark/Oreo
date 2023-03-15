@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	// Lee de la entrada estándar los n valores y los coloca en el arreglo
 	for (i = 0; i < n; i++)
 		scanf("%d", &A[i]);
-	printf("\n\n    QUICKSORT\n   con %d números",n);
+	printf("\n\n    QUICKSORT\n    con %d números\n",n);
 	
 	// Inicia la medición de tiempos
 	uswtime(&utime0, &stime0, &wtime0);

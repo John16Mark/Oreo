@@ -17,7 +17,7 @@ del algoritmo.
 
 void MergeSort(int A[], int p, int r);
 void Merge(int A[],int p, int q, int r);
-void Imprimir(int A[], int desde, int hasta);
+void imprimir(int *A, int n);
 void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1);
 
 int main(int argc, char *argv[])
@@ -64,13 +64,15 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-void Imprimir(int A[], int desde, int hasta)
+void imprimir(int *A, int n)
 {
-	int i;
-	printf("[");
-	for (i = desde; i <= hasta; i++)
-		printf("%d ", A[i]);
-	printf("]\n");
+	int i, j;
+	printf("\n\n  ARREGLO ORDENADO:\n");
+	
+	for(i=0; i<n; i++)
+	{
+		printf("\n%d: %d",i,A[i]);
+	}
 }
 
 /*
@@ -148,4 +150,23 @@ void Merge(int A[], int p, int q, int r)
 	}
 
 	free(C);
+}
+
+void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1)
+{
+	// Cálculo del tiempo de ejecución del programa
+	printf("\n");
+	printf("real (Tiempo total)  %.10f s\n",  w1 - w0);
+	printf("user (Tiempo de procesamiento en CPU) %.10f s\n",  u1 - u0);
+	printf("sys (Tiempo en acciones de E/S)  %.10f s\n",  s1 - s0);
+	printf("CPU/Wall   %.10f %% \n",100.0 * (u1 - u0 + s1 - s0) / (w1 - w0));
+	printf("\n");
+	
+	// Mostrar los tiempos en formato exponecial
+	printf("\n");
+	printf("real (Tiempo total)  %.10e s\n",  w1 - w0);
+	printf("user (Tiempo de procesamiento en CPU) %.10e s\n",  u1 - u0);
+	printf("sys (Tiempo en acciones de E/S)  %.10e s\n",  s1 - s0);
+	printf("CPU/Wall   %.10f %% \n",100.0 * (u1 - u0 + s1 - s0) / (w1 - w0));
+	printf("\n");
 }

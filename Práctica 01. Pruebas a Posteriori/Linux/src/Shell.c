@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include "tiempos/tiempo.h"
 #include <math.h>
 
 void Shell(int *A, int n);
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 	// Lee de la entrada estándar los n valores y los coloca en el arreglo
 	for (i = 0; i < n; i++)
 		scanf("%d", &A[i]);
-	printf("\n\n    SHELL\n   con %d números",n);
+	printf("\n\n    SHELL\n    con %d números\n",n);
 	
 	// Inicia la medición de tiempos
 	uswtime(&utime0, &stime0, &wtime0);
