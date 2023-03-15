@@ -161,7 +161,7 @@ void insertar(Heap* heap, int valor) {
 /*
 void heapify_up(Heap* heap, int i)
 Recibe:	*heap: 	Dirección del heap
-		*i: 	Valor del número a comparar
+		*i: 	Posición del número a comparar
 Calcula quién es el padre del número y compara cuál es mayor; si el hijo es menor, los intercambia
 Realiza la operación de manera recursiva hasta que llegue lo más arriba que puede
 */
