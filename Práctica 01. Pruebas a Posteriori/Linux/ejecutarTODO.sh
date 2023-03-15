@@ -1,4 +1,4 @@
-#!/bin/sh
+
 # compilar.sh
 # Version 1.0 marzo 2023
 # Autor: Juan Molina
@@ -11,6 +11,8 @@
 BIN_DIR=bin
 SRC=numeros10millones.txt
 OUT_DIR=out
+
+enes=(2000 3000 4000 5000 8000 10000 50000 100000 150000 200000 300000 400000 500000 600000 700000 800000 900000 1000000 1500000 2000000)
 
 # Comprobar que el directorio bin existe
 if [ ! -d $BIN_DIR ]; then
@@ -32,45 +34,10 @@ for f in $BIN_DIR/*
 do
     echo "  Ejecutando ${f##*/} 1000"
     $f 1000 < $SRC > $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 2000"
-    $f 2000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 3000"
-    $f 3000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 4000"
-    $f 4000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 5000"
-    $f 5000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 8000"
-    $f 8000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 10000"
-    $f 10000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 50000"
-    $f 50000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 100000"
-    $f 100000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 150000"
-    $f 150000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 200000"
-    $f 200000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 300000"
-    $f 300000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 400000"
-    $f 400000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 500000"
-    $f 500000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 600000"
-    $f 600000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 700000"
-    $f 700000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 800000"
-    $f 800000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 900000"
-    $f 900000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 1000000"
-    $f 1000000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 1500000"
-    $f 1500000 < $SRC >> $OUT_DIR/${f##*/}.txt
-    echo "  Ejecutando ${f##*/} 2000000"
-    $f 2000000 < $SRC >> $OUT_DIR/${f##*/}.txt
+    for n in ${enes[@]}
+    do
+    	echo "  Ejecutando ${f##*/} $n"
+    	$f $n < $SRC >> $OUT_DIR/${f##*/}.txt
+    done
 done
 

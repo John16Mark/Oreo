@@ -2,7 +2,7 @@
 # compilar.sh
 # Version 1.5 marzo 2023
 # Autor: Juan Molina
-# Basado en el script de bash que implementó Darío Quiñones el semestre pasado en A y ED.
+# Basado en el script de shell que implementó Darío Quiñones el semestre pasado en A y ED.
 
 # Un script de shell que compila todos los archivos .c en el directorio src
 # y los guarda en el directorio bin
