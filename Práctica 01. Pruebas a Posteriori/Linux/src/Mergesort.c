@@ -1,14 +1,12 @@
 /*
-merge.c
-V 1.0 Noviembre 2022
-Autor: Juan L. Molina Acuña
+Mergesort.c
+V 1.0 Marzo 2022
+Autor: Juan Luis Molina Acuña.
 
-Implementación del ordenamiento por mezcla en C basada en el pseudo-código
-proporcionado por el profesor. Toma n números enteros de la entrada estándar
-en la forma:
-> mezcla.exe n n0 n1 n2 n3 n4 ...  (en windows)
-Imprime estos valores de forma ordenada, junto al tiempo que tomó la ejecución
-del algoritmo.
+Implementación del ordenamiento por mezcla en C basada en el pseudocódigo proporcionado por el profesor.
+Toma n números enteros de la entrada estándar en la forma:
+> Mergesort.exe n n0 n1 n2 n3 n4 ...  (en windows)
+Imprime el tiempo que tomó la ejecución del algoritmo e imprime el arreglo ordenado(opcional).
 */
 
 #include <stdio.h>
@@ -61,27 +59,19 @@ int main(int argc, char *argv[])
 	// Imprime el rendimiento de la ejecución del algoritmo
 	rendimiento(utime0, stime0, wtime0, utime1, stime1, wtime1);
 
+	// Imprime el arreglo
+	// imprimir(A, n);
+	
 	return 0;
 }
 
-void imprimir(int *A, int n)
-{
-	int i, j;
-	printf("\n\n  ARREGLO ORDENADO:\n");
-	
-	for(i=0; i<n; i++)
-	{
-		printf("\n%d: %d",i,A[i]);
-	}
-}
-
 /*
-MergeSort
-Recibe:
-	A[]: arreglo
-	p: posici�n primer elemento
-	r: posici�n �ltimo elemento
-
+void MergeSort(int *A[], int p, int r)
+Recibe:	A[]: Dirección del arreglo
+		  p: posición primer elemento
+		  r: posición final
+Se encarga de dividir el arreglo a la mitad y ordenarlos de manera recursiva.
+Complejidad: O(n log n)
 */
 void MergeSort(int A[], int p, int r)
 {
@@ -97,14 +87,12 @@ void MergeSort(int A[], int p, int r)
 }
 
 /*
-Recibe:
-	A[]: Arreglo
-	p: posici�n primer elemento
-	q: posici�n elemento a la mitad
-	r: posici�n final
-
-	l: longitud de arreglo
-
+void Merge(int A[], int p, int q, int r)
+Recibe:	A[]: Dirección del arreglo
+		  p: posición primer elemento
+		  q: posición elemento a la mitad
+		  r: posición final
+Se encarga de remezclar y reunir los subarreglos que se formaron en MergeSort
 */
 void Merge(int A[], int p, int q, int r)
 {
@@ -152,6 +140,33 @@ void Merge(int A[], int p, int q, int r)
 	free(C);
 }
 
+/*
+void imprimir(int *A, int n)
+Recibe:	*A: Dirección del arreglo original a ordenar
+		 n:	Cantidad/tamaño del arreglo a ordenar
+Imprime todos los elementos del arreglo recibido
+*/
+void imprimir(int *A, int n)
+{
+	int i, j;
+	printf("\n\n  ARREGLO ORDENADO:\n");
+	
+	for(i=0; i<n; i++)
+	{
+		printf("\n%d: %d",i,A[i]);
+	}
+}
+
+/*
+void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1)
+Recibe:	u0:	inicio tiempo usuario
+		s0:	inicio tiempo sistema
+		w0: inicio tiempo real
+		u1: final tiempo usuario
+		s1: final tiempo sistema
+		w1: final tiempo real
+Muestra los resultados del rendimiento temporal dentro de un espacio de tiempo acotado
+*/
 void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1)
 {
 	// Cálculo del tiempo de ejecución del programa

@@ -1,3 +1,14 @@
+/*
+Quicksort.c
+V 1.0 Marzo 2022
+Autor: Juan Luis Molina Acuña.
+
+Implementación del ordenamiento rápido en C basada en el pseudocódigo proporcionado por el profesor.
+Toma n números enteros de la entrada estándar en la forma:
+> Quicksort.exe n n0 n1 n2 n3 n4 ...  (en windows)
+Imprime el tiempo que tomó la ejecución del algoritmo e imprime el arreglo ordenado(opcional).
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "tiempos/tiempo.h"
@@ -49,9 +60,21 @@ int main(int argc, char *argv[])
 	// Imprime el rendimiento de la ejecución del algoritmo
 	rendimiento(utime0, stime0, wtime0, utime1, stime1, wtime1);
 
+	// Imprime el arreglo
+	// imprimir(A, n);
+	
 	return 0;
 }
 
+/*
+void QuickSort(int *A, int p, int r)
+Recibe:	*A: Dirección del arreglo original a ordenar
+		 n:	indice desde donde ordenar
+		 r: indice hasta donde ordenar
+Realiza los cambios en el arreglo original, recursivamente ordena
+los elementos de A desde el índice p hasta r de forma ascendente.
+Complejidad: O(n log n)
+*/
 void QuickSort(int *A, int p, int r)
 {
     if (p < r)
@@ -62,6 +85,17 @@ void QuickSort(int *A, int p, int r)
     }
 }
 
+/*
+int Pivot(int *A, int p, int r)
+Recibe:	*A: Dirección del arreglo original a ordenar
+		 p: Pivote, el primer elemento de la región a ordenar
+		 r: Límite de la región a ordenar
+Coloca todos los elementos menores al pivote a la izquierda y
+los mayores a la derecha, después intercambia el pivote para que
+quede en su lugar correcto.
+Devuelve:
+	El indice del pivote después de ordenar la región
+*/
 int Pivot(int *A, int p, int r)
 {
     int piv = A[p], i = p+1, j = r;
@@ -76,6 +110,13 @@ int Pivot(int *A, int p, int r)
     return j;
 }
 
+/*
+void Intercambiar(int *A, int i, int j)
+Recibe:*A: Dirección del arreglo
+		i: indice elemento a intercambiar con j
+		j: indice elemento a intercambiar con i
+Realiza el intercambio de los elementos en las posiciones i y j
+*/
 void Intercambiar(int *A, int i, int j)
 {
     int temp = A[j];
@@ -83,6 +124,12 @@ void Intercambiar(int *A, int i, int j)
     A[i] = temp;
 }
 
+/*
+void imprimir(int *A, int n)
+Recibe:	*A: Dirección del arreglo original a ordenar
+		 n:	Cantidad/tamaño del arreglo a ordenar
+Imprime todos los elementos del arreglo recibido
+*/
 void imprimir(int *A, int n)
 {
 	int i, j;
@@ -94,6 +141,16 @@ void imprimir(int *A, int n)
 	}
 }
 
+/*
+void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1)
+Recibe:	u0:	inicio tiempo usuario
+		s0:	inicio tiempo sistema
+		w0: inicio tiempo real
+		u1: final tiempo usuario
+		s1: final tiempo sistema
+		w1: final tiempo real
+Muestra los resultados del rendimiento temporal dentro de un espacio de tiempo acotado
+*/
 void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1)
 {
 	// Cálculo del tiempo de ejecución del programa

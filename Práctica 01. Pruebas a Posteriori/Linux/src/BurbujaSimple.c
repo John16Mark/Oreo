@@ -1,3 +1,14 @@
+/*
+BurbujaSimple.c
+V 1.0 Marzo 2022
+Autor: Paola Reyes Francisco.
+
+Implementación del ordenamiento burbuja en C basada en el pseudocódigo proporcionado por el profesor.
+Toma n números enteros de la entrada estándar en la forma:
+> BurbujaSimple.exe n n0 n1 n2 n3 n4 ...  (en windows)
+Imprime el tiempo que tomó la ejecución del algoritmo e imprime el arreglo ordenado(opcional).
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "tiempos/tiempo.h"
@@ -47,9 +58,19 @@ int main(int argc, char *argv[])
 	// Imprime el rendimiento de la ejecución del algoritmo
 	rendimiento(utime0, stime0, wtime0, utime1, stime1, wtime1);
 	
+	// Imprime el arreglo
+	// imprimir(A, n);
+	
 	return 1;
 }
 
+/*
+void burbujaSimple(int *A, int n)
+Recibe:	*A: Dirección del arreglo original a ordenar
+		 n:	Cantidad/tamaño del arreglo a ordenar
+Ordena el arreglo A de tamaño n mediante el algoritmo de la burbuja
+Complejidad: O(n^2)
+*/
 void burbujaSimple(int *A, int n)
 {
 	int i,j;
@@ -69,6 +90,12 @@ void burbujaSimple(int *A, int n)
 	}
 }
 
+/*
+void imprimir(int *A, int n)
+Recibe:	*A: Dirección del arreglo original a ordenar
+		 n:	Cantidad/tamaño del arreglo a ordenar
+Imprime todos los elementos del arreglo recibido
+*/
 void imprimir(int *A, int n)
 {
 	int i, j;
@@ -80,6 +107,16 @@ void imprimir(int *A, int n)
 	}
 }
 
+/*
+void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1)
+Recibe:	u0:	inicio tiempo usuario
+		s0:	inicio tiempo sistema
+		w0: inicio tiempo real
+		u1: final tiempo usuario
+		s1: final tiempo sistema
+		w1: final tiempo real
+Muestra los resultados del rendimiento temporal dentro de un espacio de tiempo acotado
+*/
 void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1)
 {
 	// Cálculo del tiempo de ejecución del programa
