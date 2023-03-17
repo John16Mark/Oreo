@@ -125,7 +125,7 @@ void intercambiar(int* a, int* b) {
 /*
 void heapify_down(Heap* heap, int i)
 Recibe:	*heap: 	Dirección del heap
-		*i: 	Valor del número a acomodar
+		*i: 	Posición del número a comparar
 Crea una variable (smallest) para almacenar la posición del número más pequeño (inicia en la cima).
 Realiza una serie comparaciones con sus hijos para obtener la posición correcta y finalmente intercambia la cima
 con este número. Esto lo hace de manera recursiva hasta que llegue al fondo.
@@ -152,7 +152,7 @@ void heapify_down(Heap* heap, int i) {
 /*
 void insertar(Heap* heap, int valor)
 Recibe:	*heap: 	Dirección del heap
-		*i: 	Valor del número a añadir
+		valor: 	Valor del número a añadir
 Pregunta si llegó a la capacidad máxima que cabe dentro de la estructura. Si no ha llegado, añade el número hasta abajo.
 Posteriormente revisa si su posición es correcta con la función heapify_up.
 */
