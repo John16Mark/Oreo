@@ -1,6 +1,6 @@
 
 # compilar.sh
-# Version 1.0 marzo 2023
+# Version 1.9 marzo 2023
 # Autor: Juan Molina
 # Basado en el script de shell que implementó Darío Quiñones el semestre pasado en AyED.
 

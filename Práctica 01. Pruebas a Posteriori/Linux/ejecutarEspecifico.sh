@@ -8,8 +8,8 @@
 # y los guarda la salida en un archivo de texto en la carpeta out
 
 # -----------------MODIFICAR ESTOS VALORES-------------------------
-CANTIDAD=10000
-ALGORITMO=Quicksort
+CANTIDAD=1000000
+ALGORITMO=Treesort
 # -----------------------------------------------------------------
 # Variables
 BIN_DIR=bin
