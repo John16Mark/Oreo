@@ -7,6 +7,9 @@ Implementación del ordenamiento por árbol binario en C.
 Toma n números enteros de la entrada estándar en la forma:
 > mezcla.exe n n0 n1 n2 n3 n4 ...  (en linux)
 Imprime el tiempo que tomó la ejecución del algoritmo e imprime el arreglo ordenado(opcional).
+
+Compilar desde la carpeta "Linux" de la forma:
+gcc -o bin/Treesort src/Treesort.c src/tiempos/tiempo.c
 */
 
 #include <stdio.h>

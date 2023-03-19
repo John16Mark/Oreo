@@ -7,6 +7,9 @@ Implementación del ordenamiento por Selección en C basada en el pseudocódigo pro
 Toma n números enteros de la entrada estándar en la forma:
 > Seleccion.exe n n0 n1 n2 n3 n4 ...  (en windows)
 Imprime el tiempo que tomó la ejecución del algoritmo e imprime el arreglo ordenado(opcional).
+
+Compilar desde la carpeta "Linux" de la forma:
+gcc -o bin/Seleccion src/Seleccion.c src/tiempos/tiempo.c
 */
 
 #include <stdio.h>
