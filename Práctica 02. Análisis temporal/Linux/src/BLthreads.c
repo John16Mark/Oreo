@@ -151,7 +151,7 @@ void rendimiento(double u0, double s0, double w0, double u1, double s1, double w
 /*
 void* procesar(void* id)
 Recibe:	id:	id del thread
-Hace los calculos necesarios para definir un intervalo dependiendo del número
+Hace los clculos necesarios para definir un intervalo dependiendo del número
 de hilos que se usen y de su id e imprime el mensaje de la utilización del hilo.
 Finalmente, hace la búsqueda y actualiza el valor de p solo si se encontró el
 elemento en dicho intervalo.
