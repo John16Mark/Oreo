@@ -1,16 +1,16 @@
 /*
 BLthreads.c
-V 1.1 Abril 2022
+V 1.2 Abril 2022
 Autor: Aarón Olvera Martínez
 
 Implementación de la búsqueda lineal con threads en C obtenida en https://www.geeksforgeeks.org/linear-search/
 Toma n números enteros de la entrada estándar en la forma:
 > BLthreads N k Numthreads a0 a1 a2 a3 ... an (en linux)
-Imprime el tiempo que tomó la ejecución del algoritmo, e imprime la dirección de memoria donde se encontró el valor.
+Imprime el tiempo que tomó la ejecución del algoritmoe imprime el índice del arreglo en el que se encuentra el valor.
 */
 
 // gcc BLthreads.c -lpthread tiempos/tiempo.c -o BLthreads
-//Ejemplo de ejecución en la terminal BLT 500000 82182077 8 < orden10millones.txt
+//Ejemplo de ejecución en la terminal BLthreads 500000 82182077 8 < orden10millones.txt
 
 #include <pthread.h>
 #include <stdio.h>
@@ -19,14 +19,14 @@ Imprime el tiempo que tomó la ejecución del algoritmo, e imprime la dirección
 
 //VARIABLES GLOBALES
 //*****************************************************************
-int NumThreads;				//Número de threads
-int N;						//Tamaño del arreglo
-int k;						//Variable a encontrar en el arreglo
+int NumThreads;				// Número de threads
+int N;						// Tamaño del arreglo
+int k;						// Variable a encontrar en el arreglo
 int *A;						// Apuntador al arreglo
-int p;
+int p;						// Variable para guardar el indice
 
 //Funciones
-int Busqueda(int *A, int inicio, int fin, int k);
+void Busqueda(int *A, int inicio, int fin, int k);
 void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1);
 void *procesar(void* id);
 
@@ -53,6 +53,8 @@ int main(int argc, char *argv[])
 	// Lee el numero de threads a utilizar y reserva su memoria
 	NumThreads = atoi(argv[3]);
 	thread = malloc(NumThreads*sizeof(pthread_t));
+	// Se da el valor inicial de -1 a p
+	p = -1;
 	// Lee de la entrada estándar los n valores y los coloca en el árbol
 	for (i = 0; i < N; i++)
 		scanf("%d", &A[i]);
@@ -97,26 +99,30 @@ int main(int argc, char *argv[])
 }
 
 /*
-int Busqueda(int *A,int inicio, int fin, int k)
+void Busqueda(int *A,int inicio, int fin, int k)
 Recibe:	*A: Dirección del arreglo original a ordenar
 		 inicio: Inicio del intervalo del hilo
 		 fin: Fin del intervalo del hilo
 		 k: Valor a buscar
 
 Compara cada elemento del arreglo A con el valor 
-a buscar k. Regresa -1 si no se encuentra.
+a buscar k. Termina cuando se encuentra el valor, o cuando se llega al final del intervalo.
 Se hace una pequeña modificación en el caso de la implementación de los hilos,
 para obtener el índice correcto en la búsqueda lineal, se tiene que comenzar a
 comparar en el incio del intervalo asignado a cada hilo y terminar en fin.
 Complejidad: O(n)
 */
-int Busqueda(int *A,int inicio, int fin, int k)
+void Busqueda(int *A,int inicio, int fin, int k)
 {
 	int i;
-	for (i = inicio; i < fin; i++)
-		if (A[i] == k)
-			return i;
-	return -1;
+	for (i = inicio; i < fin; i++){
+		if(p!=-1)
+			break;
+		if (A[i] == k){
+			p = i;
+		}
+	}
+		
 }
 
 /*
@@ -151,7 +157,7 @@ void rendimiento(double u0, double s0, double w0, double u1, double s1, double w
 /*
 void* procesar(void* id)
 Recibe:	id:	id del thread
-Hace los clculos necesarios para definir un intervalo dependiendo del número
+Hace los calculos necesarios para definir un intervalo dependiendo del número
 de hilos que se usen y de su id e imprime el mensaje de la utilización del hilo.
 Finalmente, hace la búsqueda y actualiza el valor de p solo si se encontró el
 elemento en dicho intervalo.
@@ -171,13 +177,8 @@ void* procesar(void* id)
 
 	printf("\nHola desde procesar\tSoy el thread %d\tInicio %d\tTermino %d",n_thread,inicio,fin);	//Comentar para la información del intervalo.
 	//Realiza la búsqueda y guarda el valor del índice del arreglo o en su defecto -1.
-	resbusqueda = Busqueda(A, inicio, fin, k);
-	if(resbusqueda!=-1){
-		//Guarda el valor de la búsqueda
-		p = resbusqueda;
-		printf("\n Encontrado en el thread %d, %d", n_thread, p);									//Comentar para no mostrar el índice.
-	}
+	Busqueda(A, inicio, fin, k);
 	
-	printf("\nBye desde procesar\tSoy el thread %d\tHe terminado",n_thread);
+	printf("\nBye desde procesar\tSoy el thread %d\tHe terminado",n_thread);	//Comentar para no mostrar
 
 }
