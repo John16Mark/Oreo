@@ -1,13 +1,13 @@
 /*
 BusquedaLinealT.c
 V 1.2 Abril 2022
-Autores:	Aarón Olvera Martínez
-			Juan Luis Molina Acuña
+Autores:	AarÃ³n Olvera MartÃ­nez
+			Juan Luis Molina AcuÃ±a
 
-Implementación de la búsqueda lineal con threads en C obtenida en https://www.geeksforgeeks.org/linear-search/
-Toma n números enteros de la entrada estándar en la forma:
+ImplementaciÃ³n de la bÃºsqueda lineal con threads en C obtenida en https://www.geeksforgeeks.org/linear-search/
+Toma n nÃºmeros enteros de la entrada estÃ¡ndar en la forma:
 > BusquedaLinealT n k Numthreads a0 a1 a2 a3 ... an (en linux)
-Imprime el tiempo que tomó la ejecución del algoritmo imprime el índice del arreglo en el que se encuentra el valor.
+Imprime el tiempo que tomÃ³ la ejecuciÃ³n del algoritmo imprime el Ã­ndice del arreglo en el que se encuentra el valor.
 
 	COMPILAR:
 gcc BusquedaLinealT.c -o BusquedaLinealT.exe lib/TADColaDin.c
@@ -25,8 +25,8 @@ BusquedaLinealT.exe 10000000 4 < numeros10millones.txt
 
 //VARIABLES GLOBALES
 //*****************************************************************
-int NumThreads;				// Número de threads
-int n;						// Tamaño del arreglo
+int NumThreads;				// NÃºmero de threads
+int n;						// TamaÃ±o del arreglo
 int k;						// Variable a encontrar en el arreglo
 int *A;						// Apuntador al arreglo
 int p;						// Variable para guardar el indice
@@ -40,11 +40,11 @@ int main(int argc, char *argv[])
 {
 	// Arreglo de threads
 	pthread_t *thread;
-	// Variables para la medición de tiempos
+	// Variables para la mediciÃ³n de tiempos
 	clock_t t_inicio, t_final;
 	double t_intervalo;
 	double t_acumulado = 0;
-	// Variable contadora para leer los números
+	// Variable contadora para leer los nÃºmeros
 	int i;
 	// Variable para ciclo
 	int j;
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 		printf("\n Ejemplo: %s 100 4", argv[0]);
 		exit(1);
 	}
-	// Lee el argumento del tamaño del arreglo y reserva su memoria
+	// Lee el argumento del tamaÃ±o del arreglo y reserva su memoria
 	n = atoi(argv[1]);
 	A = malloc(n * sizeof(int));
 	// Lee el numero de threads a utilizar y reserva su memoria
@@ -66,15 +66,15 @@ int main(int argc, char *argv[])
 	// Se da el valor inicial de -1 a p
 	p = -1;
 	
-	// Lee de la entrada estándar los n valores y los coloca en el arreglo
+	// Lee de la entrada estÃ¡ndar los n valores y los coloca en el arreglo
 	for (i = 0; i < n; i++)
 		scanf("%d", &A[i]);
 	
-	// Lee los números a buscar de la dirección "buscar.txt"
+	// Lee los nÃºmeros a buscar de la direcciÃ³n "buscar.txt"
 	Initialize(&mi_cola);
 	cargarArchivo(&mi_cola, "buscar.txt");
 	
-	// Ejecución del algoritmo de búsqueda
+	// EjecuciÃ³n del algoritmo de bÃºsqueda
 	for(j = 1; j <= Size(&mi_cola); j++){
 		k = Element(&mi_cola, j).n;
 		p = -1;
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 		//Crear los threads con el comportamiento "segmentar"
 		for (i=1; i<NumThreads; i++) 
 		{
-			//En esta parte es cuando se realiza la búsqueda en los threads 1, ..., a_NumThreads
+			//En esta parte es cuando se realiza la bÃºsqueda en los threads 1, ..., a_NumThreads
 			if (pthread_create (&thread[i], NULL, procesar,(void*)i) != 0 ) 
 			{
 				perror("El thread no pudo crearse");
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
 			}
 		}
 
-		// Inicia la medición de tiempos
+		// Inicia la mediciÃ³n de tiempos
 		t_inicio = clock();
 
 		//El main ejecuta el thread 0
@@ -100,13 +100,13 @@ int main(int argc, char *argv[])
 		for (i=1; i<NumThreads; i++){
 			pthread_join (thread[i], NULL);}
 
-		// Termina la medición de tiempos
+		// Termina la mediciÃ³n de tiempos
 		t_final = clock();
 		t_intervalo = (double)(t_final - t_inicio) / (CLOCKS_PER_SEC);
 		t_acumulado += t_intervalo;
 
-		// /*											Comentar si no se quiere imprimir la posición en donde se encontró
-		//Se imprime la posición del arreglo en la que se encontró o, en su defecto, -1 si no se encuentra en arreglo
+		// /*											Comentar si no se quiere imprimir la posiciÃ³n en donde se encontrÃ³
+		//Se imprime la posiciÃ³n del arreglo en la que se encontrÃ³ o, en su defecto, -1 si no se encuentra en arreglo
 		if(p == -1){
 			printf("\n \033[91mNO SE ENCONTR%c EL N%cMERO\033[0m", 224, 233);
 		}
@@ -127,15 +127,15 @@ int main(int argc, char *argv[])
 
 /*
 void Busqueda(int *A,int inicio, int fin, int k)
-Recibe:	*A: Dirección del arreglo original a ordenar
+Recibe:	*A: DirecciÃ³n del arreglo original a ordenar
 		 inicio: Inicio del intervalo del hilo
 		 fin: Fin del intervalo del hilo
 		 k: Valor a buscar
 
 Compara cada elemento del arreglo A con el valor 
 a buscar k. Termina cuando se encuentra el valor, o cuando se llega al final del intervalo.
-Se hace una pequeña modificación en el caso de la implementación de los hilos,
-para obtener el índice correcto en la búsqueda lineal, se tiene que comenzar a
+Se hace una pequeÃ±a modificaciÃ³n en el caso de la implementaciÃ³n de los hilos,
+para obtener el Ã­ndice correcto en la bÃºsqueda lineal, se tiene que comenzar a
 comparar en el incio del intervalo asignado a cada hilo y terminar en fin.
 Complejidad: O(n)
 */
@@ -155,9 +155,9 @@ void Busqueda(int *A,int inicio, int fin, int k)
 /*
 void* procesar(void* id)
 Recibe:	id:	id del thread
-Hace los calculos necesarios para definir un intervalo dependiendo del número
-de hilos que se usen y de su id e imprime el mensaje de la utilización del hilo.
-Finalmente, hace la búsqueda y actualiza el valor de p solo si se encontró el
+Hace los calculos necesarios para definir un intervalo dependiendo del nÃºmero
+de hilos que se usen y de su id e imprime el mensaje de la utilizaciÃ³n del hilo.
+Finalmente, hace la bÃºsqueda y actualiza el valor de p solo si se encontrÃ³ el
 elemento en dicho intervalo.
 */
 void* procesar(void* id)
@@ -173,9 +173,9 @@ void* procesar(void* id)
 	else
 		fin=((n_thread+1)*n)/NumThreads-1;
 
-	//printf("\nHola desde procesar\tSoy el thread %d\tInicio %d\tTermino %d",n_thread,inicio,fin);	//Comentar para la información del intervalo.
+	//printf("\nHola desde procesar\tSoy el thread %d\tInicio %d\tTermino %d",n_thread,inicio,fin);	//Comentar para la informaciÃ³n del intervalo.
 	
-	//Realiza la búsqueda y guarda el valor del índice del arreglo o en su defecto -1.
+	//Realiza la bÃºsqueda y guarda el valor del Ã­ndice del arreglo o en su defecto -1.
 	Busqueda(A, inicio, fin, k);
 	
 	//printf("\nBye desde procesar\tSoy el thread %d\tHe terminado",n_thread);	//Comentar para no mostrar
@@ -184,10 +184,10 @@ void* procesar(void* id)
 
 /*
 void cargarArchivo(cola *c, char *direccion)
-Recibe:	*c: 		Cola donde se almacenarán los números a buscar
-		*direccion:	Dirección del archivo donde están los números
+Recibe:	*c: 		Cola donde se almacenarÃ¡n los nÃºmeros a buscar
+		*direccion:	DirecciÃ³n del archivo donde estÃ¡n los nÃºmeros
 		
-Abre un archivo de texto y almacena los números del archivo en una cola.
+Abre un archivo de texto y almacena los nÃºmeros del archivo en una cola.
 */
 void cargarArchivo(cola *c, char *direccion)
 {
@@ -201,7 +201,7 @@ void cargarArchivo(cola *c, char *direccion)
 		exit(1);
 	}
 	
-	//Lee línea por línea el archivo de texto y los almacena en la cola
+	//Lee lÃ­nea por lÃ­nea el archivo de texto y los almacena en la cola
 	char line[500];
 	while (fgets(line, sizeof(line), flujo)){
 		e.n = atoi(line);
