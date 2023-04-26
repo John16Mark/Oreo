@@ -1,18 +1,19 @@
 /*
-Busqueda Lineal.c
+Lineal.c
 V 1.1 Abril 2022
-Autor: AarÃ³n Olvera MartÃ­nez
+Autores:	Aarón Olvera Martínez
+			Juan Luis Molina Acuña
 
-ImplementaciÃ³n de la bÃºsqueda lineal en C obtenida en https://www.geeksforgeeks.org/linear-search/
-Toma n nÃºmeros enteros de la entrada estÃ¡ndar en la forma:
+Implementación de la búsqueda lineal en C obtenida en https://www.geeksforgeeks.org/linear-search/
+Toma n números enteros de la entrada estándar en la forma:
 > BusquedaLineal n k a0 a1 a2 a3 ... an (en linux)
-Imprime el tiempo que tomÃ³ la ejecuciÃ³n del algoritmo, e imprime la direcciÃ³n de memoria donde se encontrÃ³ el valor.
+Imprime el tiempo que tomó la ejecución del algoritmo, e imprime la dirección de memoria donde se encontró el valor.
 
 	COMPILAR:
-gcc BusquedaLineal.c -o BusquedaLineal.exe lib/TADColaDin.c
+gcc Lineal.c -o Lineal.exe lib/TADColaDin.c
 
 	EJECUTAR:
-BusquedaLineal.exe 10000000 < numeros10millones.txt
+Lineal.exe 10000000 < numeros10millones.txt
 
 */
 
@@ -21,24 +22,24 @@ BusquedaLineal.exe 10000000 < numeros10millones.txt
 #include "lib/TADColaDin.h"
 #include <time.h>
 
-int Busqueda(int *A, int n, int k);
+int Lineal(int *A, int n, int k);
 void cargarArchivo(cola *c, char *direccion);
 
 int main(int argc, char *argv[])
 {
-	// Variables para la mediciÃ³n de tiempos
+	// Variables para la medición de tiempos
 	clock_t t_inicio, t_final;
 	double t_intervalo;
 	double t_acumulado = 0;
 	// Variable para determinar la longitud del arreglo
 	int n;
-	// Variable contadora para leer los nÃºmeros
+	// Variable contadora para leer los números
 	int i;
 	// Apuntador al arreglo
 	int *A;
 	// Cola donde se almacenan los valores a buscar
 	cola mi_cola;
-	// Variable del Ã­ndice en el que se encontrÃ³ el valor
+	// Variable del índice en el que se encontró el valor
 	int p;
 	// Verifica si se reciben solo tres argumentos
 	if(argc != 2)
@@ -51,11 +52,11 @@ int main(int argc, char *argv[])
 	// Lee el argumento
 	n = atoi(argv[1]);
 	A = malloc(n * sizeof(int));
-	// Lee de la entrada estÃ¡ndar los n valores y los coloca en el arreglo
+	// Lee de la entrada estándar los n valores y los coloca en el arreglo
 	for (i = 0; i < n; i++)
 		scanf("%d", &A[i]);
 		
-	// Lee los nÃºmeros a buscar de la direcciÃ³n "buscar.txt"
+	// Lee los números a buscar de la dirección "buscar.txt"
 	Initialize(&mi_cola);
 	cargarArchivo(&mi_cola, "buscar.txt");
 
@@ -65,17 +66,17 @@ int main(int argc, char *argv[])
 	for(i = 1; i <= Size(&mi_cola); i++){
 
 		printf("\n\n Valor a encontrar: %d", Element(&mi_cola, i).n);
-		// Inicia la mediciÃ³n de tiempos
+		// Inicia la medición de tiempos
 		t_inicio = clock();
-		// EjecuciÃ³n del algoritmo de bÃºsqueda
-		p = Busqueda(A, n, Element(&mi_cola, i).n);
-		// Termina la mediciÃ³n de tiempos
+		// Ejecución del algoritmo de búsqueda
+		p = Lineal(A, n, Element(&mi_cola, i).n);
+		// Termina la medición de tiempos
 		t_final = clock();
 		t_intervalo = (double)(t_final - t_inicio) / (CLOCKS_PER_SEC);
 		t_acumulado += t_intervalo;
 		
-		// /*											Comentar si no se quiere imprimir la posiciÃ³n en donde se encontrÃ³
-		//Se imprime la posiciÃ³n del arreglo en la que se encontrÃ³ o, en su defecto, -1 si no se encuentra en arreglo
+		// /*											Comentar si no se quiere imprimir la posición en donde se encontró
+		//Se imprime la posición del arreglo en la que se encontró o, en su defecto, -1 si no se encuentra en arreglo
 		if(p == -1){
 			printf("\n \033[91mNO SE ENCONTR%c EL N%cMERO\033[0m", 224, 233);
 		}
@@ -94,8 +95,8 @@ int main(int argc, char *argv[])
 }
 
 /*
-int Busqueda(int *A, int n, int k)
-Recibe:	*A: DirecciÃ³n del arreglo original a ordenar
+int Lineal(int *A, int n, int k)
+Recibe:	*A: Dirección del arreglo original a ordenar
 		 n: Numero de elementos en el arreglo
 		 k: Valor a buscar
 
@@ -103,7 +104,7 @@ Compara cada elemento del arreglo A con el valor
 a buscar k. Regresa -1 si no se encuentra.
 Complejidad: O(n)
 */
-int Busqueda(int *A, int n, int k)
+int Lineal(int *A, int n, int k)
 {
 	int i;
 	for (i = 0; i < n; i++)
@@ -114,10 +115,10 @@ int Busqueda(int *A, int n, int k)
 
 /*
 void cargarArchivo(cola *c, char *direccion)
-Recibe:	*c: 		Cola donde se almacenarÃ¡n los nÃºmeros a buscar
-		*direccion:	DirecciÃ³n del archivo donde estÃ¡n los nÃºmeros
+Recibe:	*c: 		Cola donde se almacenarán los números a buscar
+		*direccion:	Dirección del archivo donde están los números
 		
-Abre un archivo de texto y almacena los nÃºmeros del archivo en una cola.
+Abre un archivo de texto y almacena los números del archivo en una cola.
 */
 void cargarArchivo(cola *c, char *direccion)
 {
@@ -131,7 +132,7 @@ void cargarArchivo(cola *c, char *direccion)
 		exit(1);
 	}
 	
-	//Lee lÃ­nea por lÃ­nea el archivo de texto y los almacena en la cola
+	//Lee línea por línea el archivo de texto y los almacena en la cola
 	char line[500];
 	while (fgets(line, sizeof(line), flujo)){
 		e.n = atoi(line);
