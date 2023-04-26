@@ -1,21 +1,27 @@
 /*
-BLthreads.c
+BusquedaLinealT.c
 V 1.2 Abril 2022
-Autor: Aarón Olvera Martínez
+Autores:	Aarón Olvera Martínez
+			Juan Luis Molina Acuña
 
 Implementación de la búsqueda lineal con threads en C obtenida en https://www.geeksforgeeks.org/linear-search/
 Toma n números enteros de la entrada estándar en la forma:
-> BLthreads N k Numthreads a0 a1 a2 a3 ... an (en linux)
-Imprime el tiempo que tomó la ejecución del algoritmoe imprime el índice del arreglo en el que se encuentra el valor.
-*/
+> BusquedaLinealT n k Numthreads a0 a1 a2 a3 ... an (en linux)
+Imprime el tiempo que tomó la ejecución del algoritmo imprime el índice del arreglo en el que se encuentra el valor.
 
-// gcc BLthreads.c -lpthread tiempos/tiempo.c -o BLthreads
-//Ejemplo de ejecución en la terminal BLthreads 500000 82182077 8 < orden10millones.txt
+	COMPILAR:
+gcc BusquedaLinealT.c -o BusquedaLinealT.exe lib/TADColaDin.c
+
+	EJECUTAR:
+BusquedaLinealT.exe 10000000 4 < numeros10millones.txt
+
+*/
 
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "lib/TADColaDin.h"
+#include <time.h>
 
 //VARIABLES GLOBALES
 //*****************************************************************
@@ -34,8 +40,13 @@ int main(int argc, char *argv[])
 {
 	// Arreglo de threads
 	pthread_t *thread;
+	// Variables para la medición de tiempos
+	clock_t t_inicio, t_final;
+	double t_intervalo;
+	double t_acumulado = 0;
 	// Variable contadora para leer los números
 	int i;
+	// Variable para ciclo
 	int j;
 	// Cola donde se almacenan los valores a buscar
 	cola mi_cola;
@@ -68,34 +79,45 @@ int main(int argc, char *argv[])
 		k = Element(&mi_cola, j).n;
 		p = -1;
 		
+		printf("\n\n Valor a encontrar: %d", k);
 		//Crear los threads con el comportamiento "segmentar"
 		for (i=1; i<NumThreads; i++) 
 		{
 			//En esta parte es cuando se realiza la búsqueda en los threads 1, ..., a_NumThreads
 			if (pthread_create (&thread[i], NULL, procesar,(void*)i) != 0 ) 
 			{
-				perror("El thread no  pudo crearse");
+				perror("El thread no pudo crearse");
 				exit(-1);
 			}
 		}
-		
+
+		// Inicia la medición de tiempos
+		t_inicio = clock();
+
 		//El main ejecuta el thread 0
 		procesar(0);
-	
 		//Esperar a que terminen los threads (procesar)
-		for (i=1; i<NumThreads; i++) pthread_join (thread[i], NULL);
-	
+		for (i=1; i<NumThreads; i++){
+			pthread_join (thread[i], NULL);}
+
+		// Termina la medición de tiempos
+		t_final = clock();
+		t_intervalo = (double)(t_final - t_inicio) / (CLOCKS_PER_SEC);
+		t_acumulado += t_intervalo;
+
 		// /*											Comentar si no se quiere imprimir la posición en donde se encontró
 		//Se imprime la posición del arreglo en la que se encontró o, en su defecto, -1 si no se encuentra en arreglo
-		printf("\n Valor a encontrar: %d", k);
 		if(p == -1){
-			printf("\n \033[91mNO SE ENCONTR%c EL N%cMERO\033[0m\n", 224, 233);
+			printf("\n \033[91mNO SE ENCONTR%c EL N%cMERO\033[0m", 224, 233);
 		}
 		else{
-			printf("\n \033[92mSe encontr%c en la posici%cn:\033[0m %d\n",162,162, p);
+			printf("\n \033[92mSe encontr%c en la posici%cn:\033[0m %d",162,162, p);
 		}
 		// */											Fin comentario
+		printf("\n Tiempo medido: %.8f segundos.\n", t_intervalo);
 	}
+	t_acumulado /= Size(&mi_cola);
+	printf("\n\n    PROMEDIO DE MEDICI%cN DE TIEMPOS\n    %.8f segundos.\n", 224, t_acumulado);
 	
 	//Libera la memoria del arreglo
 	free(A);
@@ -151,11 +173,12 @@ void* procesar(void* id)
 	else
 		fin=((n_thread+1)*n)/NumThreads-1;
 
-	printf("\nHola desde procesar\tSoy el thread %d\tInicio %d\tTermino %d",n_thread,inicio,fin);	//Comentar para la información del intervalo.
+	//printf("\nHola desde procesar\tSoy el thread %d\tInicio %d\tTermino %d",n_thread,inicio,fin);	//Comentar para la información del intervalo.
+	
 	//Realiza la búsqueda y guarda el valor del índice del arreglo o en su defecto -1.
 	Busqueda(A, inicio, fin, k);
 	
-	printf("\nBye desde procesar\tSoy el thread %d\tHe terminado",n_thread);	//Comentar para no mostrar
+	//printf("\nBye desde procesar\tSoy el thread %d\tHe terminado",n_thread);	//Comentar para no mostrar
 
 }
 
