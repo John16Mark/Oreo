@@ -1,23 +1,35 @@
 /*
-Busqueda Lineal.c
+Lineal.c
 V 1.1 Abril 2022
-Autor: Aarón Olvera Martínez
+Autores:	Yael André Blásquez Martínez
+			Juan Luis Molina Acuña
+			Aarón Olvera Martínez
+			Paola Reyes Francisco
 
 Implementación de la búsqueda lineal en C obtenida en https://www.geeksforgeeks.org/linear-search/
 Toma n números enteros de la entrada estándar en la forma:
 > BusquedaLineal n k a0 a1 a2 a3 ... an (en linux)
 Imprime el tiempo que tomó la ejecución del algoritmo, e imprime la dirección de memoria donde se encontró el valor.
-*/
 
-//gcc BusquedaLineal.c -o BusquedaLineal tiempos/tiempo.c
-//BusquedaLineal 500000 82182077 < orden10millones.txt
+	COMPILAR:
+gcc Lineal.c -o Lineal lib/TADColaDin.c lib/tiempo.c
+
+	EJECUTAR:
+./Lineal 10000000 < numeros10millones.txt
+
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "tiempos/tiempo.h"
+#include "lib/TADColaDin.h"
+#include "lib/tiempo.h"
 
-int Busqueda(int *A, int n, int k);
+int Lineal(int *A, int n, int k);
+void cargarArchivo(cola *c, char *direccion);
 void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1);
+
+// Variables globales para la medición de tiempos.
+double u_acumulado = 0, w_acumulado = 0, s_acumulado = 0, p_acumulado = 0;
 
 int main(int argc, char *argv[])
 {
@@ -29,53 +41,80 @@ int main(int argc, char *argv[])
 	int i;
 	// Apuntador al arreglo
 	int *A;
-	// Variable a encontrar en el arreglo
-	int k;
+	// Cola donde se almacenan los valores a buscar
+	cola mi_cola;
 	// Variable del índice en el que se encontró el valor
 	int p;
-	// Verifica si se reciben solo tres argumentos
-	if(argc != 3)
+	// Verifica si se reciben solo dos argumentos
+	if(argc != 2)
 	{
-		printf("\n\n Para ejecutar el programa se necesita tama%co de arreglo y el n%cmero a buscar",164,163);
-		printf("\n Ejemplo: %s 100 23781", argv[0]);
+		printf("\n\n Para ejecutar el programa se necesita tamaño de arreglo y el número a buscar");
+		printf("\n Ejemplo: %s 100", argv[0]);
 		exit(1);
 	}
+	
 	// Lee el argumento
 	n = atoi(argv[1]);
 	A = malloc(n * sizeof(int));
-	// Se lee el argumento del valor a buscar y se añade al elemento auxiliar
-	k = atoi(argv[2]);
-	// Lee de la entrada estándar los n valores y los coloca en el árbol
+	// Lee de la entrada estándar los n valores y los coloca en el arreglo
 	for (i = 0; i < n; i++)
 		scanf("%d", &A[i]);
-	// Inicia la medición de tiempos
-	uswtime(&utime0, &stime0, &wtime0);
-	// Ejecución del algoritmo de búsqueda
-	p = Busqueda(A, n, k);
+		
+	// Lee los números a buscar de la dirección "buscar.txt"
+	Initialize(&mi_cola);
+	cargarArchivo(&mi_cola, "buscar.txt");
+
+	printf("\n\n    BÚSQUEDA LINEAL\n    con %d números", n);
 	
-	// /*																	Comentar si no se quiere imprimir la posición en donde se encontró
+	// Ciclo para cada elemento de la cola
+	for(i = 1; i <= Size(&mi_cola); i++){
 
-	//Se imprime la posición del arreglo en la que se encontró o, en su defecto, -1 si no se encuentra en arreglo
-	printf("\n Valor a encontrar: %d", k);
-	if(p == -1){
-		printf("\n \033[91mNO SE ENCONTR%c EL N%cMERO\033[0m\n", 224, 233);
+		printf("\n\n Valor a encontrar: %d", Element(&mi_cola, i).n);
+		// Inicia la medición de tiempos
+		uswtime(&utime0, &stime0, &wtime0);
+		// Ejecución del algoritmo de búsqueda
+		p = Lineal(A, n, Element(&mi_cola, i).n);
+		// Termina la medición de tiempos
+		uswtime(&utime1, &stime1, &wtime1);
+		
+		// /*											Comentar si no se quiere imprimir la posición en donde se encontró
+		//Se imprime la posición del arreglo en la que se encontró o, en su defecto, -1 si no se encuentra en arreglo
+		if(p == -1){
+			printf("\n \033[91mNO SE ENCONTRÓ EL NÚMERO\033[0m");
+		}
+		else{
+			printf("\n \033[92mSe encontró en la posición:\033[0m %d", p);
+		}
+		// */											Fin comentario
+		rendimiento(utime0, stime0, wtime0, utime1, stime1, wtime1);
 	}
-	else{
-		printf("\n Se encontr%c en la posici%cn: %d\n",162,162, p);
-	}
+	w_acumulado /= Size(&mi_cola);
+	u_acumulado /= Size(&mi_cola);
+	s_acumulado /= Size(&mi_cola);
+	p_acumulado /= Size(&mi_cola);
+	// Cálculo del promedio de medición del algoritmo
+	printf("\n\n    PROMEDIO DE MEDICIÓN DE TIEMPOS\n");
+	printf("real (Tiempo total)  %.10f s\n",  w_acumulado);
+	printf("user (Tiempo de procesamiento en CPU) %.10f s\n",  u_acumulado);
+	printf("sys (Tiempo en acciones de E/S)  %.10f s\n",  s_acumulado);
+	printf("CPU/Wall   %.10f %% \n", p_acumulado);
+	printf("\n");
 
-	// */																	Fin comentario
-	// Termina la medición de tiempos
-	uswtime(&utime1, &stime1, &wtime1);
-	// Imprime el rendimiento de la ejecución del algoritmo
-	rendimiento(utime0, stime0, wtime0, utime1, stime1, wtime1);
+	// Mostrar los promedios en formato exponecial
+	printf("\n");
+	printf("real (Tiempo total)  %.10e s\n",  w_acumulado);
+	printf("user (Tiempo de procesamiento en CPU) %.10e s\n",  u_acumulado);
+	printf("sys (Tiempo en acciones de E/S)  %.10e s\n",  s_acumulado);
+	printf("CPU/Wall   %.10f %% \n", p_acumulado);
+	printf("\n");
+
 	//Libera la memoria del arreglo
 	free(A);
 	return 0;
 }
 
 /*
-int Busqueda(int *A, int n, int k)
+int Lineal(int *A, int n, int k)
 Recibe:	*A: Dirección del arreglo original a ordenar
 		 n: Numero de elementos en el arreglo
 		 k: Valor a buscar
@@ -84,13 +123,43 @@ Compara cada elemento del arreglo A con el valor
 a buscar k. Regresa -1 si no se encuentra.
 Complejidad: O(n)
 */
-int Busqueda(int *A, int n, int k)
+int Lineal(int *A, int n, int k)
 {
 	int i;
 	for (i = 0; i < n; i++)
 		if (A[i] == k)
 			return i;
 	return -1;
+}
+
+/*
+void cargarArchivo(cola *c, char *direccion)
+Recibe:	*c: 		Cola donde se almacenarán los números a buscar
+		*direccion:	Dirección del archivo donde están los números
+		
+Abre un archivo de texto y almacena los números del archivo en una cola.
+*/
+void cargarArchivo(cola *c, char *direccion)
+{
+	elemento e;
+	FILE *flujo = fopen(direccion, "r");
+	size_t len = 0;
+	ssize_t read;
+	
+	if(!flujo){
+		printf("\n Error al abrir el archivo: %s", direccion);
+		exit(1);
+	}
+	
+	//Lee línea por línea el archivo de texto y los almacena en la cola
+	char line[500];
+	while (fgets(line, sizeof(line), flujo)){
+		e.n = atoi(line);
+		Queue(c,e);
+	}
+    
+	fclose(flujo);
+	return;
 }
 
 /*
@@ -120,4 +189,9 @@ void rendimiento(double u0, double s0, double w0, double u1, double s1, double w
 	printf("sys (Tiempo en acciones de E/S)  %.10e s\n",  s1 - s0);
 	printf("CPU/Wall   %.10f %% \n",100.0 * (u1 - u0 + s1 - s0) / (w1 - w0));
 	printf("\n");
+
+	w_acumulado += (w1 - w0);
+	u_acumulado += (u1 - u0);
+	s_acumulado += (s1 - s0);
+	p_acumulado += 100.0 * (u1 - u0 + s1 - s0) / (w1 - w0);
 }
