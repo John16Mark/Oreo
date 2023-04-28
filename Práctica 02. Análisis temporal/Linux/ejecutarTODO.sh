@@ -38,6 +38,12 @@ do
     RET_DIR=${f##*/} # nombre del archivo pero regresando un directorio
     mkdir -p $OUT_DIR/$RET_DIR
     FOL_DIR=$OUT_DIR/$RET_DIR
+    if [[ $f =~ ^(bin/Lineal) ]]; then
+    	SRC=numeros10millones.txt
+    else
+    	SRC=10millones.txt
+    fi
+    #echo " SOURCE: $SRC"
     for n in ${enes[@]}
     do
 	if [[ $f =~ (T)$ ]]; then
@@ -47,6 +53,7 @@ do
 	    echo "  Ejecutando $RET_DIR $n"
 	    $f $n < $SRC > $FOL_DIR/${f##*/}_$n.txt
 	fi
+	
     done
     
     #echo "  Ejecutando ${f##*/} 1000"
