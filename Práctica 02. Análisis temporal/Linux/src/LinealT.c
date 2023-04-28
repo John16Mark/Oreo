@@ -55,11 +55,11 @@ int main(int argc, char *argv[])
 	// Cola donde se almacenan los valores a buscar
 	cola mi_cola;
 
-	// Verifica si se reciben solo cuatro argumentos
+	// Verifica si se reciben solo tres argumentos
 	if(argc != 3)
 	{
-		printf("\n\n Para ejecutar el programa se necesita tama%co de arreglo, el n%cmero a buscar y el n%cmero de hilos que se quieren utilizar",164,163, 163);
-		printf("\n Ejemplo: %s 100 23781 4", argv[0]);
+		printf("\n\n Para ejecutar el programa se necesita tamaño de arreglo y el número de hilos que se quieren utilizar");
+		printf("\n Ejemplo: %s 1000000 4", argv[0]);
 		exit(1);
 	}
 
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 	// Se da el valor inicial de -1 a p
 	p = -1;
 
-	// Lee de la entrada estándar los n valores y los coloca en el árbol
+	// Lee de la entrada estándar los n valores y los coloca en el arreglo
 	for (i = 0; i < N; i++)
 		scanf("%d", &A[i]);
 	// Lee los números a buscar de la dirección "buscar.txt"
