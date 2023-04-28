@@ -36,9 +36,9 @@ else
 fi
 #echo " SOURCE: $SRC"
 if [[ $f =~ (T)$ ]]; then
-    echo "  Ejecutando $RET_DIR $n con $THREADS hilos"
+    echo "  Ejecutando $ALGORITMO $n con $THREADS hilos"
     $BIN_DIR/$ALGORITMO $n $THREADS < $SRC
 else
-    echo "  Ejecutando $RET_DIR $n"
+    echo "  Ejecutando $ALGORITMO $n"
     $BIN_DIR/$ALGORITMO $n < $SRC
 fi
