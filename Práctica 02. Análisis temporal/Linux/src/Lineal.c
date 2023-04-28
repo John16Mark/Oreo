@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 	cola mi_cola;
 	// Variable del índice en el que se encontró el valor
 	int p;
+	
 	// Verifica si se reciben solo dos argumentos
 	if(argc != 2)
 	{
