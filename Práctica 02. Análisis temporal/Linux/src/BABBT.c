@@ -9,10 +9,10 @@ Toma n números enteros de la entrada estándar en la forma:
 Imprime el tiempo que tomó la ejecución del algoritmo e imprime el índice del arreglo en el que se encuentra el valor.
 */
 
-//gcc BABBthreads.c -o BABBthreads tiempos/tiempo.c -lm
+//gcc BABBT.c -o BABBthreads tiempos/tiempo.c -lm
 //Ejemplos para la verificación del funcionamiento
-	//./BABBthreads 5000000 1813412181 8 < 10millones.txt			//Debe estar en 3165239
-	//./BABBthreads 5000000 865201447 8 < 10millones.txt			//Debe estar en 265
+	//./BABBT 5000000 1813412181 8 < 10millones.txt			//Debe estar en 3165239
+	//./BABBT 5000000 865201447 8 < 10millones.txt			//Debe estar en 265
 
 #include <pthread.h>
 #include <stdio.h>
@@ -93,28 +93,54 @@ int main(int argc, char *argv[])
 	// Inicia la medición de tiempos
 	uswtime(&utime0, &stime0, &wtime0);
 
-	//Conocer c y k
+	/*
+	Para asignar hilos a ciertos nodos del árbol:
+	Se buscan los valores k y c utilizados para crear una "tabla de combinaciones" con ceros y unos,
+	que en el algoritmo representa las combinaciones posibles para llegar a cada nodo del árbol
+	encontrado en el nivel k. Así, por ejemplo, si se eligen 8 hilos k=3, por 2^k=8. Si el numero
+	de hilos no es una potencia de 2, se toma el número de k, al elegir el menor 2^k que es mayor
+	al número de hilos, como ejemplo, si son 5 hilos k = 3, puesto que se utilizarán algunos de los
+	nodos que pertenecen al nivel k. 
+	
+	Ahora bien, se ocupa otra variable llamada C, que nos servirá
+	en caso de que el número de hilos no sea una potencia de 2, para poder elegir nodos del nivel
+	superior utilizando la tabla de combinaciones.
+	El numero de hilos se puede expresar como
+
+	NumThreads=2^k-c   ---- Ecuación para obtener c despejando
+
+	C también sirve para no repetir combinaciones el el nivel superior (como se explica en la
+	función void* procesar(void* id))
+	*/
 	for(i=0; NumThreads>=pow(2,i); i++);			// (Solo se ejecuta lo del parentesis)
 
 	k = i;											// Se define el valor de k
-	c = pow(2,k)-NumThreads;						// Se define el valor de c
+	c = pow(2,k)-NumThreads;						//NumThreads=2^k-c   ---- Ecuación para obtener C despejando
 
-	// CREACIÓN DE LA MATRIZ PARA LOS HILOS
-	//Matriz con base en d y k
-	m = pow(2,k);						//Número de filas
-	n = k;								//Número de columnas
-	B = (int **)malloc(m*sizeof(int*)); 	//Memoria para el numero de filas
+	// CREACIÓN DE LA MATRIZ PARA LOS HILOS (tabla de combinaciones)
+		/*Matriz con base en d, k y l (Utlizando memoria dinámica)
+		En donde k: número de filas
+				 d: variable auxiliar para llenar TODA la columna
+				 l: variable auxiliar para llenar un conjunto de 0...1...
+			Por ejemplo, si se tiene una matriz que 2^k filas y k columnas
+			Para llenar la primera columna, el número de valores unos o ceros consecutivos es d=2^(k-1)
+			En el mismo ejemplo, al llenar la columna 2, d=2^(k-2)
+			De manera generalizada d=2^(k-1-j) para 0<=j<n
+		*/
+	m = pow(2,k);												// Número de filas
+	n = k;														// Número de columnas
+	B = (int **)malloc(m*sizeof(int*)); 						// Memoria para el numero de filas
 	//Tamaño a las filas (numero de columnas)
 	for(i=0; i<m; i++){
 		B[i] = (int*)malloc(n*sizeof(int));
 	}
-	// Asignacion de los valores de la matriz de hilos
+	// Asignacion de los valores de la tabla de combinaciones
 	for(j=0; j<n; j++){
 		d = pow(2, k-1-j);
-		for(i=0; i<m; i+=2*d){
+		for(i=0; i<m; i+=2*d){				//Salto de 2*d porque ya se llenaron los unos
 			for(l=i; l<d+i; l++){
-				B[l][j] = 0;
-				B[l+d][j] = 1;
+				B[l][j] = 0;				// Asigna los ceros
+				B[l+d][j] = 1;				// Asigna los unos consecutivos a los ceros
 			}
 		}
 	}
@@ -140,7 +166,10 @@ int main(int argc, char *argv[])
 
 	// /*																	Comentar si no se quiere imprimir la posición en donde se encontró
 
-	//Se imprime la posición del arreglo en la que se encontró o, en su defecto, -1 si no se encuentra en arreglo
+	/*
+	 Se imprime la posición del arreglo en la que se encontró o,
+	 en su defecto, -1 si no se encuentra en arreglo
+	*/
 	printf("\n Valor a encontrar: %d", v);
 	if(p == -1){
 		printf("\n \033[91mNO SE ENCONTR%c EL N%cMERO\033[0m\n", 224, 233);
@@ -290,63 +319,73 @@ void rendimiento(double u0, double s0, double w0, double u1, double s1, double w
 /*
 void* procesar(void* id)
 Recibe:	id:	id del thread
-Hace los calculos necesarios para definir un intervalo dependiendo del número
-de hilos que se usen y de su id e imprime el mensaje de la utilización del hilo.
+Hace los calculos necesarios para seleccionar el nodo raiz del subárbol en donde
+trabajará el hilo seleccionado e imprime el mensaje de la utilización del hilo.
 Finalmente, hace la búsqueda y actualiza el valor de p solo si se encontró el
 elemento en dicho intervalo.
 */
 void* procesar(void* id)
 {	
-	int n_thread=(int)id;
-	int fila;
-	int i, j;
-	int noprocesar = 0;
-	// Apuntador al nodo encontrado
+	int n_thread=(int)id;						// Número de hilo
+	int fila;									// Fila de la combinación correspondiente al hilo
+	int i, j;									// Variables contadoras
+	int noprocesar = 0;							// Dentiene la búsqueda si se encuentra el valor o aux apunta a NULL
+	// Apuntador para guardar el nodo en donde se encontró el valor
 	struct nodo *encontrado = NULL;
-	//Apuntador auxiliar para inicial la busqueda
+	//Apuntador auxiliar para iniciar la busqueda
 	struct nodo *aux = R;
 
 	//Revisar la parte de los datos a procesar	
 	if(n_thread<(pow(2,k)-2*c)){
-		i = 0;
+		i = 0;									// Si es del nivel k, se toman todos los valores de la combinación
 		fila = n_thread;
 	}
 	else{
-		i = 1;
-		fila = 2*n_thread - (pow(2,k)-2*c);
+		i = 1;									// Si es del nivel k-1, no se toma el último valor de la combinación
+		fila = 2*n_thread - (pow(2,k)-2*c);					// Cálculo de la fila (se toma la primera)
 	}
 		
-
+	//Ciclo para recorrer el árbol y posicionarse en el nodo en donde se iniciará la búsqueda
 	for(j=0; j<k-i; j++){
+		// Caso donde no hay valores en el subárbol
 		if(aux==NULL){
-			noprocesar = 1;
+			noprocesar = 1;									// Indica que no se realizará la búsqueda
 			break;
 		}
+		// Caso donde si hay valores en el subárbol
 		if(aux!=NULL){
+			//Caso donde el valor se encontró en el proceso
 			if(aux->val==v){
-				encontrado = aux;
-				noprocesar = 1;
+				encontrado = aux;							//Asigna el valor en donde se encontró
+				noprocesar = 1;								// Indica que no se realizará la búsqueda
 				break;
 			}
+			// Caso elegir hijo izquierdo
 			if(B[fila][j]==0){
 				aux=aux->izq;
-			}else{
+			}
+			// Caso elegir hijo derecho
+			else{
 				aux=aux->der;
 			}
 		}
 	}
 
+	// Caso en donde se indicó que se debía procesar
 	if(noprocesar==0){
 		printf("\nHola desde procesar\tSoy el thread %d\t He comenzado",n_thread);	//Comentar para la información del hilo
-	// Ejecución del algoritmo de búsqueda, se le da un valor a entero a "p" (para el resultado final) con base en el resultado de la búsqueda
-	encontrado = Busqueda(aux, v);
-	if(encontrado != NULL){
-		p = encontrado->indice;
-		printf("\n Encontrado en el thread %d, %d", n_thread, p);									//Comentar para no mostrar el índice.
+		// Ejecución del algoritmo de búsqueda, se le da un valor entero a "p" (para el resultado final) con base en el resultado de la búsqueda
+		encontrado = Busqueda(aux, v);
+		// Caso en el que si se encontró
+		if(encontrado != NULL){
+			p = encontrado->indice;
+			printf("\n Encontrado en el thread %d, %d", n_thread, p);									//Comentar para no mostrar el índice.
+		}
+		
+		printf("\nBye desde procesar\tSoy el thread %d\t He terminado",n_thread);	//Comentar para no mostrar
 	}
-	
-	printf("\nBye desde procesar\tSoy el thread %d\t He terminado",n_thread);	//Comentar para no mostrar
-	}else{
+	// Caso en donde se indicó que no se debía procesar
+	else{
 		printf("\nHola desde procesar\tSoy el thread %d NO ME TOCÓ PROCESAR DATOS",n_thread);	//Comentar que no se procesará en ese hilo
 		if(encontrado!=NULL){
 			p = encontrado->indice;
