@@ -8,7 +8,7 @@ Autores:	Yael André Blásquez Martínez
 
 Implementación de la búsqueda con ABB con hilos en C obtenida en https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/
 Toma n números enteros de la entrada estándar en la forma:
-> ArbolBinarioT n k a0 a1 a2 a3 ... an (en linux)
+> ArbolBinarioT n NumThreads a0 a1 a2 a3 ... an (en linux)
 Imprime el tiempo que tomó la ejecución del algoritmo e imprime el índice del arreglo en el que se encuentra el valor.
 
 	COMPILAR:

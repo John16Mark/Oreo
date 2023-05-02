@@ -1,6 +1,6 @@
 /*
 ArbolBinario.c
-V 1.0 Abril 2022
+V 1.2 Abril 2022
 Autores:	Yael André Blásquez Martínez
 			Juan Luis Molina Acuña
 			Aarón Olvera Martínez
@@ -8,12 +8,16 @@ Autores:	Yael André Blásquez Martínez
 
 Implementación de la búsqueda con ABB en C obtenida en https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/
 Toma n números enteros de la entrada estándar en la forma:
-> BABB n k a0 a1 a2 a3 ... an (en linux)
+> ArbolBinario n a0 a1 a2 a3 ... an (en linux)
 Imprime el tiempo que tomó la ejecución del algoritmo e imprime el índice del arreglo en el que se encuentra el valor.
-*/
 
-//gcc ArbolBinario.c -o ArbolBinario tiempos/tiempo.c
-//ArbolBinario 5000000 1813412181 < numeros10millones.txt			//Debe estar en 3165239
+	COMPILAR:
+gcc src/ArbolBinario.c -o bin/ArbolBinario lib/tiempo.c -lm -w
+
+	EJECUTAR:
+./bin/ArbolBinario 5000000 < numeros10millones.txt
+
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -69,7 +73,7 @@ int main(int argc, char *argv[])
 	// Verifica si se reciben solo tres argumentos
 	if(argc != 2)
 	{
-		printf("\n\n Para ejecutar el programa se necesita tama%co de arreglo y el n%cmero a buscar",164,163);
+		printf("\n\n Para ejecutar el programa se necesita tamaño de arreglo");
 		printf("\n Ejemplo: %s 100", argv[0]);
 		exit(1);
 	}
