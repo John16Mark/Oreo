@@ -14,10 +14,15 @@ Imprime el tiempo que tomó la ejecución del algoritmo e imprime el índice del
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "tiempos/tiempo.h"
+#include "lib/TADColaDin.h"
+#include "lib/tiempo.h"
 
 int busquedaBinaria(int *A, int l, int r, int k);
 void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1);
+void cargarArchivo(cola *c, char *direccion);
+
+// Variables globales para la medición de tiempos.
+double u_acumulado = 0, w_acumulado = 0, s_acumulado = 0, p_acumulado = 0;
 
 int main(int argc, char *argv[])
 {
@@ -29,46 +34,74 @@ int main(int argc, char *argv[])
 	int i;
 	// Apuntador al arreglo
 	int *A;
-	// Variable a encontrar en el arreglo
-	int k;
+	// Cola donde se almacenan los valores a buscar
+	cola mi_cola;
 	// Variable del índice en el que se encontró el valor
 	int p;
+
 	// Verifica si se reciben solo tres argumentos
-	if(argc != 3)
+	if(argc != 2)
 	{
 		printf("\n\n Para ejecutar el programa se necesita tama%co de arreglo y el n%cmero a buscar",164,163);
-		printf("\n Ejemplo: %s 100 23781", argv[0]);
+		printf("\n Ejemplo: %s 100 ", argv[0]);
 		exit(1);
 	}
+
 	// Lee el argumento
 	n = atoi(argv[1]);
 	A = malloc(n * sizeof(int));
-	// Se lee el argumento del valor a buscar y se añade al elemento auxiliar
-	k = atoi(argv[2]);
-	// Lee de la entrada estándar los n valores y los coloca en el árbol
+	// Lee de la entrada estándar los n valores y los coloca en el arreglo
 	for (i = 0; i < n; i++)
 		scanf("%d", &A[i]);
-	// Inicia la medición de tiempos
-	uswtime(&utime0, &stime0, &wtime0);
-	// Ejecución del algoritmo de búsqueda
-	p = busquedaBinaria(A, 0, n-1, k);
-	
-	// /*																	Comentar si no se quiere imprimir la posición en donde se encontró
 
-	//Se imprime la posición del arreglo en la que se encontró o, en su defecto, -1 si no se encuentra en arreglo
-	printf("\n Valor a encontrar: %d", k);
-	if(p == -1){
-		printf("\n \033[91mNO SE ENCONTR%c EL N%cMERO\033[0m\n", 224, 233);
-	}
-	else{
-		printf("\n Se encontr%c en la posici%cn: %d\n",162,162, p);
-	}
+	// Lee los números a buscar de la dirección "buscar.txt"
+	Initialize(&mi_cola);
+	cargarArchivo(&mi_cola, "buscar.txt");
 
-	// */																	Fin comentario
-	// Termina la medición de tiempos
-	uswtime(&utime1, &stime1, &wtime1);
-	// Imprime el rendimiento de la ejecución del algoritmo
-	rendimiento(utime0, stime0, wtime0, utime1, stime1, wtime1);
+	printf("\n\n    BÚSQUEDA BINARIA\n    con %d números", n);
+
+	// Ciclo para cada elemento de la cola
+	for(i = 1; i <= Size(&mi_cola); i++){
+
+		printf("\n\n Valor a encontrar: %d", Element(&mi_cola, i).n);
+		// Inicia la medición de tiempos
+		uswtime(&utime0, &stime0, &wtime0);
+		// Ejecución del algoritmo de búsqueda
+		p = busquedaBinaria(A, 0, n-1, Element(&mi_cola, i).n);
+		// Termina la medición de tiempos
+		uswtime(&utime1, &stime1, &wtime1);
+		
+		// /*											Comentar si no se quiere imprimir la posición en donde se encontró
+		//Se imprime la posición del arreglo en la que se encontró o, en su defecto, -1 si no se encuentra en arreglo
+		if(p == -1){
+			printf("\n \033[91mNO SE ENCONTRÓ EL NÚMERO\033[0m");
+		}
+		else{
+			printf("\n \033[92mSe encontró en la posición:\033[0m %d", p);
+		}
+		// */											Fin comentario
+		rendimiento(utime0, stime0, wtime0, utime1, stime1, wtime1);
+	}
+	w_acumulado /= Size(&mi_cola);
+	u_acumulado /= Size(&mi_cola);
+	s_acumulado /= Size(&mi_cola);
+	p_acumulado /= Size(&mi_cola);
+	// Cálculo del promedio de medición del algoritmo
+	printf("\n\n    PROMEDIO DE MEDICIÓN DE TIEMPOS\n");
+	printf("real (Tiempo total)  %.10f s\n",  w_acumulado);
+	printf("user (Tiempo de procesamiento en CPU) %.10f s\n",  u_acumulado);
+	printf("sys (Tiempo en acciones de E/S)  %.10f s\n",  s_acumulado);
+	printf("CPU/Wall   %.10f %% \n", p_acumulado);
+	printf("\n");
+
+	// Mostrar los promedios en formato exponecial
+	printf("\n");
+	printf("real (Tiempo total)  %.10e s\n",  w_acumulado);
+	printf("user (Tiempo de procesamiento en CPU) %.10e s\n",  u_acumulado);
+	printf("sys (Tiempo en acciones de E/S)  %.10e s\n",  s_acumulado);
+	printf("CPU/Wall   %.10f %% \n", p_acumulado);
+	printf("\n");
+
 	//Libera la memoria del arreglo
 	free(A);
 	return 0;
@@ -139,4 +172,39 @@ void rendimiento(double u0, double s0, double w0, double u1, double s1, double w
 	printf("sys (Tiempo en acciones de E/S)  %.10e s\n",  s1 - s0);
 	printf("CPU/Wall   %.10f %% \n",100.0 * (u1 - u0 + s1 - s0) / (w1 - w0));
 	printf("\n");
+
+	w_acumulado += (w1 - w0);
+	u_acumulado += (u1 - u0);
+	s_acumulado += (s1 - s0);
+	p_acumulado += 100.0 * (u1 - u0 + s1 - s0) / (w1 - w0);
+}
+
+/*
+void cargarArchivo(cola *c, char *direccion)
+Recibe:	*c: 		Cola donde se almacenarán los números a buscar
+		*direccion:	Dirección del archivo donde están los números
+		
+Abre un archivo de texto y almacena los números del archivo en una cola.
+*/
+void cargarArchivo(cola *c, char *direccion)
+{
+	elemento e;
+	FILE *flujo = fopen(direccion, "r");
+	size_t len = 0;
+	ssize_t read;
+	
+	if(!flujo){
+		printf("\n Error al abrir el archivo: %s", direccion);
+		exit(1);
+	}
+	
+	//Lee línea por línea el archivo de texto y los almacena en la cola
+	char line[500];
+	while (fgets(line, sizeof(line), flujo)){
+		e.n = atoi(line);
+		Queue(c,e);
+	}
+    
+	fclose(flujo);
+	return;
 }
