@@ -1,5 +1,5 @@
 /*
-Busqueda Lineal.c
+Busqueda Binaria.c
 V 1.1 Abril 2022
 Autor: Aarón Olvera Martínez
 
