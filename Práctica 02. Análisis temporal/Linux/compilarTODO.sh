@@ -1,5 +1,5 @@
 #!/bin/sh
-# compilar.sh
+# compilarTODO.sh
 # Version 1.0 abril 2023
 # Autor: Juan Molina
 # Basado en el script de shell que implementó Darío Quiñones el semestre pasado en A y ED.
@@ -28,7 +28,7 @@ do
     # $f src/nombre del archivo
     # $TIM_DIR librería para medición de tiempos.
     # $COL_DIR librería implementación de cola
-    gcc -o $BIN_DIR/${RET_DIR%.*} $f $TIM_DIR $COL_DIR
+    gcc -o $BIN_DIR/${RET_DIR%.*} $f $TIM_DIR $COL_DIR -lm -w
     # gcc -o bin/BurbujaOptimizada1 src/BurbujaOptimizada1.c src/tiempos/tiempo.c
 done
 
