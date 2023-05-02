@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 	Initialize(&mi_cola);
 	cargarArchivo(&mi_cola, "buscar.txt");
 
-	printf("\n\n    BÚSQUEDA LINEAL\n    con %d números", N);
+	printf("\n\n    BÚSQUEDA LINEAL\n    con %d números y %d hilos", N, NumThreads);
 
 	// Ejecución del algoritmo de búsqueda
 	for(j = 1; j <= Size(&mi_cola); j++){
