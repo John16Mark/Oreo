@@ -1,6 +1,6 @@
 
-# compilar.sh
-# Version 1.0 abril 2023
+# ejecutarEnTERMINAL.sh
+# Version 1.5 abril 2023
 # Autor: Juan Molina
 # Basado en el script de shell que implementó Darío Quiñones el semestre pasado en AyED.
 
@@ -8,7 +8,7 @@
 # y los guarda la salida en un archivo de texto en la carpeta out
 
 # --------------------MODIFICAR ESTE VALOR-------------------------
-ALGORITMO=Lineal
+ALGORITMO=ArbolBinarioT
 n=10000000
 THREADS=4
 # -----------------------------------------------------------------
