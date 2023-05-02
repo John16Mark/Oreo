@@ -57,6 +57,7 @@ int main(int argc, char *argv[])
 	int j;
 	// Cola donde se almacenan los valores a buscar
 	cola mi_cola;
+
 	// Verifica si se reciben solo tres argumentos
 	if(argc != 3)
 	{
@@ -64,6 +65,7 @@ int main(int argc, char *argv[])
 		printf("\n Ejemplo: %s 100 4", argv[0]);
 		exit(1);
 	}
+
 	// Lee el argumento del tamaño del arreglo y reserva su memoria
 	n = atoi(argv[1]);
 	A = malloc(n * sizeof(int));
@@ -76,11 +78,12 @@ int main(int argc, char *argv[])
 	// Lee de la entrada estándar los n valores y los coloca en el arreglo
 	for (i = 0; i < n; i++)
 		scanf("%d", &A[i]);
-	
 	// Lee los números a buscar de la dirección "buscar.txt"
 	Initialize(&mi_cola);
 	cargarArchivo(&mi_cola, "buscar.txt");
 	
+	printf("\n\n    BÚSQUEDA EXPONENCIAL\n    con %d números y %d hilos", n, NumThreads);
+
 	// Ejecución del algoritmo de búsqueda
 	for(j = 1; j <= Size(&mi_cola); j++){
 		k = Element(&mi_cola, j).n;
@@ -160,29 +163,22 @@ Complejidad: O(log n)
 */
 int busquedaBinaria(int *A, int l, int r, int k)
 {
-    if(r>=l)
-    {
-    	//Calcula el índice medio del rango
-        int mitad = l+(r-l)/2;
+    while (l <= r) {
+    	
+        int medio = l + (r - l) / 2;
+
+		if(p!=-1)
+			break;
+
+        if (A[medio] == k)
+            p = medio;
  
-        //Si el valor k es igual al valor del índice medio del rango
-        if(A[mitad]==k)
-            return mitad;
-            
- 		/*Si el valor k es mas pequeño que el valor del índice 
-		 medio del rango, entonces k solo puede estar presente 
-		 en la mitad izquierda del rango */
-        if(A[mitad]>k)
-            return busquedaBinaria(A,l,mitad-1,k);
+        if (A[medio] < k)
+            l = medio +1;
  
-        /*Si el valor k es mas grande que el valor del índice 
-		 medio del rango, entonces k solo puede estar presente 
-		 en la mitad derecha del rango */
-        return busquedaBinaria(A,mitad+1,r,k);
+        else
+            r = medio - 1;
     }
- 
-    //Si el valor no se encuentra en el arreglo
-    return -1;
 }
 
 /*
@@ -202,22 +198,18 @@ Complejidad: O(log n)
 */
 int busquedaExponencial(int *A, int inicio, int fin, int k)
 {
-    //Caso base: si k esta en la primera posición
     if(A[inicio]==k)
-        return inicio;
- 
+        p = inicio;
+ 					
     int i = 1;
-    int posicion = i;
 
-    //Busca el rango donde se encuentra el valor k
-    while(posicion<fin&&A[posicion]<=k)
+    while(p != -1 && i<fin && A[inicio+i]<=k)
     {
-    	i=i*2;
-    	posicion = inicio + i;
+    	
+		i=i*2;
 	}
 	
-	//Llama a la funcion busquedaBinaria para el rango encontrado
-    return busquedaBinaria(A,i/2+posicion,min(i+posicion,fin-1),k);
+    busquedaBinaria(A,inicio + i/2,min(inicio + i,fin-1),k);
 }
 /*
 void* procesar(void* id)
