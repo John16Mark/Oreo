@@ -206,6 +206,11 @@ void rendimiento(double u0, double s0, double w0, double u1, double s1, double w
 	printf("sys (Tiempo en acciones de E/S)  %.10e s\n",  s1 - s0);
 	printf("CPU/Wall   %.10f %% \n",100.0 * (u1 - u0 + s1 - s0) / (w1 - w0));
 	printf("\n");
+	
+	w_acumulado += (w1 - w0);
+	u_acumulado += (u1 - u0);
+	s_acumulado += (s1 - s0);
+	p_acumulado += 100.0 * (u1 - u0 + s1 - s0) / (w1 - w0);
 }
 
 /*
