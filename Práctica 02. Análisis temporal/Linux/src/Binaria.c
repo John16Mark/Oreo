@@ -1,9 +1,12 @@
 /*
-Busqueda Binaria.c
+Binaria.c
 V 1.1 Abril 2022
-Autor: Aarón Olvera Martínez
+Autores:	Yael André Blásquez Martínez
+			Juan Luis Molina Acuña
+			Aarón Olvera Martínez
+			Paola Reyes Francisco
 
-Implementación de la búsqueda lineal en C obtenida en https://www.geeksforgeeks.org/linear-search/
+Implementación de la búsqueda binaria en C obtenida en https://www.geeksforgeeks.org/binary-search/
 Toma n números enteros de la entrada estándar en la forma:
 > BusquedaLineal n k a0 a1 a2 a3 ... an (en linux)
 Imprime el tiempo que tomó la ejecución del algoritmo e imprime el índice del arreglo en el que se encuentra el valor.
@@ -42,7 +45,7 @@ int main(int argc, char *argv[])
 	// Verifica si se reciben solo tres argumentos
 	if(argc != 2)
 	{
-		printf("\n\n Para ejecutar el programa se necesita tama%co de arreglo y el n%cmero a buscar",164,163);
+		printf("\n\n Para ejecutar el programa se necesita tamaño de arreglo");
 		printf("\n Ejemplo: %s 100 ", argv[0]);
 		exit(1);
 	}

@@ -6,7 +6,7 @@ Autores:	Yael André Blásquez Martínez
 			Aarón Olvera Martínez
 			Paola Reyes Francisco
 
-Implementación de la búsqueda lineal con threads en C obtenida en https://www.geeksforgeeks.org/linear-search/
+Implementación de la búsqueda binaria con threads en C obtenida en https://www.geeksforgeeks.org/binary-search/
 Toma n números enteros de la entrada estándar en la forma:
 > BinariaT N k Numthreads a0 a1 a2 a3 ... an (en linux)
 Imprime el tiempo que tomó la ejecución del algoritmoe imprime el índice del arreglo en el que se encuentra el valor.
