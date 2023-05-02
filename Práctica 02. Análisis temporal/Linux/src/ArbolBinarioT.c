@@ -1,18 +1,23 @@
 /*
 ArbolBinarioT.c
-V 1.0 Abril 2022
-Autor: Aarón Olvera Martínez
+V 1.1 Abril 2022
+Autores:	Yael André Blásquez Martínez
+			Juan Luis Molina Acuña
+			Aarón Olvera Martínez
+			Paola Reyes Francisco
 
 Implementación de la búsqueda con ABB con hilos en C obtenida en https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/
 Toma n números enteros de la entrada estándar en la forma:
 > ArbolBinarioT n k a0 a1 a2 a3 ... an (en linux)
 Imprime el tiempo que tomó la ejecución del algoritmo e imprime el índice del arreglo en el que se encuentra el valor.
-*/
 
-//gcc ArbolBinarioT.c -o ArbolBinarioT lib/tiempo.c -lm -w
-//Ejemplos para la verificación del funcionamiento
-	//./bin/ArbolBinarioT 5000000 1813412181 8 < numeros10millones.txt			//Debe estar en 3165239
-	//./bin/ArbolBinarioT 5000000 865201447 8 < numeros10millones.txt			//Debe estar en 265
+	COMPILAR:
+gcc src/ArbolBinarioT.c -o bin/ArbolBinarioT lib/tiempo.c -lm -w
+
+	EJECUTAR:
+./bin/ArbolBinarioT 5000000 8 < numeros10millones.txt
+
+*/
 
 #include <pthread.h>
 #include <stdio.h>
