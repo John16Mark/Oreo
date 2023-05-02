@@ -10,7 +10,7 @@ Imprime el tiempo que tomó la ejecución del algoritmo e imprime el índice del
 */
 
 //gcc Binaria.c -o Binaria tiempos/tiempo.c
-//Binaria 500000 82182077 < orden10millones.txt
+//Binaria 500000 < orden10millones.txt
 
 #include <stdio.h>
 #include <stdlib.h>
