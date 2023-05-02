@@ -8,14 +8,14 @@ Autores:	Yael André Blásquez Martínez
 
 Implementación de la búsqueda binaria con threads en C obtenida en https://www.geeksforgeeks.org/binary-search/
 Toma n números enteros de la entrada estándar en la forma:
-> BinariaT N k Numthreads a0 a1 a2 a3 ... an (en linux)
+> BinariaT N NumThreads a0 a1 a2 a3 ... an (en linux)
 Imprime el tiempo que tomó la ejecución del algoritmoe imprime el índice del arreglo en el que se encuentra el valor.
 
 	COMPILAR:
 gcc BinariaT.c -lpthread lib/tiempo.c -o BinariaT
 
 	EJECUTAR:
-./BinariaT 500000 82182077 8 < orden10millones.txt
+./BinariaT 500000 8 < orden10millones.txt
 
 */
 
