@@ -8,7 +8,7 @@
 # y los guarda la salida en un archivo de texto en la carpeta out
 
 # --------------------MODIFICAR ESTE VALOR-------------------------
-ALGORITMO=ExponencialT
+ALGORITMO=Lineal
 n=10000000
 THREADS=4
 # -----------------------------------------------------------------
@@ -29,12 +29,13 @@ if [ ! -f $SRC ]; then
     exit 1
 fi
 
-if [[ $ALGORITMO =~ ^(bin/Lineal)|^(bin/Exponencial) ]]; then
+if [[ $ALGORITMO =~ (^(Lineal))|(^(ArbolBinario)) ]]; then
     SRC=numeros10millones.txt
 else
     SRC=10millones.txt
 fi
-#echo " SOURCE: $SRC"
+    
+echo " SOURCE: $SRC"
 if [[ $ALGORITMO =~ (T)$ ]]; then
     echo "  Ejecutando $ALGORITMO $n con $THREADS hilos"
     $BIN_DIR/$ALGORITMO $n $THREADS < $SRC

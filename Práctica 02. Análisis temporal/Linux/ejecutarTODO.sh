@@ -38,11 +38,12 @@ do
     RET_DIR=${f##*/} # nombre del archivo pero regresando un directorio
     mkdir -p $OUT_DIR/$RET_DIR
     FOL_DIR=$OUT_DIR/$RET_DIR
-    if [[ $f =~ ^(bin/Lineal) ]]; then
+    if [[ $f =~ (^(bin/Lineal))|(^(bin/ArbolBinario)) ]]; then
     	SRC=numeros10millones.txt
     else
     	SRC=10millones.txt
     fi
+
     #echo " SOURCE: $SRC"
     for n in ${enes[@]}
     do
