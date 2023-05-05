@@ -1,6 +1,6 @@
 /*
 Lineal.c
-V 1.1 Abril 2022
+V 1.1 Abril 2023
 Autores:	Yael André Blásquez Martínez
 			Juan Luis Molina Acuña
 			Aarón Olvera Martínez
@@ -8,7 +8,7 @@ Autores:	Yael André Blásquez Martínez
 
 Implementación de la búsqueda lineal en C obtenida en https://www.geeksforgeeks.org/linear-search/
 Toma n números enteros de la entrada estándar en la forma:
-> BusquedaLineal n k a0 a1 a2 a3 ... an (en linux)
+> Lineal n a0 a1 a2 a3 ... an (en linux)
 Imprime el tiempo que tomó la ejecución del algoritmo, e imprime la dirección de memoria donde se encontró el valor.
 
 	COMPILAR:
