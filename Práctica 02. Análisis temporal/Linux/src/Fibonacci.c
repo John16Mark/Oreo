@@ -10,9 +10,9 @@ Toma n números enteros de la entrada estándar en la forma:
 > Fibonacci n a0 a1 a2 a3 ... an (en linux)
 Imprime el tiempo que tomó la ejecución del algoritmo, e imprime la dirección de memoria donde se encontró el valor.
 	COMPILAR:
-gcc Fibonacci.c -o Fibonacci.exe lib/TADColaDin.c
+gcc Fibonacci.c -o Fibonacci lib/TADColaDin.c tiempos/tiempo.c
 	EJECUTAR:
-Fibonacci.exe 10000000 < ordenados10millones.txt
+./Fibonacci 10000000 < numeros10millones.txt > fibo.txt
 */
 
 #include <stdio.h>
@@ -23,6 +23,7 @@ Fibonacci.exe 10000000 < ordenados10millones.txt
 int Fibonacci(int *A, int n, int k);
 void cargarArchivo(cola *c, char *direccion);
 int min(int x, int y) { return (x <= y) ? x : y; }
+void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1);
 
 // Variables globales para la medición de tiempos.
 double u_acumulado = 0, w_acumulado = 0, s_acumulado = 0, p_acumulado = 0;
@@ -183,6 +184,7 @@ int Fibonacci(int *A, int n, int k)
  
     return -1;
 }
+
 /*
 void cargarArchivo(cola *c, char *direccion)
 Recibe:	*c: 		Cola donde se almacenarán los números a buscar
