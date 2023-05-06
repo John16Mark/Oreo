@@ -112,14 +112,14 @@ int main(int argc, char *argv[])
 
 /*
 int busquedaBinaria(int *A, int l, int r, int k)
-Recibe:	*A: Dirección del arreglo original a ordenar
+Recibe:	*A: Dirección del arreglo original 
 		 l: Primer valor del arreglo ordenado
 		 r: Último valor del arreglo ordenado
 		 k: Valor buscado
 
 La busqueda binaria iterativa lo que hace es sacar la 
 mitad del arreglo, luego corrobora si el valor del medio
-es igaul al buscado, en este caso simplemente devuelve el
+es igual al buscado, en este caso simplemente devuelve el
 índice del medio. Si no va a checar si el valor del medio
 es más pequeño, si esto se cumple, se va a considerar 
 únicamente la parte derecha del arreglo, en caso de que
