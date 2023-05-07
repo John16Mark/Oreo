@@ -150,12 +150,53 @@ void Comprimir()
 
 void Descomprimir()
 {
-	FILE *archivo;
-	char *A;
-	double n_bytes;
 	char direccion[150];
 	char salida[150];
 
 	disenioDescompresion();
 	scanf("%s",direccion);
+
+	gotoxy(2, 13);
+	colorForeground("blanco");
+	printf("Introduzca el nombre del archivo comprimido de salida (DE PREFERENCIA OMITIR EXTENSI%cN):", 224);
+	gotoxy(4, 15);
+	colorDefault();
+	scanf("%s",salida);
+
+	direcciones D;
+	strcpy(D.entrada, direccion);
+	strcpy(D.salida, salida);
+
+	if(0 != pthread_create(&hilo1, NULL, proceso, &D)){
+		perror("El thread no pudo crearse");
+		exit(-1);
+	}
+
+	clrscr();
+	pochita(42,4);
+	gotoxy(51, 19);
+	colorForeground("rojo claro");
+	printf("Descomprimiendo");
+	while(!procesoTerminado){
+		gotoxy(CONSOLE_WIDTH-1, CONSOLE_HEIGHT-1);
+		esperar(500);
+		gotoxy(66, 19);
+		printf(".  ");
+		gotoxy(CONSOLE_WIDTH-1, CONSOLE_HEIGHT-1);
+		esperar(500);
+		gotoxy(67, 19);
+		printf(".");
+		gotoxy(CONSOLE_WIDTH-1, CONSOLE_HEIGHT-1);
+		esperar(500);
+		gotoxy(68, 19);
+		printf(".");
+	}
+	pthread_join (hilo1, NULL);
+	procesoTerminado = false;
+	gotoxy(51, 19);
+	printf("    TERMINADO     ");
+	gotoxy(CONSOLE_WIDTH-1, CONSOLE_HEIGHT-1);
+	esperar(700);
+
+	gotoxy(23,15);
 }
