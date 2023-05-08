@@ -13,10 +13,10 @@ Imprime el tiempo que tomó la ejecución del algoritmo e imprime el índice del
 
 	COMPILAR:
 gcc FibonacciT.c -o FibonacciT lib/TADColaDin.c tiempos/tiempo.c -lpthread
+
 	EJECUTAR:
 ./FibonacciT 10000000 8 < numeros10millones.txt > fiboT.txt
 ./FibonacciT 10 4 < numeros10millones.txt 
-
 
 */
 
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 	Initialize(&mi_cola);
 	cargarArchivo(&mi_cola, "buscar.txt");
 
-	printf("\n\n    BÚSQUEDA BINARIA\n    con %d números y %d hilos", N, NumThreads);
+	printf("\n\n    BÚSQUEDA DE FIBONACCI\n    con %d números y %d hilos", N, NumThreads);
 
 	// Ejecución del algoritmo de búsqueda
 	for(j = 1; j <= Size(&mi_cola); j++){
@@ -168,43 +168,47 @@ void Fibonacci(int *A, int inicio, int fin, int k)
     
 	if(p != -1) return;
 
+	//Primeros valores de la serie de Fibonacci
     int fibM2 = 0; 
     int fibM1 = 1; 
     int fibM = fibM2 + fibM1; 
  
-    
+    //Establece el valor de la serie de Fibonacci que sea menor o igual al rango de inicio y fin
     while (p == -1 && fibM < fin - inicio) {
         fibM2 = fibM1;
         fibM1 = fibM;
         fibM = fibM2 + fibM1;
     }
- 
+ 	
+ 	//Se encarga de que el rango a buscar no sobrepase los que ya se buscaron y no se salga del arreglo
     int control = -1;
- 
+ 	
+ 	//Hasta que solo quede un elemento en el arreglo por comprobar y no se haya encontrado ya
     while (p == -1 && fibM > 1) {
-
-        
+        //Para que no se salga del arreglo
         int i = min(control + fibM2, fin - inicio- 1);
- 
+ 		
+ 		//Si el valor en la posición es menor al valor a buscar
         if (A[i+inicio] < k) {
             fibM = fibM1;
             fibM1 = fibM2;
             fibM2 = fibM - fibM1;
             control = i;
         }
- 
+ 		//Si el valor en la posición es mayor al valor a buscar
         else if (A[i+inicio] > k) {
             fibM = fibM2;
             fibM1 = fibM1 - fibM2;
             fibM2 = fibM - fibM1;
         }
- 
+		//Si es igual
         else{
+        	//Se suma el inicio porque debe de estar dentro del rango
 			p = i + inicio;
 		}
             
     }
- 
+ 	//Revisa si está en la última posición que quedó de buscar
     if (p == -1 && fibM1 && A[inicio + control + 1] == k){
 		p = inicio + control + 1;
 		printf("\n%d\n", inicio);
