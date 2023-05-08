@@ -5,14 +5,18 @@ Autores:	Yael André Blásquez Martínez
 			Juan Luis Molina Acuña
 			Aarón Olvera Martínez
 			Paola Reyes Francisco
+
 Implementación de la búsqueda de Fibonacci en C obtenida en https://www.geeksforgeeks.org/fibonacci-search/
 Toma n números enteros de la entrada estándar en la forma:
 > Fibonacci n a0 a1 a2 a3 ... an (en linux)
 Imprime el tiempo que tomó la ejecución del algoritmo, e imprime la dirección de memoria donde se encontró el valor.
+
 	COMPILAR:
 gcc Fibonacci.c -o Fibonacci lib/TADColaDin.c tiempos/tiempo.c
+
 	EJECUTAR:
-./Fibonacci 10000000 < numeros10millones.txt > fibo.txt
+./Fibonacci 10000000 < numeros10millones.txt
+
 */
 
 #include <stdio.h>
@@ -113,75 +117,57 @@ int main(int argc, char *argv[])
 
 /*
 int Fibonacci(int *A, int n, int k)
-Recibe: *A, la dirección del arreglo original
-
-Este algoritmo hace uso de la secuencia de Fibonacci
-para buscar cierto valor ingresado, las primeras tres
-lineas del algoritmo hacen que se generen los 
-primeros valores de la secuencia de Fibonacci, siendo
-estos el 0,1,1. Se entra en un ciclo while el cual
-va a parar en el valor más pequeño que sea mayor o
-igual a n, despues inicializa la variable control, 
-esta empieza en el valor de -1 y nos va a indicar la
-parte del arreglo que ya fue revisada. Despúes va 
-a entrar a otro ciclo while el cual va a parar 
-hasta que ya solo quede un elemento en el arreglo. 
-Luego se establece el índice i haciendo uso de la
-función min, la cual arroja el valor más pequeño 
-entre dos parámetros. Si el arreglo en la posición
-i es menor que k, se descarta la parte del arreglo
-desde la variable control hasta i. En cambio, si es
-mayor a k, el elemento que buscamos no está a la 
-derecha por lo que se descarta desde i+1 hasta el
-final. Si ninguna de las dos condiciones se cumple, 
-quiere decir que encontramos el valor del arreglo
-en la posición i. Por último, se compara el valor
-final del arreglo, si coincide con el que buscamos
-devuleve el indice, de lo contrario regresa -1 
-para indicar que el valor buscado no se encuentra
-en el arreglo.
+Recibe:	*A:	Arreglo de números
+		 n: tamaño del arreglo
+		 k: valor a buscar
+Busca el valor k en el arreglo con el algoritmo debúsqueda Fibonacci
+Regresa:	posición del valor en el arreglo (si se encuentra)
+			-1 (si no se encuentra)
 */
 
 int Fibonacci(int *A, int n, int k)
 {
-    
+    //Primeros valores de la serie de Fibonacci
     int fibM2 = 0; 
     int fibM1 = 1; 
     int fibM = fibM2 + fibM1; 
- 
-    
+ 	
+ 	//Establece el valor de la serie de Fibonacci que sea menor o igual a n
     while (fibM < n) {
         fibM2 = fibM1;
         fibM1 = fibM;
         fibM = fibM2 + fibM1;
     }
- 
+ 	
+ 	//Se encarga de que el rango a buscar no sobrepase los que ya se buscaron y no se salga del arreglo
     int control = -1;
- 
+ 	
+ 	//Hasta que solo quede un elemento en el arreglo por comprobar
     while (fibM > 1) {
-        
+        //Para que no se salga del arreglo
         int i = min(control + fibM2, n - 1);
- 
+
+        //Si el valor en la posición es menor al valor a buscar
         if (A[i] < k) {
             fibM = fibM1;
             fibM1 = fibM2;
             fibM2 = fibM - fibM1;
             control = i;
         }
- 
+ 		//Si el valor en la posición es mayor al valor a buscar
         else if (A[i] > k) {
             fibM = fibM2;
             fibM1 = fibM1 - fibM2;
             fibM2 = fibM - fibM1;
         }
- 
+ 		//Si es igual
         else
             return i;
     }
- 
+ 	//Revisa si está en la última posición que quedó de buscar
     if (fibM1 && A[control + 1] == k)
         return control + 1;
- 
+ 	//Si no se encontró
     return -1;
 }
 
