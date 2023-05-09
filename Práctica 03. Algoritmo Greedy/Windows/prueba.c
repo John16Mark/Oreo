@@ -1,6 +1,6 @@
 /*
 
-gcc prueba.c -o prueba.exe lib/disenio.c lib/ascii_art.c lib/menu.c
+gcc prueba.c -o prueba.exe lib/disenio.c lib/ascii_art.c lib/menu.c lib/TADLista/TADListaDL.c
 
 */
 
@@ -12,6 +12,7 @@ gcc prueba.c -o prueba.exe lib/disenio.c lib/ascii_art.c lib/menu.c
 #include "lib/disenio.h"
 #include "lib/ascii_art.h"
 #include "lib/menu.h"
+#include "lib/TADLista/TADListaDL.h"
 
 #include <windows.h>
 
@@ -35,7 +36,6 @@ typedef struct direcciones{
 	char entrada[150];
 	char salida[150];
 }direcciones;
-
 
 int main()
 {
@@ -68,13 +68,41 @@ int main()
 void *proceso(void *arg)
 {
 	FILE *archivo;
-	char *A;
+	unsigned char *A;
 	double n_bytes;
-
-	//int OwO = *((int*)arg);
 	direcciones D0 = *((direcciones*)arg);
 
-	printf("\n\n%s",&D0.entrada);
+	//-----------------
+	/*
+	int j;
+	int posicion = 0;
+	int mod = 0;
+	elemento *Frec;
+	Frec = malloc(256 * sizeof(elemento));
+	int i;
+	for(i = 0; i < 256; i++){
+		Frec[i].frecuencia = 0;
+	}
+	Frec[72].codificado = "0010";
+	Frec[111].codificado = "10";
+	Frec[108].codificado = "0011";
+	Frec[97].codificado = "01";
+	Frec[109].codificado = "1100";
+	Frec[117].codificado = "1101";
+	Frec[110].codificado = "000";
+	Frec[100].codificado = "111";
+	int tam = 6;
+	unsigned char *ASalida = malloc(tam * sizeof(unsigned char));
+	for(i = 0; i < tam; i++){
+		ASalida[i] = 0;
+	}
+	for(i = 0; i < strlen(Frec[72].codificado); i++){
+		//printf("%d ",CONSULTARBIT(Frec[72].codificado,i));
+		printf("%d ",Frec[72].codificado[i]);
+	}
+	printf("\n");
+	*/
+	//-----------------
 
 	//Modo binario lectura -> archivo de entrda
 	archivo = fopen(D0.entrada, "rb");	
@@ -83,16 +111,64 @@ void *proceso(void *arg)
 	rewind(archivo);
 
 	//Lee todos los bytes del archivo y los almacena en el arreglo de bytes, cierra el archivo.
-	A = (char *) malloc(n_bytes * sizeof(char));
+	A = (unsigned char *) malloc(n_bytes * sizeof(unsigned char));
 	fread(A, n_bytes, 1, archivo);
 	fclose(archivo);
 
+	//-----------------
+	/*
+	for(i = 0; i < n_bytes; i++){
+		printf("%d ",A[i]);
+		Frec[A[i]].frecuencia++;
+	}
+	printf("\n");
+	for(i = 0; i < n_bytes; i++){
+		printf("%s ",Frec[A[i]].codificado);
+	}
+	printf("\n");
+	// Recorre todos los caracteres del archivo original, busca su codificación binaria y modifica
+	// los bits de los caracteres del arreglo de salida
+	for(i = 0; i < n_bytes; i++){
+		for(j = 0; j < strlen(Frec[A[i]].codificado); j++){
+			if(Frec[A[i]].codificado[j] == '1'){
+				PONE_1(ASalida[posicion], 7-mod);
+			}
+			//printf("%c",Frec[A[i]].codificado[j]);
+			mod++;
+			if(mod == 8){
+				posicion++;
+				mod = 0;
+			}
+		}
+	}
+	printf("\n");
+	for(i = 0; i < tam; i++){
+		for(j = 0; j < 8; j++){
+			printf("%d",CONSULTARBIT(ASalida[i],7-j));
+		}
+		printf(" ");
+	}
+	printf("\n");
+	for(i = 0; i < tam; i++){
+		printf("%c",ASalida[i]);
+	}
+	printf("\n");
+	for(i = 0; i < tam; i++){
+		printf("%d ",ASalida[i]);
+	}
+
+	printf("\n frecuencia en %d (%c): %d ",111,111,Frec[111].frecuencia);
+	printf("\n tamaño de %s: %d", Frec[72].codificado, strlen(Frec[72].codificado));
+	esperar(2000);
+	*/
+	//-----------------
+
 	//Modo binario escritura -> archivo de salida
 	archivo = fopen(D0.salida, "wb");
-	fwrite(A, n_bytes, sizeof(char), archivo);
+	//fwrite(ASalida, tam, sizeof(unsigned char), archivo);
+	fwrite(A, n_bytes, sizeof(unsigned char), archivo);
 	fclose(archivo);
 	procesoTerminado = true;
-	
 }
 
 void Comprimir()
@@ -118,7 +194,7 @@ void Comprimir()
 		perror("El thread no pudo crearse");
 		exit(-1);
 	}
-
+	/*
 	clrscr();
 	pochita(42,4);
 	gotoxy(52, 19);
@@ -137,7 +213,7 @@ void Comprimir()
 		esperar(500);
 		gotoxy(66, 19);
 		printf(".");
-	}
+	}*/
 	pthread_join (hilo1, NULL);
 	procesoTerminado = false;
 	gotoxy(52, 19);
