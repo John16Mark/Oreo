@@ -9,6 +9,7 @@ gcc prueba.c -o prueba.exe lib/disenio.c lib/ascii_art.c lib/menu.c lib/TADLista
 #include <string.h>
 #include <stdbool.h>
 #include <pthread.h>
+#include <math.h>
 #include "lib/disenio.h"
 #include "lib/ascii_art.h"
 #include "lib/menu.h"
@@ -67,106 +68,171 @@ int main()
 
 void *proceso(void *arg)
 {
-	FILE *archivo;
-	unsigned char *A;
-	double n_bytes;
+	FILE *archivo;			// Dirección de tipo FILE que vamos a manipular
+	unsigned char *A;		// Arreglo que almacena todos los bytes (caracteres) del archivo de entrada
+	double n_bytes;			// Cantidad de bytes que tiene el archivo de entrada
+	unsigned char *ASalida;	// Arreglo que almacena todos los bytes (caracteres) del archivo de salida
+	double n_bytes_salida;	// Cantidad de bytes que tiene el archivo de salida
+	
 	direcciones D0 = *((direcciones*)arg);
-
-	//-----------------
-	/*
-	int j;
-	int posicion = 0;
-	int mod = 0;
-	elemento *Frec;
+	int pos_byte = 0;		// En qué byte del nuevo arreglo estás
+	int pos_bit = 0;		// En qué bit de cada byte estás
+	elemento *Frec;			// Tabla de frecuencias
+	int i, j;
+	
+	// Modo binario lectura -> archivo de entrda
+	archivo = fopen(D0.entrada, "rb");	
+	fseek(archivo, 0, SEEK_END);		// Se posiciona al final del archivo
+	n_bytes = ftell(archivo);			// Regresa el valor de la posición en donde está
+	rewind(archivo);					// Vuelve al inicio
+	
+	// Lee todos los bytes del archivo y los almacena en el arreglo de bytes, cierra el archivo.
+	A = (unsigned char *) malloc(n_bytes * sizeof(unsigned char));
+	fread(A, n_bytes, 1, archivo);		// Almacenar en A
+	fclose(archivo);					// Cerrar archivo
+	
+	// Crear archivo de texto para la tabla de frecuencias y más información
+	FILE *TABLA = fopen("Tabla.txt", "w");
+	fprintf(TABLA, "Tipo de archivo de entrada: %s", strrchr(D0.entrada, '.'));
+	fprintf(TABLA, "\nArchivo de entrada: %0.0lf bytes", n_bytes);
+	
+	// Crea la tabla de frecuencias con tamaño 256 e inicializa en 0 la frecuencia de todos los bytes
 	Frec = malloc(256 * sizeof(elemento));
-	int i;
 	for(i = 0; i < 256; i++){
 		Frec[i].frecuencia = 0;
 	}
-	Frec[72].codificado = "0010";
-	Frec[111].codificado = "10";
-	Frec[108].codificado = "0011";
-	Frec[97].codificado = "01";
-	Frec[109].codificado = "1100";
-	Frec[117].codificado = "1101";
-	Frec[110].codificado = "000";
-	Frec[100].codificado = "111";
-	int tam = 6;
-	unsigned char *ASalida = malloc(tam * sizeof(unsigned char));
-	for(i = 0; i < tam; i++){
-		ASalida[i] = 0;
-	}
-	for(i = 0; i < strlen(Frec[72].codificado); i++){
-		//printf("%d ",CONSULTARBIT(Frec[72].codificado,i));
-		printf("%d ",Frec[72].codificado[i]);
-	}
-	printf("\n");
-	*/
-	//-----------------
-
-	//Modo binario lectura -> archivo de entrda
-	archivo = fopen(D0.entrada, "rb");	
-	fseek(archivo, 0, SEEK_END);
-	n_bytes = ftell(archivo);
-	rewind(archivo);
-
-	//Lee todos los bytes del archivo y los almacena en el arreglo de bytes, cierra el archivo.
-	A = (unsigned char *) malloc(n_bytes * sizeof(unsigned char));
-	fread(A, n_bytes, 1, archivo);
-	fclose(archivo);
-
-	//-----------------
-	/*
+	
+	// Recorre todos los bytes del archivo original, y va almacenando la frecuencia de aparición de los
+	// caracteres (bytes)
 	for(i = 0; i < n_bytes; i++){
-		printf("%d ",A[i]);
 		Frec[A[i]].frecuencia++;
 	}
-	printf("\n");
-	for(i = 0; i < n_bytes; i++){
-		printf("%s ",Frec[A[i]].codificado);
+	
+	// Obtener el tamaño del arreglo de salida
+	n_bytes_salida = 0;
+	for(i = 0; i < 256; i++){
+		if(Frec[i].frecuencia != 0){
+			Frec[i].c = i;
+			printf("\n%c",Frec[i].c);
+			//------------------------------------------//
+			//		   TODO: AÑADIR A LA LISTA			//
+			//------------------------------------------//
+		}
 	}
-	printf("\n");
-	// Recorre todos los caracteres del archivo original, busca su codificaciÃ³n binaria y modifica
+	
+	//----------------------------------------------------------------------------------//
+	//																					//
+	//		TODO: ORDENAR LA LISTA, Y A PARTIR DE LA LISTA EMPLEAR EL ALGORITMO DE		//
+	//			HUFFMAN PARA CREAR EL ÁRBOL. (IR ALMACENANDO EN UN STRING LAS			//
+	//		   FRECUENCIAS PARA EL ARCHIVO DE TEXTO CON LA TABLA DE FRECUENCIAS			//
+	//																					//
+	//----------------------------------------------------------------------------------//
+	
+	//----------------------------------------------------------------------------------//
+	//																					//
+	//		TODO: SE IMPLEMENTARÁ EL ÁRBOL PARA OBTENER LOS BINARIOS CODIFICADOS		//
+	//		DE CADA CARACTER, EL TAMAÑO DE ESOS BINARIOS, Y EL TAMAÑO DEL ARREGLO		//
+	//								DE CARACTERES DE SALIDA								//
+	//																					//
+	//----------------------------------------------------------------------------------//
+	
+	//----------------------------------------------------------------------------------//
+	//																					//
+	//		TODO: ORDENAR LA LISTA, Y A PARTIR DE LA LISTA EMPLEAR EL ALGORITMO DE		//
+	//								HUFFMAN PARA CREAR EL ÁRBOL.						//
+	//																					//
+	//----------------------------------------------------------------------------------//
+	
+	//-----------------
+	
+	PONE_1(Frec[72].code,5);
+	Frec[72].limite = 4;
+	PONE_1(Frec[111].code,7);
+	Frec[111].limite = 2;
+	PONE_1(Frec[108].code,5);
+	PONE_1(Frec[108].code,4);
+	Frec[108].limite = 4;
+	PONE_1(Frec[97].code,6);
+	Frec[97].limite = 2;
+	PONE_1(Frec[109].code,7);
+	PONE_1(Frec[109].code,6);
+	Frec[109].limite = 4;
+	PONE_1(Frec[117].code,7);
+	PONE_1(Frec[117].code,6);
+	PONE_1(Frec[117].code,4);
+	Frec[117].limite = 4;
+	Frec[110].limite = 3;
+	PONE_1(Frec[100].code,7);
+	PONE_1(Frec[100].code,6);
+	PONE_1(Frec[100].code,5);
+	Frec[100].limite = 3;
+	
+	//-----------------
+	
+	// Obtener el tamaño del arreglo de salida
+	n_bytes_salida = 0;
+	for(i = 0; i < 256; i++){
+		if(Frec[i].frecuencia != 0){
+			n_bytes_salida += ((double) Frec[i].frecuencia * (double) Frec[i].limite);
+		}
+	}
+	n_bytes_salida /= 8;
+	n_bytes_salida = ceil(n_bytes_salida);
+	fprintf(TABLA, "\nArchivo de salida: %0.0lf bytes", n_bytes_salida);
+	
+	// Crea el arreglo de bytes de salida inicializa los caracteres en 0
+	ASalida = malloc(n_bytes_salida * sizeof(unsigned char));
+	for(i = 0; i < n_bytes_salida; i++){
+		ASalida[i] = 0;
+	}
+	
+	// Recorre todos los bytes del archivo original, busca su codificación binaria y modifica
 	// los bits de los caracteres del arreglo de salida
 	for(i = 0; i < n_bytes; i++){
-		for(j = 0; j < strlen(Frec[A[i]].codificado); j++){
-			if(Frec[A[i]].codificado[j] == '1'){
-				PONE_1(ASalida[posicion], 7-mod);
+		for(j = 0; j < Frec[A[i]].limite; j++){
+
+			if(CONSULTARBIT(Frec[A[i]].code, 7-j) == 1){
+				PONE_1(ASalida[pos_byte], 7-pos_bit);
 			}
-			//printf("%c",Frec[A[i]].codificado[j]);
-			mod++;
-			if(mod == 8){
-				posicion++;
-				mod = 0;
+			pos_bit++;
+			if(pos_bit == 8){
+				pos_byte++;
+				pos_bit = 0;
 			}
 		}
 	}
+	
+	fprintf(TABLA, "\nBits sobrantes: %d bits", 8-pos_bit);
+	fclose(TABLA);
+	
+	
 	printf("\n");
-	for(i = 0; i < tam; i++){
+	for(i = 0; i < n_bytes_salida; i++){
 		for(j = 0; j < 8; j++){
 			printf("%d",CONSULTARBIT(ASalida[i],7-j));
 		}
 		printf(" ");
 	}
 	printf("\n");
-	for(i = 0; i < tam; i++){
+	for(i = 0; i < n_bytes_salida; i++){
 		printf("%c",ASalida[i]);
 	}
 	printf("\n");
-	for(i = 0; i < tam; i++){
+	for(i = 0; i < n_bytes_salida; i++){
 		printf("%d ",ASalida[i]);
 	}
-
+	/*
 	printf("\n frecuencia en %d (%c): %d ",111,111,Frec[111].frecuencia);
 	printf("\n tamaÃ±o de %s: %d", Frec[72].codificado, strlen(Frec[72].codificado));
-	esperar(2000);
 	*/
+	esperar(2000);
+	
 	//-----------------
 
 	//Modo binario escritura -> archivo de salida
 	archivo = fopen(D0.salida, "wb");
-	//fwrite(ASalida, tam, sizeof(unsigned char), archivo);
-	fwrite(A, n_bytes, sizeof(unsigned char), archivo);
+	fwrite(ASalida, n_bytes_salida, sizeof(unsigned char), archivo);
+	//fwrite(A, n_bytes, sizeof(unsigned char), archivo);
 	fclose(archivo);
 	procesoTerminado = true;
 }
