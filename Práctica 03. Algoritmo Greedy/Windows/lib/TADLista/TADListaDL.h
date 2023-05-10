@@ -16,7 +16,8 @@ typedef struct elemento
 {
 	unsigned char c;
 	int frecuencia;
-	char *codificado;
+	unsigned char code;
+	int limite;
 }elemento;
 
 typedef struct nodo
