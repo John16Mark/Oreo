@@ -49,6 +49,8 @@ void InsertNodoIn(lista *l, nodo e, int n);
 void Remove (lista *l,posicion p);
 void Replace (lista *l,posicion p, elemento e);
 nodo Dequeue(lista *l);
+nodo PopNodoIn(lista *l, int n);
+void SelectionSort(lista *l);
 //OPERACIONES DE POSICIONAMIENTO Y BÚSQUEDA
 posicion Final (lista *l);			//Efecto: Recibe una lista l y retorna la posición del elemento al final de esta.
 posicion First (lista *l);			//Efecto: Recibe una lista l y devuelve la posición del elemento al inicio de esta.
