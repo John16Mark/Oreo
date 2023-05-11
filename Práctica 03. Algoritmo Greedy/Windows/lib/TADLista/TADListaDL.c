@@ -4,11 +4,11 @@ AUTOR: Juan Luis Molina Acuña - Enero 2023
 VERSIÓN: 1.0
 
 Frente                                                       Final
-         ******    ******    ******    ******    ******    ******
+	 ******    ******    ******    ******    ******    ******
  NULL <- *    * <- *    * <- *    * <- *    * <- *    * <- *    *
-         * N1 *    * N2 *    * N3 *    * N4 *    * N5 *    * N6 *
-         *    * -> *    * -> *    * -> *    * -> *    * -> *    * -> NULL
-         ******    ******    ******    ******    ******    ******    
+	 * N1 *    * N2 *    * N3 *    * N4 *    * N5 *    * N6 *
+	 *    * -> *    * -> *    * -> *    * -> *    * -> *    * -> NULL
+	 ******    ******    ******    ******    ******    ******    
 
 COMPILACIÃ“N PARA GENERAR EL CÃ“DIGO OBJETO: gcc TADListaSL.c -c 
 */
@@ -21,17 +21,14 @@ COMPILACIÃ“N PARA GENERAR EL CÃ“DIGO OBJETO: gcc TADListaSL.c -c
 /***************************************************************************************
 								OPERACIONES DE CONSTRUCCIÓN
 ***************************************************************************************/
-void Initialize (lista *l)
-{
+void Initialize(lista *l){
 	l -> frente = NULL;
 	l -> final = NULL;
 	l -> tam = 0;
-	l -> apellido=l;
 	return;
 }
 
-void Destroy (lista *l)	
-{
+void Destroy(lista *l){
 	posicion aux; 
 	aux = l->frente; 
 	while(aux!=NULL)
@@ -45,26 +42,22 @@ void Destroy (lista *l)
 	return;
 }
 /***************************************************************************************
-							   OPERACIONES DE MODIFICACIÓN
+								OPERACIONES DE MODIFICACIÓN
 ***************************************************************************************/
-void Add (lista *l, elemento e)
-{
+void Add (lista *l, elemento e){
 	posicion aux;
 	aux=malloc(sizeof(nodo));
-	if(aux==NULL)
-	{
-		printf("ERROR: Add (l,e) desbordamiento de lista");
-		exit(1);
-	}
+	if(aux==NULL){
+		printf("ERROR: Add(lista *l, elemento e)\n       desbordamiento de lista");
+		exit(1);}
+
 	aux->e = e;
-	aux->apellido = l->apellido;
-	if(l->tam>0)
-	{
+	aux->ramaIzq = NULL;
+	aux->ramaDer = NULL;
+	if(l->tam>0){
 		aux->anterior = l->final;
 		l->final->siguiente=aux;
-	}
-	else
-	{
+	}else{
 		aux->anterior = NULL;
 		l->frente=aux;
 	}
@@ -74,77 +67,154 @@ void Add (lista *l, elemento e)
 	return;
 }
 
-void Insert (lista * l, posicion p, elemento e, boolean b)
+void Insert (lista *l, posicion p, elemento e, boolean b)
 {
-	posicion aux, aux2, aux3;
+	posicion aux, aux2;
 	aux=malloc(sizeof(nodo));
-	if(aux==NULL)
-	{
-		printf("ERROR: Insert (l,p,e,b) Desbordamiento de lista.");
+	if(aux==NULL){
+		printf("ERROR: Insert(lista *l, posicion p, elemento e, boolean b)\n       Desbordamiento de lista.");
 		exit(1);
 	}
 	aux->e=e;
-	aux->apellido=l->apellido;
-	if(ValidatePosition(l,p))
-	{
-		if(b)	//Enfrente de p
-		{
+	aux->ramaIzq = NULL;
+	aux->ramaDer = NULL;
+	if(ValidatePosition(l,p)){
+		//Enfrente de p
+		if(b){
 			aux2=Previous(l,p);
-			if(aux2==NULL)	//p es el frente, se inserta al frente de la lista
-			{
+			//p es el frente, se inserta al frente de la lista
+			if(aux2==NULL){
 				aux->anterior=NULL;
 				p->anterior = aux;
 				aux->siguiente=l->frente;
 				l->frente=aux;
-				l->tam++;
 			}
-			else	//Si p no era el frente de la lista
-			{
+			//Si p no era el frente de la lista
+			else{
 				aux->anterior=aux2;
 				aux2->siguiente=aux;
 				p->anterior=aux;
 				aux->siguiente=p;
-				l->tam++;
 			}
 		}
-		else	//Atras de p
-		{
+		//Atras de p
+		else{
 			aux2=Following(l,p);
-			if(aux2==NULL)	//p es el final, se inserta al final de la lista
-			{
+			//p es el final, se inserta al final de la lista
+			if(aux2==NULL){
 				aux->anterior=p;
 				p->siguiente=aux;
 				l->final=aux;
 				aux->siguiente=NULL;
-				l->tam++;
 			}
-			else	//Si p no era el frente de la lista
-			{
+			//Si p no era el frente de la lista
+			else{
 				aux->anterior=p;
 				aux2->anterior=aux;
 				p->siguiente=aux;
 				aux->siguiente=aux2;
-				l->tam++;
 			}
 		}
 	}
-	else //si p es invalido, se inserta e enfrente
-	{
+	//si p es invalido, se inserta el elemento enfrente
+	else{
 		aux->siguiente=l->frente;
 		l->frente=aux;
-		if(l->tam==0)
-			l->final=aux;
-		l->tam++;
+		if(l->tam==0){
+			l->final=aux;}
 	}
+	l->tam++;
 	return;
 }
 
-void Remove (lista *l,posicion p)
+void InsertIn(lista *l, elemento e, int n)
+{
+	posicion aux=l->frente;
+	int i = 0;
+	if(n >= l->tam || n < 0){
+		printf ("ERROR: InsertInPosition(lista *l, elemento e, int n)\n       n inv%clido", 160);
+		exit (1);
+	}
+
+	while(i<n){
+		i++;
+		aux=aux->siguiente;
+	}
+	printf("\nELEMENTO EN POSICION: %d",aux->e.frecuencia);
+
+	posicion aux2;
+	aux2=malloc(sizeof(nodo));
+	if(aux2==NULL){
+		printf("ERROR: InsertInPosition(lista *l, elemento e, int n)\n       Desbordamiento de lista.");
+		exit(1);
+	}
+
+	aux2->e = e;
+	aux2->ramaIzq = NULL;
+	aux2->ramaDer = NULL;
+	aux2->siguiente = aux;
+
+	if(aux->anterior != NULL){
+		aux2->anterior = Previous(l, aux);
+		posicion aux3 = Previous(l, aux);
+		aux3->siguiente = aux2;
+	}
+	else{
+		aux2->anterior = NULL;
+		l->frente = aux2;
+	}
+	aux->anterior = aux2;
+	l->tam++;
+}
+
+void InsertNodoIn(lista *l, nodo newNodo, int n)
+{
+	posicion aux=l->frente;
+	int i = 0;
+	if(n >= l->tam || n < 0){
+		printf ("ERROR: InsertInPosition(lista *l, elemento e, int n)\n       n inv%clido", 160);
+		exit (1);
+	}
+
+	while(i<n){
+		i++;
+		aux=aux->siguiente;
+	}
+
+	posicion aux2;
+	aux2=malloc(sizeof(nodo));
+	if(aux==NULL){
+		printf("ERROR: Add(lista *l, elemento e)\n       desbordamiento de lista");
+		exit(1);}
+
+	aux2->e = newNodo.e;
+	aux2->ramaIzq = newNodo.ramaIzq;
+	aux2->ramaDer = newNodo.ramaDer;
+	aux2->anterior = NULL;
+	aux2->siguiente = NULL;
+	posicion aux3;
+	
+	aux2->siguiente = aux;
+	if(aux->anterior != NULL){
+		printf("\n %d", Previous(l,aux));
+		aux2->anterior = Previous(l, aux);
+		aux3 = Previous(l, aux);
+		aux3->siguiente = aux2;
+	}else{
+		aux2->anterior = NULL;
+		l->frente = aux2;
+	}
+
+	aux->anterior = aux2;
+	l->tam++;
+}
+
+void Remove(lista *l, posicion p)
 {
 	posicion aux,aux2;
 	if (!ValidatePosition(l,p))
 	{
-		printf ("ERROR: Remove (l,p), p es invalida");
+		printf ("ERROR: Remove(lista *l, posicion p)\n       p es invalida");
 		exit (1);
 	}	
 	if (p==l->frente)
@@ -174,16 +244,38 @@ void Remove (lista *l,posicion p)
 
 void Replace (lista *l,posicion p, elemento e)
 {
-	if(ValidatePosition(l,p))
-	{
+	if(ValidatePosition(l,p)){
 		p->e=e;
-	}
-	else
-	{
+	}else{
 		printf("ERROR: Replace(l,p,e) PosiciÃ³n invalida");
 		exit(1);
 	}
 	return;
+}
+
+nodo Dequeue(lista *l)
+{
+	posicion aux;
+	nodo NO;
+	elemento e; //Elemento a retornar 
+	if(l->tam == 0){
+		printf("ERROR: Dequeue(lista *l)\n        Subdesbordamiento de lista");
+		exit(1);
+	}else {
+		if(l->tam > 1){
+			posicion aux2 = First(l)->siguiente;
+			aux2->anterior = NULL;
+		}
+		
+		aux = l->frente;
+		l->frente = l->frente->siguiente;
+		l->tam--;
+		if(l->tam==0)
+			l->final=NULL;
+	}
+
+	//Retornar al elemento
+	return *aux;
 }
 /***************************************************************************************
 						OPERACIONES DE POSICIONAMIENTO Y BÚSQUEDA
@@ -210,11 +302,11 @@ posicion Previous (lista *l,posicion p)
 {
 	if(ValidatePosition(l,p))
 		return p->anterior;
-	printf("ERROR:Following(L,p) la posicion es invalida");
+	printf("ERROR: Previous(lista *l, posicion p)\n       la posicion es invalida");
 	exit(1);
 }
 /***************************************************************************************
-								OPERACIONES DE CONSULTA
+									OPERACIONES DE CONSULTA
 ***************************************************************************************/
 int Size (lista *l)
 {
@@ -233,9 +325,9 @@ boolean Empty (lista *l)
 
 elemento Element(lista *l, int n)
 {
-	int i=1;
+	int i=0;
 	posicion aux=l->frente;
-	if(n>0 && n<=l->tam)
+	if(n>=0 && n<l->tam)
 	{
 		while(i<n)
 		{
@@ -244,20 +336,21 @@ elemento Element(lista *l, int n)
 		}
 		return aux->e;
 	}
-	printf("ERROR:Element(L,n)n invalido");	
+	printf("ERROR: Element(lista *l, int n)\n       n inv%clido",160);	
 	exit(1);
 }
 
-elemento Position (lista *l,posicion p)
+elemento Position(lista *l, posicion p)
 {
-	if(ValidatePosition(l,p))
+	if(ValidatePosition(l, p))
 		return p->e;
-	printf("ERROR:Position(L,p) la posicion es invalida");
+	printf("ERROR: Position(lista *l, posicion p)\n       la posici%cn es inv%clida", 162, 160);
 	exit(1);
 }
 
-posicion Search (lista *l,elemento e)
-{		posicion aux=l->frente;
+posicion posicionSearch (lista *l, elemento e)
+{
+	posicion aux=l->frente;
 	while(aux!=NULL)
 	{
 		if(memcmp(&aux->e,&e,sizeof(elemento))==0)
@@ -271,10 +364,9 @@ posicion Search (lista *l,elemento e)
 
 posicion ElementPosition(lista *l, int n)
 {
-	int i=1;
-	
+	int i=0;
 	posicion aux=l->frente;
-	if(n>0 && n<=l->tam)
+	if(n>=0 && n<l->tam)
 	{
 		while(i<n)
 		{
@@ -283,20 +375,25 @@ posicion ElementPosition(lista *l, int n)
 		}
 		return aux;
 	}
-	printf("ERROR: ElementPosition(L,n)n invalido");	
+	printf("ERROR: ElementPosition(lista *l, int n)\n       n inv%clido", 160);	
 	exit(1);			
 }
 
 boolean ValidatePosition(lista *l,posicion p)
 {
 	boolean b = FALSE;
-	if(p!=NULL)
-		if(p->apellido==l->apellido)
-			b = TRUE;
+	posicion aux = l->frente;
+	int i;
+	for(i = 0; i < l->tam; i++){
+		if(p == aux){
+			return TRUE;
+		}
+		aux=aux->siguiente;
+	}
 	return b;	
 }
 /***************************************************************************************
-						  OPERACIONES DE CONSULTA (DEPURACIÓN)
+							  OPERACIONES DE CONSULTA (DEPURACIÓN)
 ***************************************************************************************/
 void VerLigasLista(lista *l)
 {
