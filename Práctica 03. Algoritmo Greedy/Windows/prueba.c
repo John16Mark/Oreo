@@ -19,6 +19,8 @@ gcc prueba.c -o prueba.exe lib/disenio.c lib/ascii_art.c lib/menu.c lib/TADLista
 
 #define CONSOLE_WIDTH 120
 #define CONSOLE_HEIGHT 30
+#define TABLA_MAX_LINEAS 263
+#define TABLA_MAX_COLUMNAS 500
 
 #define PESOBIT(bpos) 1<<bpos
 #define CONSULTARBIT(var,bpos) (*(unsigned*)&var & PESOBIT(bpos))?1:0
@@ -36,6 +38,7 @@ pthread_t hilo2;
 typedef struct direcciones{
 	char entrada[150];
 	char salida[150];
+	char tabla[150];
 }direcciones;
 
 int main()
@@ -46,6 +49,7 @@ int main()
 	while(1){
 		disenioMenu();
 		scanf("%d",&eleccion);
+		fflush(stdin);
 		switch(eleccion){
 		case 1:
 			Comprimir();
@@ -66,24 +70,31 @@ int main()
 	return 0;
 }
 
-void *proceso(void *arg)
+void *procesoCompresion(void *arg)
 {
-	FILE *archivo;			// Dirección de tipo FILE que vamos a manipular
+	FILE *archivo;			// Direcciï¿½n de tipo FILE que vamos a manipular
 	unsigned char *A;		// Arreglo que almacena todos los bytes (caracteres) del archivo de entrada
 	double n_bytes;			// Cantidad de bytes que tiene el archivo de entrada
 	unsigned char *ASalida;	// Arreglo que almacena todos los bytes (caracteres) del archivo de salida
 	double n_bytes_salida;	// Cantidad de bytes que tiene el archivo de salida
 	
 	direcciones D0 = *((direcciones*)arg);
-	int pos_byte = 0;		// En qué byte del nuevo arreglo estás
-	int pos_bit = 0;		// En qué bit de cada byte estás
+	int pos_byte = 0;		// En quï¿½ byte del nuevo arreglo estï¿½s
+	int pos_bit = 0;		// En quï¿½ bit de cada byte estï¿½s
 	elemento *Frec;			// Tabla de frecuencias
 	int i, j;
+	lista mi_lista;
+
+	Initialize(&mi_lista);
 	
 	// Modo binario lectura -> archivo de entrda
-	archivo = fopen(D0.entrada, "rb");	
+	archivo = fopen(D0.entrada, "rb");
+	if(!archivo){
+		printf("\n Error al abrir el archivo: %s", D0.entrada);
+		exit(1);
+	}
 	fseek(archivo, 0, SEEK_END);		// Se posiciona al final del archivo
-	n_bytes = ftell(archivo);			// Regresa el valor de la posición en donde está
+	n_bytes = ftell(archivo);			// Regresa el valor de la posiciï¿½n en donde estï¿½
 	rewind(archivo);					// Vuelve al inicio
 	
 	// Lee todos los bytes del archivo y los almacena en el arreglo de bytes, cierra el archivo.
@@ -91,55 +102,48 @@ void *proceso(void *arg)
 	fread(A, n_bytes, 1, archivo);		// Almacenar en A
 	fclose(archivo);					// Cerrar archivo
 	
-	// Crear archivo de texto para la tabla de frecuencias y más información
-	FILE *TABLA = fopen("Tabla.txt", "w");
-	fprintf(TABLA, "Tipo de archivo de entrada: %s", strrchr(D0.entrada, '.'));
-	fprintf(TABLA, "\nArchivo de entrada: %0.0lf bytes", n_bytes);
-	
-	// Crea la tabla de frecuencias con tamaño 256 e inicializa en 0 la frecuencia de todos los bytes
+	// Crea la tabla de frecuencias con tamaï¿½o 256 e inicializa en 0 la frecuencia de todos los bytes
 	Frec = malloc(256 * sizeof(elemento));
 	for(i = 0; i < 256; i++){
 		Frec[i].frecuencia = 0;
 	}
 	
-	// Recorre todos los bytes del archivo original, y va almacenando la frecuencia de aparición de los
+	// Recorre todos los bytes del archivo original, y va almacenando la frecuencia de apariciï¿½n de los
 	// caracteres (bytes)
 	for(i = 0; i < n_bytes; i++){
 		Frec[A[i]].frecuencia++;
 	}
 	
-	// Obtener el tamaño del arreglo de salida
+	// Obtener el tamaï¿½o del arreglo de salida
 	n_bytes_salida = 0;
 	for(i = 0; i < 256; i++){
 		if(Frec[i].frecuencia != 0){
 			Frec[i].c = i;
 			printf("\n%c",Frec[i].c);
-			//------------------------------------------//
-			//		   TODO: AÑADIR A LA LISTA			//
-			//------------------------------------------//
+			Add(&mi_lista, Frec[i]);
 		}
+	}
+	int tam_lista = Size(&mi_lista);
+	elemento *TablaResumida;
+	TablaResumida = malloc(tam_lista * sizeof(elemento));
+	SelectionSort(&mi_lista);
+	for(i = 0; i < tam_lista; i++){
+		TablaResumida[i] = Element(&mi_lista, i);
 	}
 	
 	//----------------------------------------------------------------------------------//
 	//																					//
-	//		TODO: ORDENAR LA LISTA, Y A PARTIR DE LA LISTA EMPLEAR EL ALGORITMO DE		//
-	//			HUFFMAN PARA CREAR EL ÁRBOL. (IR ALMACENANDO EN UN STRING LAS			//
+	//				 TODO: A PARTIR DE LA LISTA EMPLEAR EL ALGORITMO DE					//
+	//			HUFFMAN PARA CREAR EL ï¿½RBOL. (IR ALMACENANDO EN UN STRING LAS			//
 	//		   FRECUENCIAS PARA EL ARCHIVO DE TEXTO CON LA TABLA DE FRECUENCIAS			//
 	//																					//
 	//----------------------------------------------------------------------------------//
 	
 	//----------------------------------------------------------------------------------//
 	//																					//
-	//		TODO: SE IMPLEMENTARÁ EL ÁRBOL PARA OBTENER LOS BINARIOS CODIFICADOS		//
-	//		DE CADA CARACTER, EL TAMAÑO DE ESOS BINARIOS, Y EL TAMAÑO DEL ARREGLO		//
+	//		TODO: SE IMPLEMENTARï¿½ EL ï¿½RBOL PARA OBTENER LOS BINARIOS CODIFICADOS		//
+	//		DE CADA CARACTER, EL TAMAï¿½O DE ESOS BINARIOS, Y EL TAMAï¿½O DEL ARREGLO		//
 	//								DE CARACTERES DE SALIDA								//
-	//																					//
-	//----------------------------------------------------------------------------------//
-	
-	//----------------------------------------------------------------------------------//
-	//																					//
-	//		TODO: ORDENAR LA LISTA, Y A PARTIR DE LA LISTA EMPLEAR EL ALGORITMO DE		//
-	//								HUFFMAN PARA CREAR EL ÁRBOL.						//
 	//																					//
 	//----------------------------------------------------------------------------------//
 	
@@ -169,7 +173,7 @@ void *proceso(void *arg)
 	
 	//-----------------
 	
-	// Obtener el tamaño del arreglo de salida
+	// Obtener el tamaï¿½o del arreglo de salida
 	n_bytes_salida = 0;
 	for(i = 0; i < 256; i++){
 		if(Frec[i].frecuencia != 0){
@@ -178,6 +182,15 @@ void *proceso(void *arg)
 	}
 	n_bytes_salida /= 8;
 	n_bytes_salida = ceil(n_bytes_salida);
+
+	// Crear archivo de texto para la tabla de frecuencias y mï¿½s informaciï¿½n
+	FILE *TABLA = fopen("Tabla.txt", "w");
+	if(!TABLA){
+		printf("\n Error al abrir el archivo: %s", D0.tabla);
+		exit(1);
+	}
+	fprintf(TABLA, "Tipo de archivo de entrada: %s", strrchr(D0.entrada, '.'));
+	fprintf(TABLA, "\nArchivo de entrada: %0.0lf bytes", n_bytes);
 	fprintf(TABLA, "\nArchivo de salida: %0.0lf bytes", n_bytes_salida);
 	
 	// Crea el arreglo de bytes de salida inicializa los caracteres en 0
@@ -186,7 +199,7 @@ void *proceso(void *arg)
 		ASalida[i] = 0;
 	}
 	
-	// Recorre todos los bytes del archivo original, busca su codificación binaria y modifica
+	// Recorre todos los bytes del archivo original, busca su codificaciï¿½n binaria y modifica
 	// los bits de los caracteres del arreglo de salida
 	for(i = 0; i < n_bytes; i++){
 		for(j = 0; j < Frec[A[i]].limite; j++){
@@ -203,6 +216,10 @@ void *proceso(void *arg)
 	}
 	
 	fprintf(TABLA, "\nBits sobrantes: %d bits", 8-pos_bit);
+	fprintf(TABLA, "\n\nTABLA DE FRECUENCIAS:\n");
+	for(i = 0; i < tam_lista; i++){
+		fprintf(TABLA, "%c:%d\n", TablaResumida[i].c, TablaResumida[i].frecuencia);
+	}
 	fclose(TABLA);
 	
 	
@@ -237,6 +254,55 @@ void *proceso(void *arg)
 	procesoTerminado = true;
 }
 
+void *procesoDescompresion(void *arg)
+{
+	FILE *archivo;			// Direcciï¿½n de tipo FILE que vamos a manipular
+	unsigned char *A;		// Arreglo que almacena todos los bytes (caracteres) del archivo de entrada
+	double n_bytes;			// Cantidad de bytes que tiene el archivo de entrada
+	unsigned char *ASalida;	// Arreglo que almacena todos los bytes (caracteres) del archivo de salida
+	double n_bytes_salida;	// Cantidad de bytes que tiene el archivo de salida
+	
+	direcciones D0 = *((direcciones*)arg);
+	int pos_byte = 0;		// En quï¿½ byte del nuevo arreglo estï¿½s
+	int pos_bit = 0;		// En quï¿½ bit de cada byte estï¿½s
+	elemento *Frec;			// Tabla de frecuencias
+	int i, j;
+	lista mi_lista;
+
+	Initialize(&mi_lista);
+
+	// Lee el archivo de texto de la tabla de frecuencias y almacena los datos
+	FILE *tablatxt;
+	tablatxt = fopen(D0.tabla, "r");
+	if(!tablatxt){
+		printf("\n Error al abrir el archivo: %s", D0.tabla);
+		exit(1);
+	}
+	// Almacena lÃ­nea por lÃ­nea en un arreglo
+	char line[TABLA_MAX_COLUMNAS];
+	int n_lineas_tabla = 0;
+	unsigned char linea[TABLA_MAX_LINEAS][TABLA_MAX_COLUMNAS];
+	while (fgets(linea[n_lineas_tabla], TABLA_MAX_COLUMNAS, tablatxt)){
+		printf("\n%d",strlen(linea[n_lineas_tabla]));
+		linea[n_lineas_tabla][strlen(linea[n_lineas_tabla]) - 1] = '\0';
+		n_lineas_tabla++;
+	}
+
+	// Almacena el caracter y la frecuencia y los aÃ±ade a la lista
+	elemento e;
+	fflush(stdout);
+	char *num;
+	for(i=6; i < n_lineas_tabla; ++i){
+		e.c = linea[i][0];
+		num = strrchr(linea[i], ':')+1;
+		e.frecuencia = atoi(num);
+		Add(&mi_lista, e);
+	}
+
+	esperar(2000);
+	procesoTerminado = true;
+}
+
 void Comprimir()
 {
 	char direccion[150];
@@ -256,7 +322,7 @@ void Comprimir()
 	strcpy(D.entrada, direccion);
 	strcpy(D.salida, salida);
 
-	if(0 != pthread_create(&hilo1, NULL, proceso, &D)){
+	if(0 != pthread_create(&hilo1, NULL, procesoCompresion, &D)){
 		perror("El thread no pudo crearse");
 		exit(-1);
 	}
@@ -294,26 +360,38 @@ void Descomprimir()
 {
 	char direccion[150];
 	char salida[150];
+	char tabla[150];
 
 	disenioDescompresion();
-	scanf("%s",direccion);
+	scanf("%s",&direccion);
+	fflush(stdin);
 
 	gotoxy(2, 13);
 	colorForeground("blanco");
 	printf("Introduzca el nombre del archivo comprimido de salida (DE PREFERENCIA OMITIR EXTENSI%cN):", 224);
 	gotoxy(4, 15);
 	colorDefault();
-	scanf("%s",salida);
+	scanf("%s",&tabla);
+	fflush(stdin);
+
+	gotoxy(2, 19);
+	colorForeground("blanco");
+	printf("Introduzca el nombre del archivo comprimido de salida (DE PREFERENCIA OMITIR EXTENSI%cN):", 224);
+	gotoxy(4, 21);
+	colorDefault();
+	scanf("%s",&salida);
+	fflush(stdin);
 
 	direcciones D;
 	strcpy(D.entrada, direccion);
 	strcpy(D.salida, salida);
+	strcpy(D.tabla, tabla);
 
-	if(0 != pthread_create(&hilo1, NULL, proceso, &D)){
+	if(0 != pthread_create(&hilo1, NULL, procesoDescompresion, &D)){
 		perror("El thread no pudo crearse");
 		exit(-1);
 	}
-
+	/*
 	clrscr();
 	pochita(42,4);
 	gotoxy(51, 19);
@@ -332,13 +410,14 @@ void Descomprimir()
 		esperar(500);
 		gotoxy(68, 19);
 		printf(".");
-	}
+	}*/
 	pthread_join (hilo1, NULL);
 	procesoTerminado = false;
+	/*
 	gotoxy(51, 19);
 	printf("    TERMINADO     ");
-	gotoxy(CONSOLE_WIDTH-1, CONSOLE_HEIGHT-1);
+	gotoxy(CONSOLE_WIDTH-1, CONSOLE_HEIGHT-1);*/
 	esperar(700);
-
-	gotoxy(23,15);
+/*
+	gotoxy(23,15);*/
 }
