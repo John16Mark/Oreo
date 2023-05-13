@@ -140,7 +140,6 @@ void InsertIn(lista *l, elemento e, int n)
 		i++;
 		aux=aux->siguiente;
 	}
-	printf("\nELEMENTO EN POSICION: %d",aux->e.frecuencia);
 
 	posicion aux2;
 	aux2=malloc(sizeof(nodo));
@@ -196,7 +195,6 @@ void InsertNodoIn(lista *l, nodo newNodo, int n)
 	
 	aux2->siguiente = aux;
 	if(aux->anterior != NULL){
-		printf("\n %d", Previous(l,aux));
 		aux2->anterior = Previous(l, aux);
 		aux3 = Previous(l, aux);
 		aux3->siguiente = aux2;
@@ -277,6 +275,81 @@ nodo Dequeue(lista *l)
 	//Retornar al elemento
 	return *aux;
 }
+
+nodo PopNodoIn(lista *l, int n)
+{
+	posicion aux=l->frente;
+	int i = 0;
+	if(n >= l->tam || n < 0){
+		printf ("ERROR: PopNodoIn(lista *l, elemento e, int n)\n       n inv%clido", 160);
+		exit (1);
+	}
+
+	while(i<n){
+		i++;
+		aux=aux->siguiente;
+	}
+
+	posicion aux2, aux3;
+	aux2=malloc(sizeof(nodo));
+	aux3=malloc(sizeof(nodo));
+	if(aux2==NULL || aux3==NULL){
+		printf("ERROR: Add(lista *l, elemento e)\n       desbordamiento de lista");
+		exit(1);}
+
+	aux2=Previous(l, aux);
+	aux3=Following(l,aux);
+
+	if(aux2 != NULL){
+		if(aux3 != NULL){
+			aux3->anterior = aux2;}
+	}else{
+		if(aux3 != NULL){
+			aux3->anterior = NULL;}
+		l->frente = aux3;
+	}
+	//printf("TRUENA");
+	if(aux3 != NULL){
+		if(aux2 != NULL){
+			aux2->siguiente = aux3;}
+	}else{
+		if(aux2 != NULL){
+			aux2->siguiente = NULL;}
+		l->final = aux2;
+	}
+
+	l->tam--;
+	return *aux;
+}
+
+void SelectionSort(lista *l){
+	posicion aux, aux2, aux3;
+	nodo NEWNODO;
+	aux=malloc(sizeof(nodo));
+	aux2=malloc(sizeof(nodo));
+	aux3=malloc(sizeof(nodo));
+	if(aux==NULL || aux2==NULL || aux3==NULL){
+		printf("ERROR: SelectionSort(lista *l)\n       desbordamiento de lista");
+		exit(1);}
+
+	int i, j;
+	int indice;
+	int n = Size(l);
+
+	for(i = 0; i < n-1; i++){
+		indice = i;
+		for(j = i+1; j < n; j++){
+			if(Element(l, j).frecuencia < Element(l, indice).frecuencia){
+				indice = j;
+			}
+		}
+		//temp = A[indice]
+		NEWNODO = PopNodoIn(l, indice);
+		//A[indice] = A[i]
+		InsertNodoIn(l, NEWNODO, i);
+	}
+}
+
 /***************************************************************************************
 						OPERACIONES DE POSICIONAMIENTO Y BÚSQUEDA
 ***************************************************************************************/
