@@ -22,8 +22,8 @@ gcc Arbol.c lib/TADLista/TADListaDL.c
 #define PONE_0(var,bpos) *(unsigned*)&var &= ~(PESOBIT(bpos))
 #define CAMBIA(var,bpos) *(unsigned*)&var ^= PESOBIT(bpos)
 
-void codePreOrden(posicion n);
-void asignarCodigo(posicion n);
+void codePreOrden(posicion n, elemento *Frec);
+void asignarCodigo(posicion n, elemento *Frec);
 
 int main()
 {
@@ -50,10 +50,15 @@ int main()
 	}
 	*/
 
+	// Asigna element.c y los agrega a la lista
+
 	for(i = 0; i < 10; i++){
+		if(Frec[i].frecuencia != 0){
+			Frec[i].c = i;
+			printf("\n%c",Frec[i].c);
 			Add(&mi_lista, Frec[i]);
+		}
 	}
-	// int tam_lista = Size(&mi_lista);
 
 	SelectionSort(&mi_lista);
 
@@ -97,10 +102,11 @@ int main()
 	int n_bits=sizeof(unsigned char)*8;
 	raiz->e.code = 0;
 	raiz->e.limite = 0;		// Para el nodo raiz
+	Frec[raiz->e.c] = raiz->e;		// Se mete al arreglo
 
 	//PONE_1(raiz->e.code, 7); 		//1 en Bit 0
 	
-	codePreOrden(raiz);
+	codePreOrden(raiz, Frec);
 
 	/*
 	Para verificar que se escribió bien el bit
@@ -117,17 +123,17 @@ int main()
 	return 0;
 }
 
-void codePreOrden(posicion n){
+void codePreOrden(posicion n, elemento *Frec){
 	if(n!=NULL){
 		// ProcesarNodo, asignando su código correspondiente
-		asignarCodigo(n);
+		asignarCodigo(n, Frec);
 
-		codePreOrden(n->ramaIzq);
-		codePreOrden(n->ramaDer);
+		codePreOrden(n->ramaIzq, Frec);
+		codePreOrden(n->ramaDer, Frec);
 	}
 }
 
-void asignarCodigo(posicion n){
+void asignarCodigo(posicion n, elemento *Frec){
 
 	// Copia el código y límite (lo incrementa), para su hijo izquierdo
 	if(n->ramaIzq != NULL){
@@ -139,6 +145,7 @@ void asignarCodigo(posicion n){
 		n->ramaIzq->e.code = n->e.code;			// Copia el código
 		// No es necesario poner 0 porque inicia en 0
 		//PONE_0(n->ramaIzq->e.code, 7 - n->ramaIzq->e.limite); 			// 0 en el bit n->ramaIzq->e.limite
+		Frec[n->ramaIzq->e.code] = n->ramaIzq->e;			// Se mete al arreglo
 
 	}
 
@@ -152,11 +159,18 @@ void asignarCodigo(posicion n){
 		// Actualización del bit
 		n->ramaDer->e.code = n->e.code;			// Copia el código
 		PONE_1(n->ramaDer->e.code, 7 - n->ramaIzq->e.limite + 1); 			// 1 en el bit n->ramaIzq->e.limite
+		Frec[n->ramaDer->e.code] = n->ramaDer->e;				// Se mete al arreglo
 		
+
+	// Para verificar que funciona COMENTAR
+
+	//***********************************************************
 	//Revisar el valor de cada bit
 	int n_bits = 8;
 	printf("Valor de los bits\n");
 	for (int i=n_bits-1; i>=0; i--)
 	printf("%d",CONSULTARBIT(n->ramaDer->e.code,i));			// Para verificar que funciona COMENTAR
 	}
+
+	//************************************************************
 }
