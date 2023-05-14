@@ -1,7 +1,7 @@
 /*
 IMPLEMENTACIONES DE LA LIBRERIA DEL TAD LISTA (TADLista.h)
-AUTOR: Juan Luis Molina Acuña - Enero 2023
-VERSIÓN: 1.0
+AUTOR: Juan Luis Molina Acuï¿½a - Enero 2023
+VERSIï¿½N: 1.0
 
 Frente                                                       Final
 	 ******    ******    ******    ******    ******    ******
@@ -13,13 +13,13 @@ Frente                                                       Final
 COMPILACIÃ“N PARA GENERAR EL CÃ“DIGO OBJETO: gcc TADListaSL.c -c 
 */
 
-//LIBRERÍAS
+//LIBRERï¿½AS
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "TADListaDL.h"
 /***************************************************************************************
-								OPERACIONES DE CONSTRUCCIÓN
+								OPERACIONES DE CONSTRUCCIï¿½N
 ***************************************************************************************/
 void Initialize(lista *l){
 	l -> frente = NULL;
@@ -42,7 +42,7 @@ void Destroy(lista *l){
 	return;
 }
 /***************************************************************************************
-								OPERACIONES DE MODIFICACIÓN
+								OPERACIONES DE MODIFICACIï¿½N
 ***************************************************************************************/
 void Add (lista *l, elemento e){
 	posicion aux;
@@ -276,6 +276,31 @@ nodo Dequeue(lista *l)
 	return *aux;
 }
 
+posicion DequeuePos(lista *l)
+{
+	posicion aux;
+	nodo NO;
+	elemento e; //Elemento a retornar 
+	if(l->tam == 0){
+		printf("ERROR: Dequeue(lista *l)\n        Subdesbordamiento de lista");
+		exit(1);
+	}else {
+		if(l->tam > 1){
+			posicion aux2 = First(l)->siguiente;
+			aux2->anterior = NULL;
+		}
+		
+		aux = l->frente;
+		l->frente = l->frente->siguiente;
+		l->tam--;
+		if(l->tam==0)
+			l->final=NULL;
+	}
+
+	//Retornar la posiciÃ³n
+	return aux;
+}
+
 nodo PopNodoIn(lista *l, int n)
 {
 	posicion aux=l->frente;
@@ -351,7 +376,7 @@ void SelectionSort(lista *l){
 }
 
 /***************************************************************************************
-						OPERACIONES DE POSICIONAMIENTO Y BÚSQUEDA
+						OPERACIONES DE POSICIONAMIENTO Y Bï¿½SQUEDA
 ***************************************************************************************/
 posicion Final (lista *l)
 {
@@ -466,7 +491,7 @@ boolean ValidatePosition(lista *l,posicion p)
 	return b;	
 }
 /***************************************************************************************
-							  OPERACIONES DE CONSULTA (DEPURACIÓN)
+							  OPERACIONES DE CONSULTA (DEPURACIï¿½N)
 ***************************************************************************************/
 void VerLigasLista(lista *l)
 {

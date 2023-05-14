@@ -49,6 +49,7 @@ void InsertNodoIn(lista *l, nodo e, int n);
 void Remove (lista *l,posicion p);
 void Replace (lista *l,posicion p, elemento e);
 nodo Dequeue(lista *l);
+posicion DequeuePos(lista *l);
 nodo PopNodoIn(lista *l, int n);
 void SelectionSort(lista *l);
 //OPERACIONES DE POSICIONAMIENTO Y BÚSQUEDA
