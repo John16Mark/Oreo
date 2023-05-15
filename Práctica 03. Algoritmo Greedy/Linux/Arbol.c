@@ -145,7 +145,11 @@ void asignarCodigo(posicion n, elemento *Frec){
 		n->ramaIzq->e.code = n->e.code;			// Copia el código
 		// No es necesario poner 0 porque inicia en 0
 		//PONE_0(n->ramaIzq->e.code, 7 - n->ramaIzq->e.limite); 			// 0 en el bit n->ramaIzq->e.limite
-		Frec[n->ramaIzq->e.code] = n->ramaIzq->e;			// Se mete al arreglo
+		
+		// Se mete al arreglo si es una hoja
+
+		if(n->ramaIzq->ramaDer == NULL && n->ramaIzq->ramaIzq == NULL)
+			Frec[n->ramaIzq->e.c] = n->ramaIzq->e;
 
 	}
 
@@ -159,7 +163,10 @@ void asignarCodigo(posicion n, elemento *Frec){
 		// Actualización del bit
 		n->ramaDer->e.code = n->e.code;			// Copia el código
 		PONE_1(n->ramaDer->e.code, 7 - n->ramaIzq->e.limite + 1); 			// 1 en el bit n->ramaIzq->e.limite
-		Frec[n->ramaDer->e.code] = n->ramaDer->e;				// Se mete al arreglo
+
+		// Se mete al arreglo si es una hoja
+		if(n->ramaDer->ramaDer == NULL && n->ramaDer->ramaIzq == NULL)
+			Frec[n->ramaDer->e.c] = n->ramaDer->e;
 		
 
 	// Para verificar que funciona COMENTAR
