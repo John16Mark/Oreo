@@ -113,8 +113,8 @@ int main(int argc, char *argv[])
 /*
 int busquedaBinaria(int *A, int l, int r, int k)
 Recibe:	*A: Dirección del arreglo original 
-		 l: Primer valor del arreglo ordenado
-		 r: Último valor del arreglo ordenado
+		 l: Índice del primer valor del arreglo ordenado
+		 r: Índice del último valor del arreglo ordenado
 		 k: Valor buscado
 
 La busqueda binaria iterativa lo que hace es sacar la 
