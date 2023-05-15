@@ -131,6 +131,9 @@ mayor a la posición en que se encuentra el valor k o hasta que alcance el
 final del arreglo A. Una vez que encuentra el rango llama a la función
 busquedaBinaria para encontrar el valor a buscar en el rango establecido.
 
+Regresa: posición del valor k (si lo encontró)
+	 -1 (si no lo encontró)
+
 Complejidad: O(log n)
 */
 int busquedaExponencial(int *A, int n, int k)
@@ -148,33 +151,36 @@ int busquedaExponencial(int *A, int n, int k)
     return busquedaBinaria(A,i/2,min(i,n-1),k);
 }
 
-// A recursive binary search function. It returns
-// location of x in  given array arr[l..r] is
-// present, otherwise -1
+/*
+int busquedaBinaria(int *A, int l, int r, int k)
+Recibe:	*A: Dirección del arreglo original ordenado
+	l: Posición del primer valor del rango
+	r: Posición del último valor del rango
+	k: Valor a buscar
+Mientras se cumpla la condición se calcula la posición de la mitad del
+rango para después comparar el valor en la posición mitad con el valor k.
+Si se cumple retorna la posición mitad, sino compara si el valor k es menor
+o mayor al valor de la posición mitad para llamarse a sí misma dependiendo el caso.
+
+Regresa: posición del valor k (si lo encontró)
+	 -1 (si no lo encontró)
+
+Complejidad: O(log n)
+*/
 int busquedaBinaria(int *A, int l, int r, int k)
 {
     if(r>=l)
     {
         int mitad = l+(r-l)/2;
  
-        //Si el valor se encuentra en la mitad del arreglo
         if(A[mitad]==k)
             return mitad;
             
-            
- 		/*Si el valor a buscar es mas pequeño que el valor posicionado
-		 en la mitad del arreglo, entonces se encuentra en el
-		 subarreglo izquierdo */
         if(A[mitad]>k)
             return busquedaBinaria(A,l,mitad-1,k);
- 
-        /*Si el valor a buscar es mas grande que el valor posicionado
-		 en la mitad del arreglo, entonces se encuentra en el
-		 subarreglo derecho */
+
         return busquedaBinaria(A,mitad+1,r,k);
     }
- 
-    //Si el valor no se encuentra en el arreglo
     return -1;
 }
 
