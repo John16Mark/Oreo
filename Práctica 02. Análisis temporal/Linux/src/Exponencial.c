@@ -1,6 +1,6 @@
 /*
 Exponencial.c
-V 1.1 Abril 2022
+V 1.1 Abril 2023
 Autores:	Yael André Blásquez Martínez
 			Juan Luis Molina Acuña
 			Aarón Olvera Martínez
