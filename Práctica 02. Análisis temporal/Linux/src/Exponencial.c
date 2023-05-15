@@ -1,15 +1,15 @@
 /*
 Exponencial.c
 V 1.1 Abril 2022
-Autores:	Yael André Blásquez Martínez
-			Juan Luis Molina Acuña
-			Aarón Olvera Martínez
+Autores:	Yael AndrÃ© BlÃ¡squez MartÃ­nez
+			Juan Luis Molina AcuÃ±a
+			AarÃ³n Olvera MartÃ­nez
 			Paola Reyes Francisco
 
-Implementación de la búsqueda Exponencial en C obtenida en https://www.geeksforgeeks.org/exponential-search/
-Toma n números enteros de la entrada estándar en la forma:
+ImplementaciÃ³n de la bÃºsqueda Exponencial en C obtenida en https://www.geeksforgeeks.org/exponential-search/
+Toma n nÃºmeros enteros de la entrada estÃ¡ndar en la forma:
 > BusquedaLineal n k a0 a1 a2 a3 ... an (en linux)
-Imprime el tiempo que tomó la ejecución del algoritmo, e imprime la dirección de memoria donde se encontró el valor.
+Imprime el tiempo que tomÃ³ la ejecuciÃ³n del algoritmo, e imprime la direcciÃ³n de memoria donde se encontrÃ³ el valor.
 
 	COMPILAR:
 gcc Exponencial.c -o Exponencial lib/TADColaDin.c lib/tiempo.c
@@ -32,27 +32,27 @@ int busquedaBinaria(int *A, int l, int r, int k);
 void cargarArchivo(cola *c, char *direccion);
 void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1);
 
-// Variables globales para la medición de tiempos.
+// Variables globales para la mediciÃ³n de tiempos.
 double u_acumulado = 0, w_acumulado = 0, s_acumulado = 0, p_acumulado = 0;
 
 int main(int argc, char *argv[])
 {
-	// Variables para la medición de tiempos.
+	// Variables para la mediciÃ³n de tiempos.
 	double utime0, stime0, wtime0, utime1, stime1, wtime1;
 	// Variable para determinar la longitud del arreglo
 	int n;
-	// Variable contadora para leer los números
+	// Variable contadora para leer los nÃºmeros
 	int i;
 	// Apuntador al arreglo
 	int *A;
 	// Cola donde se almacenan los valores a buscar
 	cola mi_cola;
-	// Variable del índice en el que se encontró el valor
+	// Variable del Ã­ndice en el que se encontrÃ³ el valor
 	int p;
 	// Verifica si se reciben solo tres argumentos
 	if(argc != 2)
 	{
-		printf("\n\n Para ejecutar el programa se necesita tamaño de arreglo");
+		printf("\n\n Para ejecutar el programa se necesita tamaÃ±o de arreglo");
 		printf("\n Ejemplo: %s 1000000", argv[0]);
 		exit(1);
 	}
@@ -60,34 +60,34 @@ int main(int argc, char *argv[])
 	// Lee el argumento
 	n = atoi(argv[1]);
 	A = malloc(n * sizeof(int));
-	// Lee de la entrada estándar los n valores y los coloca en el arreglo
+	// Lee de la entrada estÃ¡ndar los n valores y los coloca en el arreglo
 	for (i = 0; i < n; i++)
 		scanf("%d", &A[i]);
 		
-	// Lee los números a buscar de la dirección "buscar.txt"
+	// Lee los nÃºmeros a buscar de la direcciÃ³n "buscar.txt"
 	Initialize(&mi_cola);
 	cargarArchivo(&mi_cola, "buscar.txt");
 
-	printf("\n\n    BÚSQUEDA EXPONENCIAL\n    con %d números", n);
+	printf("\n\n    BÃšSQUEDA EXPONENCIAL\n    con %d nÃºmeros", n);
 	
 	// Ciclo para cada elemento de la cola
 	for(i = 1; i <= Size(&mi_cola); i++){
 
 		printf("\n\n Valor a encontrar: %d", Element(&mi_cola, i).n);
-		// Inicia la medición de tiempos
+		// Inicia la mediciÃ³n de tiempos
 		uswtime(&utime0, &stime0, &wtime0);
-		// Ejecución del algoritmo de búsqueda
+		// EjecuciÃ³n del algoritmo de bÃºsqueda
 		p = busquedaExponencial(A, n, Element(&mi_cola, i).n);
-		// Termina la medición de tiempos
+		// Termina la mediciÃ³n de tiempos
 		uswtime(&utime1, &stime1, &wtime1);
 		
-		// /*											Comentar si no se quiere imprimir la posición en donde se encontró
-		//Se imprime la posición del arreglo en la que se encontró o, en su defecto, -1 si no se encuentra en arreglo
+		// /*											Comentar si no se quiere imprimir la posiciÃ³n en donde se encontrÃ³
+		//Se imprime la posiciÃ³n del arreglo en la que se encontrÃ³ o, en su defecto, -1 si no se encuentra en arreglo
 		if(p == -1){
-			printf("\n \033[91mNO SE ENCONTRÓ EL NÚMERO\033[0m");
+			printf("\n \033[91mNO SE ENCONTRÃ“ EL NÃšMERO\033[0m");
 		}
 		else{
-			printf("\n \033[92mSe encontró en la posición:\033[0m %d", p);
+			printf("\n \033[92mSe encontrÃ³ en la posiciÃ³n:\033[0m %d", p);
 		}
 		// */											Fin comentario
 		rendimiento(utime0, stime0, wtime0, utime1, stime1, wtime1);
@@ -96,8 +96,8 @@ int main(int argc, char *argv[])
 	u_acumulado /= Size(&mi_cola);
 	s_acumulado /= Size(&mi_cola);
 	p_acumulado /= Size(&mi_cola);
-	// Cálculo del promedio de medición del algoritmo
-	printf("\n\n    PROMEDIO DE MEDICIÓN DE TIEMPOS\n");
+	// CÃ¡lculo del promedio de mediciÃ³n del algoritmo
+	printf("\n\n    PROMEDIO DE MEDICIÃ“N DE TIEMPOS\n");
 	printf("real (Tiempo total)  %.10f s\n",  w_acumulado);
 	printf("user (Tiempo de procesamiento en CPU) %.10f s\n",  u_acumulado);
 	printf("sys (Tiempo en acciones de E/S)  %.10f s\n",  s_acumulado);
@@ -117,25 +117,34 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-// Returns position of first occurrence of
-// k in array
+/*
+int busquedaExponencial(int *A, int n, int k)
+Recibe:	*A: DirecciÃ³n del arreglo original ordenado
+	n: Numero de elementos en el arreglo
+	k: Valor a buscar
+
+Compara el primer elemento del arreglo A con el valor a buscar k, si lo
+es retorna la posiciÃ³n 0.
+Sino, busca el rango en el que se encuentra el valor k realizando un 
+incremento exponencial de nuestro Ã­ndice i hasta que encuentre una posiciÃ³n 
+mayor a la posiciÃ³n en que se encuentra el valor k o hasta que alcance el 
+final del arreglo A. Una vez que encuentra el rango llama a la funciÃ³n
+busquedaBinaria para encontrar el valor a buscar en el rango establecido.
+
+Complejidad: O(log n)
+*/
 int busquedaExponencial(int *A, int n, int k)
 {
-    //Caso base: si k esta en la primera posición
+    //Caso base: si k esta en la primera posiciÃ³n
     if(A[0]==k)
         return 0;
- 
-    // Find range for binary search by
-    // repeated doubling
+	
     int i = 1;
     
     while(i<n&&A[i]<=k)
     {
     	i=i*2;
-	}
-	
-	//Llama a la funcion busquedaBinaria para el rango encontrado
-    //Call binary search for the found range.
+    }
     return busquedaBinaria(A,i/2,min(i,n-1),k);
 }
 
@@ -153,7 +162,7 @@ int busquedaBinaria(int *A, int l, int r, int k)
             return mitad;
             
             
- 		/*Si el valor a buscar es mas pequeño que el valor posicionado
+ 		/*Si el valor a buscar es mas pequeÃ±o que el valor posicionado
 		 en la mitad del arreglo, entonces se encuentra en el
 		 subarreglo izquierdo */
         if(A[mitad]>k)
@@ -171,10 +180,10 @@ int busquedaBinaria(int *A, int l, int r, int k)
 
 /*
 void cargarArchivo(cola *c, char *direccion)
-Recibe:	*c: 		Cola donde se almacenarán los números a buscar
-		*direccion:	Dirección del archivo donde están los números
+Recibe:	*c: 		Cola donde se almacenarÃ¡n los nÃºmeros a buscar
+		*direccion:	DirecciÃ³n del archivo donde estÃ¡n los nÃºmeros
 		
-Abre un archivo de texto y almacena los números del archivo en una cola.
+Abre un archivo de texto y almacena los nÃºmeros del archivo en una cola.
 */
 void cargarArchivo(cola *c, char *direccion)
 {
@@ -188,7 +197,7 @@ void cargarArchivo(cola *c, char *direccion)
 		exit(1);
 	}
 	
-	//Lee línea por línea el archivo de texto y los almacena en la cola
+	//Lee lÃ­nea por lÃ­nea el archivo de texto y los almacena en la cola
 	char line[500];
 	while (fgets(line, sizeof(line), flujo)){
 		e.n = atoi(line);
@@ -212,7 +221,7 @@ Muestra los resultados del rendimiento temporal dentro de un espacio de tiempo a
 */
 void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1)
 {
-	// Cálculo del tiempo de ejecución del programa
+	// CÃ¡lculo del tiempo de ejecuciÃ³n del programa
 	printf("\n");
 	printf("real (Tiempo total)  %.10f s\n",  w1 - w0);
 	printf("user (Tiempo de procesamiento en CPU) %.10f s\n",  u1 - u0);
