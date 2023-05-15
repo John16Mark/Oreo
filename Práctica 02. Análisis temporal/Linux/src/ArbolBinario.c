@@ -1,6 +1,6 @@
 /*
 ArbolBinario.c
-V 1.2 Abril 2022
+V 1.2 Abril 2023
 Autores:	Yael André Blásquez Martínez
 			Juan Luis Molina Acuña
 			Aarón Olvera Martínez
