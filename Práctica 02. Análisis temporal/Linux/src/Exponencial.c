@@ -8,7 +8,7 @@ Autores:	Yael André Blásquez Martínez
 
 Implementación de la búsqueda Exponencial en C obtenida en https://www.geeksforgeeks.org/exponential-search/
 Toma n números enteros de la entrada estándar en la forma:
-> BusquedaLineal n k a0 a1 a2 a3 ... an (en linux)
+> Exponencial n k a0 a1 a2 a3 ... an (en linux)
 Imprime el tiempo que tomó la ejecución del algoritmo, e imprime la dirección de memoria donde se encontró el valor.
 
 	COMPILAR:
