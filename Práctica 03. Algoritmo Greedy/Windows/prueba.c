@@ -34,6 +34,7 @@ void Descomprimir();
 void codePreOrden(posicion n, elemento *Frec);
 void asignarCodigo(posicion n, elemento *Frec);
 void InordenCode(posicion p, unsigned char c, int paso, elemento *Frec);
+void InordenCode2(posicion p, int paso, elemento *Frec, unsigned char c1, unsigned char c2);
 
 bool procesoTerminado = false;
 pthread_t hilo1;
@@ -154,6 +155,8 @@ void *procesoCompresion(void *arg)
 	for(i = 0; i < 256; i++){
 		if(Frec[i].frecuencia != 0){
 			Frec[i].c = i;
+			Frec[i].ch[0] = 0;
+			Frec[i].ch[1] = 0;
 			Add(&mi_lista, Frec[i]);
 		}
 	}
@@ -220,10 +223,12 @@ void *procesoCompresion(void *arg)
 	raiz->e.limite = 0;		// Para el nodo raiz
 	//Frec[raiz->e.c] = raiz->e;		// Se mete al arreglo
 	
-	codePreOrden(raiz, Frec);
+	//codePreOrden(raiz, Frec);
 	unsigned char caux = 0;
+	unsigned char caux2 =0;
 	//InordenCode(raiz, caux, 0, Frec);
-
+	//printf("\n");
+	InordenCode2(raiz, 0, Frec, caux, caux2);
 	//--------------------------------------------------------------//
 	//																//
 	//	 		  OBTENER EL TAMAÑO DEL ARREGLO DE SALIDA			//
@@ -237,9 +242,10 @@ void *procesoCompresion(void *arg)
 	for(i = 0; i < 256; i++){
 		if(Frec[i].frecuencia != 0){
 			n_bytes_salida += ((double) Frec[i].frecuencia * (double) Frec[i].limite);
-			printf("\n%c: ",Frec[i].c);
+			//printf("\n%c: %d ",Frec[i].c, Frec[i].limite);
 			for(j = 0; j<Frec[i].limite; j++){
-				printf("%d",CONSULTARBIT(Frec[i].code,7-j));
+				//printf("%d",CONSULTARBIT(Frec[i].code,7-j));
+				//printf("%d",CONSULTARBIT(Frec[i].ch[0],7-j));
 			}
 		}
 	}
@@ -281,12 +287,22 @@ void *procesoCompresion(void *arg)
 	
 	// Recorre todos los bytes del archivo original, busca su codificaci�n binaria y modifica
 	// los bits de los caracteres del arreglo de salida
+	int a;
+	int a1;
 	for(i = 0; i < n_bytes; i++){
 		for(j = 0; j < Frec[A[i]].limite; j++){
-
-			if(CONSULTARBIT(Frec[A[i]].code, 7-j) == 1){
-				PONE_1(ASalida[pos_byte], 7-pos_bit);
+			if(j < 8){
+				if(CONSULTARBIT(Frec[A[i]].code, 7-j) == 1){
+					PONE_1(ASalida[pos_byte], 7-pos_bit);
+				}
+			}else{
+				a = pos_bit-8;
+				a1 = j - 8;
+				if(CONSULTARBIT(Frec[A[i]].c2, 7-a1) == 1){
+					PONE_1(ASalida[pos_byte], 7-pos_bit);
+				}
 			}
+			
 			pos_bit++;
 			if(pos_bit == 8){
 				pos_byte++;
@@ -315,7 +331,7 @@ void *procesoCompresion(void *arg)
 	}
 	fclose(TABLA);
 	
-	
+	/*
 	printf("\n");
 	for(i = 0; i < n_bytes_salida; i++){
 		for(j = 0; j < 8; j++){
@@ -383,7 +399,7 @@ void *procesoDescompresion(void *arg)
 
 	// Lee el archivo de texto de la tabla de frecuencias y almacena los datos
 	FILE *tablatxt;
-	tablatxt = fopen(D0.tabla, "r");
+	tablatxt = fopen(strcat(D0.tabla, ".txt"), "r");
 	if(tablatxt == NULL){
 		printf("\n Error al abrir el archivo: %s", D0.tabla);
 		exit(1);
@@ -397,11 +413,11 @@ void *procesoDescompresion(void *arg)
 		linea[n_lineas_tabla][strlen(linea[n_lineas_tabla]) - 1] = '\0';
 		n_lineas_tabla++;
 	}
-	printf("\nTRUENAAAAAAAAAAAAA");
+	//printf("\nTRUENAAAAAAAAAAAAA");
 	n_bytes = atoi(strrchr(linea[2], ':')+2);
 	n_bytes_salida = atoi(strrchr(linea[1], ':')+2);
 	bits_sobrantes = atoi(strrchr(linea[3], ':')+2);
-	printf("\nTRUENAA2");
+	//printf("\nTRUENAA2");
 	fclose(tablatxt);
 
 	// Almacena el caracter y la frecuencia y los añade a la lista
@@ -528,7 +544,7 @@ void *procesoDescompresion(void *arg)
 	//																//
 	//--------------------------------------------------------------//
 
-	printf("\n");
+	//printf("\n");
 	posicion p = raiz;
 	for(i = 0; i < n_bytes; i++){
 		//printf("%c",A[i]);
@@ -562,6 +578,10 @@ void *procesoDescompresion(void *arg)
 		}
 		//printf("  ");
 	}
+
+	// LA FUNCIÓN ES ÚNICAMENTE PARA DEPURACIÓN, COMPRUEBA SI ES UNA COPIA
+	// EXACTA DE LA ORIGINAL
+	/*
 	bool bad =false;
 	int contador = 0;
 	for(i = 0; i < n_bytes_salida; i++){
@@ -580,12 +600,9 @@ void *procesoDescompresion(void *arg)
 	if(bad){
 		printf("NO CONCUERDAN");
 
-	}
+	}*/
 	fwrite(ASalida, n_bytes_salida, sizeof(unsigned char), archivo);
 	fclose(archivo);
-
-	int as;
-	scanf("%d",&as);
 
 	esperar(2000);
 	
@@ -638,7 +655,7 @@ void Comprimir()
 		perror("El thread no pudo crearse");
 		exit(-1);
 	}
-	/*
+	
 	// Pantalla de carga, se seguirá realizando mientras no haya terminado la compresión
 	clrscr();
 	pochita(42,4);
@@ -658,7 +675,7 @@ void Comprimir()
 		esperar(500);
 		gotoxy(66, 19);
 		printf(".");
-	}*/
+	}
 	pthread_join (hilo1, NULL);
 	procesoTerminado = false;
 	gotoxy(52, 19);
@@ -718,7 +735,7 @@ void Descomprimir()
 		perror("El thread no pudo crearse");
 		exit(-1);
 	}
-	/*
+	
 	// Pantalla de carga, se seguirá realizando mientras no haya terminado la descompresión
 	clrscr();
 	pochita(42,4);
@@ -738,7 +755,7 @@ void Descomprimir()
 		esperar(500);
 		gotoxy(68, 19);
 		printf(".");
-	}*/
+	}
 	pthread_join (hilo1, NULL);
 	procesoTerminado = false;
 	/*
@@ -894,6 +911,41 @@ void InordenCode(posicion p, unsigned char c, int paso, elemento *Frec){
 			unsigned char aux = c;
 			PONE_1(aux, 7-paso);
 			InordenCode(p->ramaDer, aux, paso+1, Frec);
+		}
+	}
+}
+
+void InordenCode2(posicion p, int paso, elemento *Frec, unsigned char c1, unsigned char c2){
+	if((p->ramaIzq == NULL) && (p->ramaDer == NULL)){
+		/*printf(" %c ",p->e.c);
+		for(int i = 0; i < 8; i++){
+			printf("%d",CONSULTARBIT(c1, 7-i));
+		}
+		printf(" ");
+		for(int i = 0; i < 8; i++){
+			printf("%d",CONSULTARBIT(c2, 7-i));
+		}*/
+		p->e.code = c1;
+		p->e.c2 = c2;
+		p->e.limite = paso;
+		Frec[p->e.c] = p->e;
+		//printf("\n");
+	}
+	else{
+		if(p->ramaIzq != NULL){
+			InordenCode2(p->ramaIzq, paso+1, Frec, c1, c2);
+		}
+		if(p->ramaDer != NULL){
+			unsigned char aux1 = c1;
+			unsigned char aux2 = c2;
+			int a = paso - 8;
+			if(paso < 8){
+				PONE_1(aux1, 7-paso);
+			}
+			else{
+				PONE_1(aux2, 7-a);
+			}
+			InordenCode2(p->ramaDer, paso+1, Frec, aux1, aux2);
 		}
 	}
 }

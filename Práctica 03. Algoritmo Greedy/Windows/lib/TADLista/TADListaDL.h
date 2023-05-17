@@ -15,6 +15,8 @@ typedef unsigned char boolean;
 typedef struct elemento
 {
 	unsigned char c;
+	unsigned char ch[2];
+	unsigned char c2;
 	int frecuencia;
 	unsigned char code;
 	int limite;
