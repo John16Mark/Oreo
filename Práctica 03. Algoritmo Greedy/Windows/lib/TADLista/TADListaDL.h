@@ -73,4 +73,8 @@ void VerLigasLista(lista *l);
 void VerLigas(posicion raiz);
 void PreOrdenDetallado(nodo *nodo);
 void Detalles(nodo *nodo);
+
+void VerLigasArchivo(FILE *f, posicion raiz);
+void PreOrdenDetalladoArchivo(FILE *f, nodo *nodo);
+void DetallesArchivo(FILE *f, nodo *nodo);
 #endif    // __TADLista_H

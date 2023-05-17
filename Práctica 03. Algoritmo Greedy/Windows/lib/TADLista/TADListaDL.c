@@ -641,3 +641,53 @@ void Detalles(nodo *nodo)
 	printf("Palabra: %c",nodo->e.c);
 	printf("\tFrecuencia: %d",nodo->e.frecuencia);
 }
+
+void VerLigasArchivo(FILE *f, posicion raiz)
+{
+	int i = 0;
+	posicion aux;	
+	aux=raiz;
+	fprintf(f,"\n*****************************************************************************************************");
+	PreOrdenDetalladoArchivo(f,aux);
+	fprintf(f,"\n*****************************************************************************************************");
+	/*if(!Empty(a))
+	{
+		printf("\n  Ra%cz del %crbol: %c",161, 160,aux->dato.c);
+	}
+	//printf("\n  Altura del %crbol: %d", 160, altura(Root(a)));
+	printf("\n  Cantidad de elementos=%d",a->tam);*/
+	return;
+}
+
+void PreOrdenDetalladoArchivo(FILE *f, nodo *nodo)
+{
+	if(nodo == NULL)
+	{
+		return;
+	}
+	
+	DetallesArchivo(f, nodo);
+	PreOrdenDetalladoArchivo(f,nodo->ramaIzq);
+	PreOrdenDetalladoArchivo(f,nodo->ramaDer);
+}
+
+void DetallesArchivo(FILE *f, nodo *nodo)
+{
+	fprintf(f,"\nPos=%d\t",nodo->e.c);
+	fprintf(f,"Izq=");
+	if(nodo->ramaIzq == 0){
+		fprintf(f,"%d\t", nodo->ramaIzq);
+	}
+	else{
+		fprintf(f,"%d: %d\t", nodo->ramaIzq->e.c, nodo->ramaIzq->e.c);
+	}
+	fprintf(f,"Der=");
+	if(nodo->ramaDer == 0){
+		fprintf(f,"%d\t", nodo->ramaDer);
+	}
+	else{
+		fprintf(f,"%d: %d\t", nodo->ramaDer->e.c,nodo->ramaDer->e.c);
+	}
+	fprintf(f,"Palabra: %d",nodo->e.c);
+	fprintf(f,"\tFrecuencia: %d",nodo->e.frecuencia);
+}
