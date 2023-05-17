@@ -207,6 +207,66 @@ void InsertNodoIn(lista *l, nodo newNodo, int n)
 	l->tam++;
 }
 
+void InsertNodoIn2 (lista *l, posicion p, nodo newNodo, boolean b)
+{
+	posicion aux, aux2;
+	aux=malloc(sizeof(nodo));
+	if(aux==NULL){
+		printf("ERROR: Insert(lista *l, posicion p, elemento e, boolean b)\n       Desbordamiento de lista.");
+		exit(1);
+	}
+	aux->e=newNodo.e;
+	aux->ramaIzq = newNodo.ramaIzq;
+	aux->ramaDer = newNodo.ramaDer;
+	if(ValidatePosition(l,p)){
+		//Enfrente de p
+		if(b){
+			aux2=Previous(l,p);
+			//p es el frente, se inserta al frente de la lista
+			if(aux2==NULL){
+				aux->anterior=NULL;
+				p->anterior = aux;
+				aux->siguiente=l->frente;
+				l->frente=aux;
+			}
+			//Si p no era el frente de la lista
+			else{
+				aux->anterior=aux2;
+				aux2->siguiente=aux;
+				p->anterior=aux;
+				aux->siguiente=p;
+			}
+		}
+		//Atras de p
+		else{
+			aux2=Following(l,p);
+			//p es el final, se inserta al final de la lista
+			if(aux2==NULL){
+				aux->anterior=p;
+				p->siguiente=aux;
+				l->final=aux;
+				aux->siguiente=NULL;
+			}
+			//Si p no era el frente de la lista
+			else{
+				aux->anterior=p;
+				aux2->anterior=aux;
+				p->siguiente=aux;
+				aux->siguiente=aux2;
+			}
+		}
+	}
+	//si p es invalido, se inserta el elemento enfrente
+	else{
+		aux->siguiente=l->frente;
+		l->frente=aux;
+		if(l->tam==0){
+			l->final=aux;}
+	}
+	l->tam++;
+	return;
+}
+
 void Remove(lista *l, posicion p)
 {
 	posicion aux,aux2;
@@ -519,5 +579,115 @@ void VerLigasLista(lista *l)
 	return;
 }
 
+/***************************************************************************************
+									OPERACIONES DEL ÁRBOL
+***************************************************************************************/
+/*
+Ver Ligas (VerLigas): recibe<-arbol (a)
+VerLigas(a);
+Efecto: Recibe un árbol (a) e imprime todos los enlaces que tienen los nodos del árbol.
+*/
+void VerLigas(posicion raiz)
+{
+	int i = 0;
+	posicion aux;	
+	aux=raiz;
+	printf("\n*****************************************************************************************************");
+	PreOrdenDetallado(aux);
+	printf("\n*****************************************************************************************************");
+	/*if(!Empty(a))
+	{
+		printf("\n  Ra%cz del %crbol: %c",161, 160,aux->dato.c);
+	}
+	//printf("\n  Altura del %crbol: %d", 160, altura(Root(a)));
+	printf("\n  Cantidad de elementos=%d",a->tam);*/
+	return;
+}
 
+/*
+Ver Ligas (VerLigas): recibe<-arbol (a)
+VerLigas(a);
+Efecto: Recibe un árbol (a) e imprime todos los enlaces que tienen los nodos del árbol.
+*/
+void PreOrdenDetallado(nodo *nodo)
+{
+	if(nodo == NULL)
+	{
+		return;
+	}
+	
+	Detalles(nodo);
+	PreOrdenDetallado(nodo->ramaIzq);
+	PreOrdenDetallado(nodo->ramaDer);
+}
 
+void Detalles(nodo *nodo)
+{
+	printf("\nPos=%d\t",nodo);
+	printf("Izq=");
+	if(nodo->ramaIzq == 0){
+		printf("\033[31m%d\033[0m\t", nodo->ramaIzq);
+	}
+	else{
+		printf("%d: %c\t", nodo->ramaIzq, nodo->ramaIzq->e.c);
+	}
+	printf("Der=");
+	if(nodo->ramaDer == 0){
+		printf("\033[31m%d\033[0m\t", nodo->ramaDer);
+	}
+	else{
+		printf("%d: %c\t", nodo->ramaDer,nodo->ramaDer->e.c);
+	}
+	printf("Palabra: %c",nodo->e.c);
+	printf("\tFrecuencia: %d",nodo->e.frecuencia);
+}
+
+void VerLigasArchivo(FILE *f, posicion raiz)
+{
+	int i = 0;
+	posicion aux;	
+	aux=raiz;
+	fprintf(f,"\n*****************************************************************************************************");
+	PreOrdenDetalladoArchivo(f,aux);
+	fprintf(f,"\n*****************************************************************************************************");
+	/*if(!Empty(a))
+	{
+		printf("\n  Ra%cz del %crbol: %c",161, 160,aux->dato.c);
+	}
+	//printf("\n  Altura del %crbol: %d", 160, altura(Root(a)));
+	printf("\n  Cantidad de elementos=%d",a->tam);*/
+	return;
+}
+
+void PreOrdenDetalladoArchivo(FILE *f, nodo *nodo)
+{
+	if(nodo == NULL)
+	{
+		return;
+	}
+	
+	DetallesArchivo(f, nodo);
+	PreOrdenDetalladoArchivo(f,nodo->ramaIzq);
+	PreOrdenDetalladoArchivo(f,nodo->ramaDer);
+}
+
+void DetallesArchivo(FILE *f, nodo *nodo)
+{
+	fprintf(f,"\nPos=%d\t",nodo->e.c);
+	fprintf(f,"Izq=");
+	if(nodo->ramaIzq == 0){
+		fprintf(f,"%d\t", nodo->ramaIzq);
+	}
+	else{
+		fprintf(f,"%d: %d\t", nodo->ramaIzq->e.c, nodo->ramaIzq->e.c);
+	}
+	fprintf(f,"Der=");
+	if(nodo->ramaDer == 0){
+		fprintf(f,"%d\t", nodo->ramaDer);
+	}
+	else{
+		fprintf(f,"%d: %d\t", nodo->ramaDer->e.c,nodo->ramaDer->e.c);
+	}
+	fprintf(f,"Palabra: %d",nodo->e.c);
+	fprintf(f,"\tFrecuencia: %d",nodo->e.frecuencia);
+}
