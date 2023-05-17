@@ -45,10 +45,12 @@ void Destroy (lista *l);			//Efecto: Recibe una lista l y la libera completament
 void Add (lista *l,elemento e);		//Efecto: Recibe una lista l y un elemento e; el elemento se agrega al final de la lista.
 void Insert(lista * l, posicion p, elemento e, boolean b);
 void InsertIn(lista *l, elemento e, int n);
-void InsertNodoIn(lista *l, nodo e, int n);
+void InsertNodoIn2 (lista *l, posicion p, nodo newNodo, boolean b);
+void InsertNodoIn2 (lista *l, posicion p, nodo e, boolean b);
 void Remove (lista *l,posicion p);
 void Replace (lista *l,posicion p, elemento e);
 nodo Dequeue(lista *l);
+posicion DequeuePos(lista *l);
 nodo PopNodoIn(lista *l, int n);
 void SelectionSort(lista *l);
 //OPERACIONES DE POSICIONAMIENTO Y BÚSQUEDA
@@ -67,4 +69,8 @@ posicion ElementPosition(lista *l, int n);
 boolean ValidatePosition (lista *l,posicion p);//Efecto: Recibe una lista l, una posici�n p, devuelve TRUE si la posición es válida, FALSE en caso contrario.
 //OPERACIONES DE CONSULTA (DEPURADOR)
 void VerLigasLista(lista *l);
+//OPERACIONES DEL ÁRBOL
+void VerLigas(posicion raiz);
+void PreOrdenDetallado(nodo *nodo);
+void Detalles(nodo *nodo);
 #endif    // __TADLista_H

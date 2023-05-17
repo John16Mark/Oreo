@@ -1,7 +1,7 @@
 /*
 IMPLEMENTACIONES DE LA LIBRERIA DEL TAD LISTA (TADLista.h)
-AUTOR: Juan Luis Molina AcuÒa - Enero 2023
-VERSI”N: 1.0
+AUTOR: Juan Luis Molina AcuÔøΩa - Enero 2023
+VERSIÔøΩN: 1.0
 
 Frente                                                       Final
 	 ******    ******    ******    ******    ******    ******
@@ -13,13 +13,13 @@ Frente                                                       Final
 COMPILACI√ìN PARA GENERAR EL C√ìDIGO OBJETO: gcc TADListaSL.c -c 
 */
 
-//LIBRERÕAS
+//LIBRERÔøΩAS
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "TADListaDL.h"
 /***************************************************************************************
-								OPERACIONES DE CONSTRUCCI”N
+								OPERACIONES DE CONSTRUCCIÔøΩN
 ***************************************************************************************/
 void Initialize(lista *l){
 	l -> frente = NULL;
@@ -42,7 +42,7 @@ void Destroy(lista *l){
 	return;
 }
 /***************************************************************************************
-								OPERACIONES DE MODIFICACI”N
+								OPERACIONES DE MODIFICACIÔøΩN
 ***************************************************************************************/
 void Add (lista *l, elemento e){
 	posicion aux;
@@ -207,6 +207,66 @@ void InsertNodoIn(lista *l, nodo newNodo, int n)
 	l->tam++;
 }
 
+void InsertNodoIn2 (lista *l, posicion p, nodo newNodo, boolean b)
+{
+	posicion aux, aux2;
+	aux=malloc(sizeof(nodo));
+	if(aux==NULL){
+		printf("ERROR: Insert(lista *l, posicion p, elemento e, boolean b)\n       Desbordamiento de lista.");
+		exit(1);
+	}
+	aux->e=newNodo.e;
+	aux->ramaIzq = newNodo.ramaIzq;
+	aux->ramaDer = newNodo.ramaDer;
+	if(ValidatePosition(l,p)){
+		//Enfrente de p
+		if(b){
+			aux2=Previous(l,p);
+			//p es el frente, se inserta al frente de la lista
+			if(aux2==NULL){
+				aux->anterior=NULL;
+				p->anterior = aux;
+				aux->siguiente=l->frente;
+				l->frente=aux;
+			}
+			//Si p no era el frente de la lista
+			else{
+				aux->anterior=aux2;
+				aux2->siguiente=aux;
+				p->anterior=aux;
+				aux->siguiente=p;
+			}
+		}
+		//Atras de p
+		else{
+			aux2=Following(l,p);
+			//p es el final, se inserta al final de la lista
+			if(aux2==NULL){
+				aux->anterior=p;
+				p->siguiente=aux;
+				l->final=aux;
+				aux->siguiente=NULL;
+			}
+			//Si p no era el frente de la lista
+			else{
+				aux->anterior=p;
+				aux2->anterior=aux;
+				p->siguiente=aux;
+				aux->siguiente=aux2;
+			}
+		}
+	}
+	//si p es invalido, se inserta el elemento enfrente
+	else{
+		aux->siguiente=l->frente;
+		l->frente=aux;
+		if(l->tam==0){
+			l->final=aux;}
+	}
+	l->tam++;
+	return;
+}
+
 void Remove(lista *l, posicion p)
 {
 	posicion aux,aux2;
@@ -274,6 +334,31 @@ nodo Dequeue(lista *l)
 
 	//Retornar al elemento
 	return *aux;
+}
+
+posicion DequeuePos(lista *l)
+{
+	posicion aux;
+	nodo NO;
+	elemento e; //Elemento a retornar 
+	if(l->tam == 0){
+		printf("ERROR: Dequeue(lista *l)\n        Subdesbordamiento de lista");
+		exit(1);
+	}else {
+		if(l->tam > 1){
+			posicion aux2 = First(l)->siguiente;
+			aux2->anterior = NULL;
+		}
+		
+		aux = l->frente;
+		l->frente = l->frente->siguiente;
+		l->tam--;
+		if(l->tam==0)
+			l->final=NULL;
+	}
+
+	//Retornar la posici√≥n
+	return aux;
 }
 
 nodo PopNodoIn(lista *l, int n)
@@ -351,7 +436,7 @@ void SelectionSort(lista *l){
 }
 
 /***************************************************************************************
-						OPERACIONES DE POSICIONAMIENTO Y B⁄SQUEDA
+						OPERACIONES DE POSICIONAMIENTO Y BÔøΩSQUEDA
 ***************************************************************************************/
 posicion Final (lista *l)
 {
@@ -466,7 +551,7 @@ boolean ValidatePosition(lista *l,posicion p)
 	return b;	
 }
 /***************************************************************************************
-							  OPERACIONES DE CONSULTA (DEPURACI”N)
+							  OPERACIONES DE CONSULTA (DEPURACIÔøΩN)
 ***************************************************************************************/
 void VerLigasLista(lista *l)
 {
@@ -494,5 +579,65 @@ void VerLigasLista(lista *l)
 	return;
 }
 
+/***************************************************************************************
+									OPERACIONES DEL √ÅRBOL
+***************************************************************************************/
+/*
+Ver Ligas (VerLigas): recibe<-arbol (a)
+VerLigas(a);
+Efecto: Recibe un √°rbol (a) e imprime todos los enlaces que tienen los nodos del √°rbol.
+*/
+void VerLigas(posicion raiz)
+{
+	int i = 0;
+	posicion aux;	
+	aux=raiz;
+	printf("\n*****************************************************************************************************");
+	PreOrdenDetallado(aux);
+	printf("\n*****************************************************************************************************");
+	/*if(!Empty(a))
+	{
+		printf("\n  Ra%cz del %crbol: %c",161, 160,aux->dato.c);
+	}
+	//printf("\n  Altura del %crbol: %d", 160, altura(Root(a)));
+	printf("\n  Cantidad de elementos=%d",a->tam);*/
+	return;
+}
 
+/*
+Ver Ligas (VerLigas): recibe<-arbol (a)
+VerLigas(a);
+Efecto: Recibe un √°rbol (a) e imprime todos los enlaces que tienen los nodos del √°rbol.
+*/
+void PreOrdenDetallado(nodo *nodo)
+{
+	if(nodo == NULL)
+	{
+		return;
+	}
+	
+	Detalles(nodo);
+	PreOrdenDetallado(nodo->ramaIzq);
+	PreOrdenDetallado(nodo->ramaDer);
+}
 
+void Detalles(nodo *nodo)
+{
+	printf("\nPos=%d\t",nodo);
+	printf("Izq=");
+	if(nodo->ramaIzq == 0){
+		printf("\033[31m%d\033[0m\t", nodo->ramaIzq);
+	}
+	else{
+		printf("%d: %c\t", nodo->ramaIzq, nodo->ramaIzq->e.c);
+	}
+	printf("Der=");
+	if(nodo->ramaDer == 0){
+		printf("\033[31m%d\033[0m\t", nodo->ramaDer);
+	}
+	else{
+		printf("%d: %c\t", nodo->ramaDer,nodo->ramaDer->e.c);
+	}
+	printf("Palabra: %c",nodo->e.c);
+	printf("\tFrecuencia: %d",nodo->e.frecuencia);
+}
