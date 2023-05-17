@@ -31,6 +31,10 @@ gcc prueba.c -o prueba.exe lib/disenio.c lib/ascii_art.c lib/menu.c lib/TADLista
 void Comprimir();
 void Descomprimir();
 
+void codePreOrden(posicion n, elemento *Frec);
+void asignarCodigo(posicion n, elemento *Frec);
+void InordenCode(posicion p, unsigned char c, int paso, elemento *Frec);
+
 bool procesoTerminado = false;
 pthread_t hilo1;
 pthread_t hilo2;
@@ -42,7 +46,7 @@ typedef struct direcciones{
 }direcciones;
 
 unsigned char *Arreglodeprueba;
-elemento *prueba;
+int arreglopruebatam = 0;
 
 int main()
 {
@@ -158,11 +162,9 @@ void *procesoCompresion(void *arg)
 	// Arreglo de elementos para imprimir la lista de frecuencias
 	elemento *TablaResumida;
 	TablaResumida = malloc(tam_lista * sizeof(elemento));
-	prueba = malloc(tam_lista * sizeof(elemento));
 	SelectionSort(&mi_lista);
 	for(i = 0; i < tam_lista; i++){
 		TablaResumida[i] = Element(&mi_lista, i);
-		prueba[i] = Element(&mi_lista, i);
 	}
 	
 	//--------------------------------------------------------------//
@@ -176,45 +178,8 @@ void *procesoCompresion(void *arg)
 	posicion S1 = NULL; 
 	posicion S2 = NULL;
 	int pos_aux = 0;
-	/*
-	while(mi_lista.tam != 0){
-		printf("\n");
-		for(i = 0; i < Size(&mi_lista); i++){
-			printf("%d ", Element(&mi_lista,i).frecuencia);
-		}
-		S1 = DequeuePos(&mi_lista);
-		//printf("%d ", S1->e.frecuencia);			// Comentarios para verificar en caso de ser necesario ( Se borran cuando el programa ya funcione)
-		S2 = DequeuePos(&mi_lista);
-		//printf("%d ", S2->e.frecuencia);			// Mismo que arriba
-		
-		// Modificación de los valores para agregar un nodo simple
-		N.e.frecuencia = S1->e.frecuencia + S2->e.frecuencia;
-		N.ramaIzq = S1;
-		N.ramaDer = S2;
 
-		// Insertar el nodo ordenado
-		if(mi_lista.tam != 0){
-			pos_aux = 0;
-			for(i = 0; i < Size(&mi_lista); i++){
-				if(N.e.frecuencia > Element(&mi_lista, i).frecuencia){
-					pos_aux = i;
-				}
-			}
-			InsertNodoIn(&mi_lista, N, pos_aux-1);
-			//InsertNodoIn(&mi_lista, N, 0);				// Lo quiero ordenado
-			//SelectionSort(&mi_lista);					// Si no se puede insertar ordenado
-		}
-		// Terminar cuando la lista esté vacía, se guarda la posición de raiz
-		else{
-			raiz = &N;
-			break;
-		}
-	}*/
 	while(mi_lista.tam > 1){
-		//printf("\n");
-		/**(i = 0; i < Size(&mi_lista); i++){
-			//printf("%d ", Element(&mi_lista,i).frecuencia);
-		}*/
 		S1 = DequeuePos(&mi_lista);
 		//printf("%d ", S1->e.frecuencia);			// Comentarios para verificar en caso de ser necesario ( Se borran cuando el programa ya funcione)
 		S2 = DequeuePos(&mi_lista);
@@ -227,18 +192,14 @@ void *procesoCompresion(void *arg)
 
 		pos_aux = 0;
 		for(i = 0; i < mi_lista.tam; i++){
-			//printf("\n Comparando %d con %d",N.e.frecuencia,Element(&mi_lista, i).frecuencia);
 			if(N.e.frecuencia > Element(&mi_lista, i).frecuencia){
 				pos_aux = i;
-				//printf(" ahora: %d",pos_aux);
-				//i = mi_lista.tam;
 			}
 			else
 			{
 				i = mi_lista.tam;
 			}
 		}
-		//printf("\n Se colocara en la posicion %d", pos_aux);
 		if(mi_lista.tam != 0){
 			InsertNodoIn2(&mi_lista, ElementPosition(&mi_lista,pos_aux), N, 0);
 		}
@@ -246,8 +207,6 @@ void *procesoCompresion(void *arg)
 			raiz = &N;
 		}
 	}
-	
-	VerLigas(raiz);
 
 	//--------------------------------------------------------------//
 	//																//
@@ -261,9 +220,9 @@ void *procesoCompresion(void *arg)
 	raiz->e.limite = 0;		// Para el nodo raiz
 	//Frec[raiz->e.c] = raiz->e;		// Se mete al arreglo
 	
-	//codePreOrden(raiz, Frec);
+	codePreOrden(raiz, Frec);
 	unsigned char caux = 0;
-	InordenCode(raiz, caux, 0, Frec);
+	//InordenCode(raiz, caux, 0, Frec);
 
 	//--------------------------------------------------------------//
 	//																//
@@ -278,10 +237,16 @@ void *procesoCompresion(void *arg)
 	for(i = 0; i < 256; i++){
 		if(Frec[i].frecuencia != 0){
 			n_bytes_salida += ((double) Frec[i].frecuencia * (double) Frec[i].limite);
+			printf("\n%c: ",Frec[i].c);
+			for(j = 0; j<Frec[i].limite; j++){
+				printf("%d",CONSULTARBIT(Frec[i].code,7-j));
+			}
 		}
 	}
 	n_bytes_salida /= 8;
 	n_bytes_salida = ceil(n_bytes_salida);
+
+
 
 	//--------------------------------------------------------------//
 	//																//
@@ -335,8 +300,11 @@ void *procesoCompresion(void *arg)
 	//	  		 TERMINAR DE IMPRIMIR EN EL ARCHIVO DE TEXTO		//
 	//																//
 	//--------------------------------------------------------------//
-	
-	fprintf(TABLA, "\nBits sobrantes: %d", 8-pos_bit);
+	int b = 8-pos_bit;
+	if(b == 8){
+		b = 0;
+	}
+	fprintf(TABLA, "\nBits sobrantes: %d", b);
 	fprintf(TABLA, "\n\nTABLA DE FRECUENCIAS (VALOR):\n");
 	for(i = 0; i < tam_lista; i++){
 		fprintf(TABLA, "%d:%d\n", TablaResumida[i].c, TablaResumida[i].frecuencia);
@@ -347,7 +315,7 @@ void *procesoCompresion(void *arg)
 	}
 	fclose(TABLA);
 	
-	/*
+	
 	printf("\n");
 	for(i = 0; i < n_bytes_salida; i++){
 		for(j = 0; j < 8; j++){
@@ -362,7 +330,7 @@ void *procesoCompresion(void *arg)
 	printf("\n");
 	for(i = 0; i < n_bytes_salida; i++){
 		printf("%d ",ASalida[i]);
-	}*/
+	}
 	/*
 	printf("\n frecuencia en %d (%c): %d ",111,111,Frec[111].frecuencia);
 	printf("\n tamaño de %s: %d", Frec[72].codificado, strlen(Frec[72].codificado));
@@ -420,12 +388,12 @@ void *procesoDescompresion(void *arg)
 		printf("\n Error al abrir el archivo: %s", D0.tabla);
 		exit(1);
 	}
+
 	// Almacena línea por línea en un arreglo
 	char line[TABLA_MAX_COLUMNAS];
 	int n_lineas_tabla = 0;
 	unsigned char linea[TABLA_MAX_LINEAS][TABLA_MAX_COLUMNAS];
 	while (fgets(linea[n_lineas_tabla], TABLA_MAX_COLUMNAS, tablatxt)){
-		//printf("\n%d",strlen(linea[n_lineas_tabla]));
 		linea[n_lineas_tabla][strlen(linea[n_lineas_tabla]) - 1] = '\0';
 		n_lineas_tabla++;
 	}
@@ -434,12 +402,8 @@ void *procesoDescompresion(void *arg)
 	n_bytes_salida = atoi(strrchr(linea[1], ':')+2);
 	bits_sobrantes = atoi(strrchr(linea[3], ':')+2);
 	printf("\nTRUENAA2");
-	//printf("\n NUM BYTES:%s", strrchr(linea[1], ':')+2);
-	//printf("\n NUM BYTES SALIDA:%s", strrchr(linea[2], ':')+2);
 	fclose(tablatxt);
 
-
-	//strrchr(D0.entrada, '.')
 	// Almacena el caracter y la frecuencia y los añade a la lista
 	elemento e;
 	fflush(stdout);
@@ -453,13 +417,10 @@ void *procesoDescompresion(void *arg)
 		strcpy(caracter,"");
 		strcpy(num,"");
 		k = 0;
-		//printf("TRUENAAAAAAAAAAAAA");
-		//printf("%s\n", linea[i]);
 		if(strrchr(linea[i], ':') == NULL){
 			i = n_lineas_tabla;
 		}
 		else{
-			//printf("%s\n",linea[i], i);
 			empiezaNum = false;
 			for(j = 0; j< strlen(linea[i]); j++){
 				if(empiezaNum){
@@ -478,52 +439,11 @@ void *procesoDescompresion(void *arg)
 					caracter[j+1] = '\0';
 				}
 			}
-			//printf("\n%s: %s", caracter, num);
 			e.c = atoi(caracter);
 			e.frecuencia = atoi(num);
 			Add(&mi_lista, e);
 		}
-		/*
-		printf("%s i:%d\n",linea[i], i);
-		if(empiezaTabla){
-			empiezaNum = false;
-			for(j = 0; j< strlen(linea[i]); j++){
-				if(empiezaNum){
-					caracterAux = linea[i][j];
-					num[k] = caracterAux;
-					num[k+1] = '\0';
-					k++;
-				}
-				else if(linea[i][j] == ':'){
-					empiezaNum = true;
-
-				}
-				else{
-					caracterAux = linea[i][j];
-					caracter[j] = caracterAux;
-					caracter[j+1] = '\0';
-				}
-			}
-			printf("\n%s OwO %s", caracter, num);
-			e.c = atoi(caracter);
-			e.frecuencia = atoi(num);
-			Add(&mi_lista, e);
-		}
-		if(strcmp(linea[i], "VALOR NUMERICO:") == 0){
-			empiezaTabla = true;
-			printf("PASA");
-		}*/
 	}
-
-	printf("TRUENAAAAAAAAAAAAA");
-	printf("\nNEW  ORIGINAL");
-	for(i = 0; i < Size(&mi_lista); i++){
-		printf("\n%c: %d\t\t%c: %d", Element(&mi_lista, i).c, Element(&mi_lista, i).frecuencia, prueba[i].c, prueba[i].frecuencia);
-	}
-
-
-
-	
 
 	//--------------------------------------------------------------//
 	//																//
@@ -538,10 +458,6 @@ void *procesoDescompresion(void *arg)
 	int pos_aux = 0;
 
 	while(mi_lista.tam > 1){
-		/*printf("\n");
-		for(i = 0; i < Size(&mi_lista); i++){
-			printf("%d ", Element(&mi_lista,i).frecuencia);
-		}*/
 		S1 = DequeuePos(&mi_lista);
 		//printf("%d ", S1->e.frecuencia);			// Comentarios para verificar en caso de ser necesario ( Se borran cuando el programa ya funcione)
 		S2 = DequeuePos(&mi_lista);
@@ -554,18 +470,14 @@ void *procesoDescompresion(void *arg)
 
 		pos_aux = 0;
 		for(i = 0; i < mi_lista.tam; i++){
-			//printf("\n Comparando %d con %d",N.e.frecuencia,Element(&mi_lista, i).frecuencia);
 			if(N.e.frecuencia > Element(&mi_lista, i).frecuencia){
 				pos_aux = i;
-				//printf(" ahora: %d",pos_aux);
-				//i = mi_lista.tam;
 			}
 			else
 			{
 				i = mi_lista.tam;
 			}
 		}
-		//printf("\n Se colocara en la posicion %d", pos_aux);
 		if(mi_lista.tam != 0){
 			InsertNodoIn2(&mi_lista, ElementPosition(&mi_lista,pos_aux), N, 0);
 		}
@@ -573,8 +485,6 @@ void *procesoDescompresion(void *arg)
 			raiz = &N;
 		}
 	}
-
-	VerLigas(raiz);
 
 	//--------------------------------------------------------------//
 	//																//
@@ -655,13 +565,14 @@ void *procesoDescompresion(void *arg)
 	bool bad =false;
 	int contador = 0;
 	for(i = 0; i < n_bytes_salida; i++){
-		printf("\n%d\t%d",ASalida[i], Arreglodeprueba[i]);
+		
 		if(ASalida[i] != Arreglodeprueba[i]){
 			//printf("NO CONCUERDAN");
-			
+			printf("\n\033[31m%d\t%d\033[0m",ASalida[i], Arreglodeprueba[i]);
 			bad = true;
 		}else{
 			contador++;
+			printf("\n%d\t%d",ASalida[i], Arreglodeprueba[i]);
 		}
 	}
 
@@ -672,8 +583,10 @@ void *procesoDescompresion(void *arg)
 	}
 	fwrite(ASalida, n_bytes_salida, sizeof(unsigned char), archivo);
 	fclose(archivo);
-int as;
+
+	int as;
 	scanf("%d",&as);
+
 	esperar(2000);
 	
 	procesoTerminado = true;
@@ -755,6 +668,13 @@ void Comprimir()
 
 	gotoxy(23,15);
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
 	void Descomprimir()
@@ -840,7 +760,7 @@ void Descomprimir()
 
 
 
-
+/*
 void codePreOrden(posicion n, elemento *Frec){
 	if(n!=NULL){
 		// ProcesarNodo, asignando su código correspondiente
@@ -894,7 +814,71 @@ void asignarCodigo(posicion n, elemento *Frec){
 	printf("\nCaracter: %c");
 
 	//************************************************************
+}*/
+
+
+void codePreOrden(posicion n, elemento *Frec){
+	if(n!=NULL){
+		// ProcesarNodo, asignando su código correspondiente
+		asignarCodigo(n, Frec);
+
+		codePreOrden(n->ramaIzq, Frec);
+		codePreOrden(n->ramaDer, Frec);
+	}
 }
+
+void asignarCodigo(posicion n, elemento *Frec){
+
+	// Copia el código y límite (lo incrementa), para su hijo izquierdo
+	if(n->ramaIzq != NULL){
+		// Actualización del límite
+		n->ramaIzq->e.limite = n->e.limite;		// Copia el límite
+		(n->ramaIzq->e.limite)++;				// Lo incrementa
+
+		// Actualización del bit
+		n->ramaIzq->e.code = n->e.code;			// Copia el código
+		// No es necesario poner 0 porque inicia en 0
+		//PONE_0(n->ramaIzq->e.code, 7 - n->ramaIzq->e.limite); 			// 0 en el bit n->ramaIzq->e.limite
+		
+		// Se mete al arreglo si es una hoja
+
+		if(n->ramaIzq->ramaDer == NULL && n->ramaIzq->ramaIzq == NULL)
+			Frec[n->ramaIzq->e.c] = n->ramaIzq->e;
+
+	}
+
+	// Copia el código y límite (lo incrementa), para su hijo derecho
+	if(n->ramaDer != NULL){
+		// Actualización del límite
+		n->ramaDer->e.limite = n->e.limite;		// Copia el límite
+		(n->ramaDer->e.limite)++;				// Lo incrementa
+		printf("\n%d ", n->ramaDer->e.limite);	// Para verificar en que nivel se está imprimiendo COMENTAR
+
+		// Actualización del bit
+		n->ramaDer->e.code = n->e.code;			// Copia el código
+		PONE_1(n->ramaDer->e.code, 7 - n->ramaIzq->e.limite + 1); 			// 1 en el bit n->ramaIzq->e.limite
+
+		// Se mete al arreglo si es una hoja
+		
+		if(n->ramaDer->ramaDer == NULL && n->ramaDer->ramaIzq == NULL)
+			Frec[n->ramaDer->e.c] = n->ramaDer->e;
+		
+
+	// Para verificar que funciona COMENTAR
+
+	//***********************************************************
+	//Revisar el valor de cada bit
+	int n_bits = 8;
+	printf("Valor de los bits\n");
+	for (int i=n_bits-1; i>=0; i--)
+	printf("%d",CONSULTARBIT(n->ramaDer->e.code,i));			// Para verificar que funciona COMENTAR
+	}
+
+	//************************************************************
+}
+
+
+
 
 void InordenCode(posicion p, unsigned char c, int paso, elemento *Frec){
 	if((p->ramaIzq == NULL) && (p->ramaDer == NULL)){
