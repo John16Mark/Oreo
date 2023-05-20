@@ -1,6 +1,19 @@
 /*
+Huffman.c
+V 1.3 Mayo 2022
+Autores:	Yael André Blásquez Martínez
+			Juan Luis Molina Acuña
+			Aarón Olvera Martínez
+			Paola Reyes Francisco
 
-gcc prueba.c -o prueba lib/disenio.c lib/ascii_art.c lib/menu.c lib/TADLista/TADListaDL.c lib/tiempo.c -lm -w
+Implementación del algoritmo de Huffman para compresión de archivos. La compresión recibe un archivo de cualquier extensión, y expulsa un archivo comprimido
+y un archivo de texto con la tabla de frecuencias. La descompresión recibe un archivo comprimido y la tabla de frecuencias y expulsa el archivo original descomprimido.
+
+	COMPILAR:
+gcc Huffman.c -o Huffman lib/disenio.c lib/ascii_art.c lib/menu.c lib/TADLista/TADListaDL.c lib/tiempo.c -lm -w
+
+	EJECUTAR:
+./Huffman
 
 */
 
