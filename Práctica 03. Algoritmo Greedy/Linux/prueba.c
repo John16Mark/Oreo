@@ -1,6 +1,6 @@
 /*
 
-gcc prueba.c -o prueba lib/disenio.c lib/ascii_art.c lib/menu.c lib/TADLista/TADListaDL.c -lm
+gcc prueba.c -o prueba lib/disenio.c lib/ascii_art.c lib/menu.c lib/TADLista/TADListaDL.c lib/tiempo.c -lm -w
 
 */
 
@@ -14,6 +14,7 @@ gcc prueba.c -o prueba lib/disenio.c lib/ascii_art.c lib/menu.c lib/TADLista/TAD
 #include "lib/ascii_art.h"
 #include "lib/menu.h"
 #include "lib/TADLista/TADListaDL.h"
+#include "lib/tiempo.h"
 
 #include <unistd.h> 
 
@@ -28,13 +29,11 @@ gcc prueba.c -o prueba lib/disenio.c lib/ascii_art.c lib/menu.c lib/TADLista/TAD
 #define PONE_0(var,bpos) *(unsigned*)&var &= ~(PESOBIT(bpos))
 #define CAMBIA(var,bpos) *(unsigned*)&var ^= PESOBIT(bpos)
 
-void Comprimir();
-void Descomprimir();
+void menuCompresion();
+void menuDescompresion();
 
-void codePreOrden(posicion n, elemento *Frec);
-void asignarCodigo(posicion n, elemento *Frec);
-void InordenCode(posicion p, unsigned char c, int paso, elemento *Frec);
 void InordenCode2(posicion p, int paso, elemento *Frec, unsigned char c1, unsigned char c2);
+void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1, int bytes, bool cd, char nombre[150]);
 
 bool procesoTerminado = false;
 pthread_t hilo1;
@@ -51,14 +50,7 @@ int arreglopruebatam = 0;
 
 int main()
 {
-	int i,j;
-	/*olorBackground("negro");
-	for(i = 0; i < CONSOLE_WIDTH; i++){
-		for (j = 0; j < CONSOLE_HEIGHT; j++){
-			printf(" ");
-		}
-		printf("\n");
-	}*/
+	int i;
 	clrscr();
 
 	for(i = 0; i < CONSOLE_WIDTH; i++){
@@ -70,16 +62,15 @@ int main()
 		scanf("%d",&eleccion);
 		switch(eleccion){
 		case 1:
-			Comprimir();
+			menuCompresion();
 			break;
 		case 2:
-			Descomprimir();
+			menuDescompresion();
 			break;
 		case 3:
 			clrscr();
 			pochita(42,4);
 			gotoxy(0,19);
-
 			exit(0);
 			break;
 		}
@@ -117,11 +108,17 @@ void *procesoCompresion(void *arg)
 	lista mi_lista;
 	Initialize(&mi_lista);
 	
+	// Variables para la medición de tiempos.
+	double utime0, stime0, wtime0, utime1, stime1, wtime1;
+
 	//--------------------------------------------------------------//
 	//																//
 	//				 ENTRADA Y LECTURA DE LOS ARCHIVOS				//
 	//																//
 	//--------------------------------------------------------------//
+	
+	// Inicia la medición de tiempos
+	uswtime(&utime0, &stime0, &wtime0);
 
 	// Modo binario lectura -> archivo de entrda
 	archivo = fopen(D0.entrada, "rb");
@@ -135,11 +132,7 @@ void *procesoCompresion(void *arg)
 	
 	// Lee todos los bytes del archivo y los almacena en el arreglo de bytes, cierra el archivo.
 	A = (unsigned char *) malloc(n_bytes * sizeof(unsigned char));
-	Arreglodeprueba = (unsigned char *) malloc(n_bytes * sizeof(unsigned char));
 	fread(A, n_bytes, 1, archivo);		// Almacenar en A TODO lo que está en archivo
-	for(i = 0; i < n_bytes; i++){
-		Arreglodeprueba[i] = A[i];
-	}
 	fclose(archivo);					// Cerrar archivo
 	
 	//--------------------------------------------------------------//
@@ -171,8 +164,6 @@ void *procesoCompresion(void *arg)
 	for(i = 0; i < 256; i++){
 		if(Frec[i].frecuencia != 0){
 			Frec[i].c = i;
-			Frec[i].ch[0] = 0;
-			Frec[i].ch[1] = 0;
 			Add(&mi_lista, Frec[i]);
 		}
 	}
@@ -200,9 +191,7 @@ void *procesoCompresion(void *arg)
 
 	while(mi_lista.tam > 1){
 		S1 = DequeuePos(&mi_lista);
-		//printf("%d ", S1->e.frecuencia);			// Comentarios para verificar en caso de ser necesario ( Se borran cuando el programa ya funcione)
 		S2 = DequeuePos(&mi_lista);
-		//printf("%d ", S2->e.frecuencia);			// Mismo que arriba
 		
 		// Modificación de los valores para agregar un nodo simple
 		N.e.frecuencia = S1->e.frecuencia + S2->e.frecuencia;
@@ -214,8 +203,7 @@ void *procesoCompresion(void *arg)
 			if(N.e.frecuencia > Element(&mi_lista, i).frecuencia){
 				pos_aux = i;
 			}
-			else
-			{
+			else{
 				i = mi_lista.tam;
 			}
 		}
@@ -233,18 +221,11 @@ void *procesoCompresion(void *arg)
 	//		DE BITS CODIFICADOS Y EL TAMAÑO DE DICHO CONJUNTO		//
 	//																//
 	//--------------------------------------------------------------//
-
-	//int n_bits=sizeof(unsigned char)*8;
-	raiz->e.code = 0;
-	raiz->e.limite = 0;		// Para el nodo raiz
-	//Frec[raiz->e.c] = raiz->e;		// Se mete al arreglo
 	
-	//codePreOrden(raiz, Frec);
 	unsigned char caux = 0;
-	unsigned char caux2 =0;
-	//InordenCode(raiz, caux, 0, Frec);
-	//printf("\n");
+	unsigned char caux2 = 0;
 	InordenCode2(raiz, 0, Frec, caux, caux2);
+
 	//--------------------------------------------------------------//
 	//																//
 	//	 		  OBTENER EL TAMAÑO DEL ARREGLO DE SALIDA			//
@@ -258,17 +239,10 @@ void *procesoCompresion(void *arg)
 	for(i = 0; i < 256; i++){
 		if(Frec[i].frecuencia != 0){
 			n_bytes_salida += ((double) Frec[i].frecuencia * (double) Frec[i].limite);
-			//printf("\n%c: %d ",Frec[i].c, Frec[i].limite);
-			for(j = 0; j<Frec[i].limite; j++){
-				//printf("%d",CONSULTARBIT(Frec[i].code,7-j));
-				//printf("%d",CONSULTARBIT(Frec[i].ch[0],7-j));
-			}
 		}
 	}
 	n_bytes_salida /= 8;
 	n_bytes_salida = ceil(n_bytes_salida);
-
-
 
 	//--------------------------------------------------------------//
 	//																//
@@ -307,6 +281,7 @@ void *procesoCompresion(void *arg)
 	int a1;
 	for(i = 0; i < n_bytes; i++){
 		for(j = 0; j < Frec[A[i]].limite; j++){
+			
 			if(j < 8){
 				if(CONSULTARBIT(Frec[A[i]].code, 7-j) == 1){
 					PONE_1(ASalida[pos_byte], 7-pos_bit);
@@ -314,7 +289,7 @@ void *procesoCompresion(void *arg)
 			}else{
 				a = pos_bit-8;
 				a1 = j - 8;
-				if(CONSULTARBIT(Frec[A[i]].c2, 7-a1) == 1){
+				if(CONSULTARBIT(Frec[A[i]].code2, 7-a1) == 1){
 					PONE_1(ASalida[pos_byte], 7-pos_bit);
 				}
 			}
@@ -332,6 +307,7 @@ void *procesoCompresion(void *arg)
 	//	  		 TERMINAR DE IMPRIMIR EN EL ARCHIVO DE TEXTO		//
 	//																//
 	//--------------------------------------------------------------//
+	
 	int b = 8-pos_bit;
 	if(b == 8){
 		b = 0;
@@ -346,30 +322,6 @@ void *procesoCompresion(void *arg)
 		fprintf(TABLA, "%c:%d\n", TablaResumida[i].c, TablaResumida[i].frecuencia);
 	}
 	fclose(TABLA);
-	
-	/*
-	printf("\n");
-	for(i = 0; i < n_bytes_salida; i++){
-		for(j = 0; j < 8; j++){
-			printf("%d",CONSULTARBIT(ASalida[i],7-j));
-		}
-		printf(" ");
-	}
-	printf("\n");
-	for(i = 0; i < n_bytes_salida; i++){
-		printf("%c",ASalida[i]);
-	}
-	printf("\n");
-	for(i = 0; i < n_bytes_salida; i++){
-		printf("%d ",ASalida[i]);
-	}
-	/*
-	printf("\n frecuencia en %d (%c): %d ",111,111,Frec[111].frecuencia);
-	printf("\n tamaño de %s: %d", Frec[72].codificado, strlen(Frec[72].codificado));
-	*/
-	esperar(2000);
-	
-	//-----------------
 
 	//--------------------------------------------------------------//
 	//																//
@@ -384,8 +336,12 @@ void *procesoCompresion(void *arg)
 		exit(1);
 	}
 	fwrite(ASalida, n_bytes_salida, sizeof(unsigned char), archivo);
-	//fwrite(A, n_bytes, sizeof(unsigned char), archivo);
 	fclose(archivo);
+
+	// Termina la medición de tiempos
+	uswtime(&utime1, &stime1, &wtime1);
+	rendimiento(utime0, stime0, wtime0, utime1, stime1, wtime1, n_bytes, true, D0.entrada);
+
 	procesoTerminado = true;
 }
 
@@ -419,6 +375,18 @@ void *procesoDescompresion(void *arg)
 	lista mi_lista;
 	Initialize(&mi_lista);
 
+	// Variables para la medición de tiempos.
+	double utime0, stime0, wtime0, utime1, stime1, wtime1;
+
+	//--------------------------------------------------------------//
+	//																//
+	//		   ENTRADA Y LECTURA DE LA TABLA DE FRECUENCIAS			//
+	//																//
+	//--------------------------------------------------------------//
+
+	// Inicia la medición de tiempos
+	uswtime(&utime0, &stime0, &wtime0);
+
 	// Lee el archivo de texto de la tabla de frecuencias y almacena los datos
 	FILE *tablatxt;
 	tablatxt = fopen(strcat(D0.tabla, ".txt"), "r");
@@ -435,12 +403,11 @@ void *procesoDescompresion(void *arg)
 		linea[n_lineas_tabla][strlen(linea[n_lineas_tabla]) - 1] = '\0';
 		n_lineas_tabla++;
 	}
-	//printf("\nTRUENAAAAAAAAAAAAA");
+	fclose(tablatxt);
+
 	n_bytes = atoi(strrchr(linea[2], ':')+2);
 	n_bytes_salida = atoi(strrchr(linea[1], ':')+2);
 	bits_sobrantes = atoi(strrchr(linea[3], ':')+2);
-	//printf("\nTRUENAA2");
-	fclose(tablatxt);
 
 	// Almacena el caracter y la frecuencia y los añade a la lista
 	elemento e;
@@ -497,9 +464,7 @@ void *procesoDescompresion(void *arg)
 
 	while(mi_lista.tam > 1){
 		S1 = DequeuePos(&mi_lista);
-		//printf("%d ", S1->e.frecuencia);			// Comentarios para verificar en caso de ser necesario ( Se borran cuando el programa ya funcione)
 		S2 = DequeuePos(&mi_lista);
-		//printf("%d ", S2->e.frecuencia);			// Mismo que arriba
 		
 		// Modificación de los valores para agregar un nodo simple
 		N.e.frecuencia = S1->e.frecuencia + S2->e.frecuencia;
@@ -511,8 +476,7 @@ void *procesoDescompresion(void *arg)
 			if(N.e.frecuencia > Element(&mi_lista, i).frecuencia){
 				pos_aux = i;
 			}
-			else
-			{
+			else{
 				i = mi_lista.tam;
 			}
 		}
@@ -566,21 +530,16 @@ void *procesoDescompresion(void *arg)
 	//																//
 	//--------------------------------------------------------------//
 
-	//printf("\n");
 	posicion p = raiz;
 	for(i = 0; i < n_bytes; i++){
-		//printf("%c",A[i]);
 		for(j = 7; j >= 0; j--){
-			//printf("%d",CONSULTARBIT(A[i],j));
 			if(i == n_bytes-1 && j <= bits_sobrantes){
 				j = -1;
 			}
 		}
-		//printf(" ");
 	}
 	k = 0;
 	for(i = 0; i < n_bytes; i++){
-		//printf("%c",A[i]);
 		for(j = 7; j >= 0; j--){
 			if(CONSULTARBIT(A[i], j) == 1){
 				p = p->ramaDer;
@@ -588,8 +547,6 @@ void *procesoDescompresion(void *arg)
 				p = p->ramaIzq;
 			}
 			if(p->ramaDer == NULL && p->ramaIzq == NULL){
-				//fprintf(archivo,"%c",p->e.c);
-				//printf(archivo,"%c",p->e.c);
 				ASalida[k] = p->e.c;
 				k++;
 				p = raiz;
@@ -598,36 +555,15 @@ void *procesoDescompresion(void *arg)
 				}
 			}
 		}
-		//printf("  ");
 	}
 
-	// LA FUNCIÓN ES ÚNICAMENTE PARA DEPURACIÓN, COMPRUEBA SI ES UNA COPIA
-	// EXACTA DE LA ORIGINAL
-	/*
-	bool bad =false;
-	int contador = 0;
-	for(i = 0; i < n_bytes_salida; i++){
-		
-		if(ASalida[i] != Arreglodeprueba[i]){
-			//printf("NO CONCUERDAN");
-			printf("\n\033[31m%d\t%d\033[0m",ASalida[i], Arreglodeprueba[i]);
-			bad = true;
-		}else{
-			contador++;
-			printf("\n%d\t%d",ASalida[i], Arreglodeprueba[i]);
-		}
-	}
-
-	printf("\nConcordaron %d de %f", contador, n_bytes_salida);
-	if(bad){
-		printf("NO CONCUERDAN");
-
-	}*/
 	fwrite(ASalida, n_bytes_salida, sizeof(unsigned char), archivo);
 	fclose(archivo);
 
-	esperar(2000);
-	
+	// Termina la medición de tiempos
+	uswtime(&utime1, &stime1, &wtime1);
+	rendimiento(utime0, stime0, wtime0, utime1, stime1, wtime1, n_bytes, false, D0.entrada);
+
 	procesoTerminado = true;
 }
 
@@ -639,13 +575,13 @@ void *procesoDescompresion(void *arg)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-	void Comprimir()
+	void menuCompresion()
 Efecto:
 	Lee las direcciones de los archivos para la compresión,
 	crea un hilo en el cual se realizará lacompresión y
 	muestra una pantalla de carga en lo que se realiza el proceso.
 */
-void Comprimir()
+void menuCompresion()
 {
 	char direccion[150];
 	char salida[150];
@@ -736,19 +672,19 @@ void Comprimir()
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-	void Descomprimir()
+	void menuDescompresion()
 Efecto:
 	Lee las direcciones de los archivos para la descompresión,
 	crea un hilo en el cual se realizará la descompresión y
 	muestra una pantalla de carga en lo que se realiza el proceso.
 */
-void Descomprimir()
+void menuDescompresion()
 {
 	char direccion[150];
 	char salida[150];
 	char tabla[150];
 
-	disenioCompresion();
+	disenioDescompresion();
 	scanf("%s",&direccion);
 
 	gotoxy(2, 13);
@@ -826,46 +762,41 @@ void Descomprimir()
 	gotoxy(23,15);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-void InordenCode(posicion p, unsigned char c, int paso, elemento *Frec){
-	if((p->ramaIzq == NULL) && (p->ramaDer == NULL)){
-		p->e.code = c;
-		p->e.limite = paso;
-		Frec[p->e.c] = p->e;
-	}
-	else{
-		if(p->ramaIzq != NULL){
-			InordenCode(p->ramaIzq, c, paso+1, Frec);
-		}
-		if(p->ramaDer != NULL){
-			unsigned char aux = c;
-			PONE_1(aux, 7-paso);
-			InordenCode(p->ramaDer, aux, paso+1, Frec);
-		}
-	}
-}
-
+/*
+	void InordenCode2(posicion p, int paso, elemento *Frec, unsigned char c1, unsigned char c2)
+Recibe:
+	posicion p:			posicion del nodo en donde se encuentra
+	int paso:			nivel del árbol en el que estamos posicionados
+	elemento *Frec:		tabla de frecuencias
+ 	unsigned char c1:	byte donde se almacena el conjunto de bits codificados
+ 	unsigned char c2:	misma función que c1, solo se usa cuando c1 ya está lleno y todavía faltan bits.
+Efecto:
+	realiza un recorrido del árbol, una vez llega a una hoja, almacena los conjuntos de bits codificados
+	en los elementos de esos nodos y actualiza la tabla de frecuencias con una copia de esos elementos.
+*/
 void InordenCode2(posicion p, int paso, elemento *Frec, unsigned char c1, unsigned char c2){
+	// Caso base: Si es una hoja, almacena los valores en el elemento del nodo y actualiza la tabla
+	// de frecuencias
 	if((p->ramaIzq == NULL) && (p->ramaDer == NULL)){
-		/*printf(" %c ",p->e.c);
-		for(int i = 0; i < 8; i++){
-			printf("%d",CONSULTARBIT(c1, 7-i));
-		}
-		printf(" ");
-		for(int i = 0; i < 8; i++){
-			printf("%d",CONSULTARBIT(c2, 7-i));
-		}*/
 		p->e.code = c1;
-		p->e.c2 = c2;
+		p->e.code2 = c2;
 		p->e.limite = paso;
 		Frec[p->e.c] = p->e;
-		//printf("\n");
 	}
+	// Si no, continúa el recorrido
 	else{
+		// Si existe rama izquierda, continúa el recorrido por ahí
 		if(p->ramaIzq != NULL){
 			InordenCode2(p->ramaIzq, paso+1, Frec, c1, c2);
 		}
+		// Si existe rama derecha, continúa el recorrido por ahí, añadiendo un "1" en el byte codificado
 		if(p->ramaDer != NULL){
 			unsigned char aux1 = c1;
 			unsigned char aux2 = c2;
@@ -879,4 +810,45 @@ void InordenCode2(posicion p, int paso, elemento *Frec, unsigned char c1, unsign
 			InordenCode2(p->ramaDer, paso+1, Frec, aux1, aux2);
 		}
 	}
+}
+
+/*
+void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1)
+Recibe:	u0:	inicio tiempo usuario
+		s0:	inicio tiempo sistema
+		w0: inicio tiempo real
+		u1: final tiempo usuario
+		s1: final tiempo sistema
+		w1: final tiempo real
+	 bytes:	tamaño del archivo original
+	    cd: boolean para saber si es compresión o descompresión
+Muestra los resultados del rendimiento temporal dentro de un espacio de tiempo acotado
+*/
+void rendimiento(double u0, double s0, double w0, double u1, double s1, double w1, int bytes, bool cd, char nombre[150])
+{
+	FILE *rendimiento;
+	if(cd){
+		rendimiento = fopen("out/compresion.txt", "a");
+		fprintf(rendimiento, "\n\n    COMPRESIÓN\n    de archivo %s de %d bytes\n", nombre, bytes);
+	}
+	else{
+		rendimiento = fopen("out/descompresion.txt", "a");
+		fprintf(rendimiento, "\n\n    DESCOMPRESIÓN\n    de archivo %s de %d bytes\n", nombre, bytes);
+	}
+	// Cálculo del tiempo de ejecución del programa
+	fprintf(rendimiento, "\n");
+	fprintf(rendimiento, "real (Tiempo total)  %.10f s\n",  w1 - w0);
+	fprintf(rendimiento, "user (Tiempo de procesamiento en CPU) %.10f s\n",  u1 - u0);
+	fprintf(rendimiento, "sys (Tiempo en acciones de E/S)  %.10f s\n",  s1 - s0);
+	fprintf(rendimiento, "CPU/Wall   %.10f %% \n",100.0 * (u1 - u0 + s1 - s0) / (w1 - w0));
+	fprintf(rendimiento, "\n");
+	
+	// Mostrar los tiempos en formato exponecial
+	fprintf(rendimiento, "\n");
+	fprintf(rendimiento, "real (Tiempo total)  %.10e s\n",  w1 - w0);
+	fprintf(rendimiento, "user (Tiempo de procesamiento en CPU) %.10e s\n",  u1 - u0);
+	fprintf(rendimiento, "sys (Tiempo en acciones de E/S)  %.10e s\n",  s1 - s0);
+	fprintf(rendimiento, "CPU/Wall   %.10f %% \n",100.0 * (u1 - u0 + s1 - s0) / (w1 - w0));
+	fprintf(rendimiento, "\n");
+	fclose(rendimiento);
 }
