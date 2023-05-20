@@ -1,0 +1,32 @@
+
+
+    DESCOMPRESIÓN
+    de archivo bgmc de 1373320 bytes
+
+real (Tiempo total)  0.1925740242 s
+user (Tiempo de procesamiento en CPU) 0.1925810000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0036223990 % 
+
+
+real (Tiempo total)  1.9257402420e-01 s
+user (Tiempo de procesamiento en CPU) 1.9258100000e-01 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0036223990 % 
+
+
+
+    DESCOMPRESIÓN
+    de archivo pochitac de 429701 bytes
+
+real (Tiempo total)  0.0817580223 s
+user (Tiempo de procesamiento en CPU) 0.0774950000 s
+sys (Tiempo en acciones de E/S)  0.0042330000 s
+CPU/Wall   99.9632790673 % 
+
+
+real (Tiempo total)  8.1758022308e-02 s
+user (Tiempo de procesamiento en CPU) 7.7495000000e-02 s
+sys (Tiempo en acciones de E/S)  4.2330000000e-03 s
+CPU/Wall   99.9632790673 % 
+

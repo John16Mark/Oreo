@@ -1,0 +1,32 @@
+
+
+    COMPRESIÓN
+    de archivo BGM15.ogg de 1375536 bytes
+
+real (Tiempo total)  0.2373001575 s
+user (Tiempo de procesamiento en CPU) 0.2372880000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   99.9948767219 % 
+
+
+real (Tiempo total)  2.3730015755e-01 s
+user (Tiempo de procesamiento en CPU) 2.3728800000e-01 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   99.9948767219 % 
+
+
+
+    COMPRESIÓN
+    de archivo pochita.png de 437697 bytes
+
+real (Tiempo total)  0.1279690266 s
+user (Tiempo de procesamiento en CPU) 0.1266720000 s
+sys (Tiempo en acciones de E/S)  0.0012910000 s
+CPU/Wall   99.9952906061 % 
+
+
+real (Tiempo total)  1.2796902657e-01 s
+user (Tiempo de procesamiento en CPU) 1.2667200000e-01 s
+sys (Tiempo en acciones de E/S)  1.2910000000e-03 s
+CPU/Wall   99.9952906061 % 
+
