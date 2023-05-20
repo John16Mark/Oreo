@@ -1,7 +1,7 @@
 #ifndef __TADLista_H
 #define __TADLista_H
 /*
-IMPLEMENTACIÓN DE TAD LISTA DOBLEMENTE LIGADA
+IMPLEMENTACIÓN DE TAD LISTA DOBLEMENTE LIGADA CON FUNCIONES DE NODOS PARA ÁRBOL
 AUTOR: Juan Luis Molina Acuña - enero 2023
 VERSIÓN 1.5
 
@@ -15,10 +15,9 @@ typedef unsigned char boolean;
 typedef struct elemento
 {
 	unsigned char c;
-	unsigned char ch[2];
-	unsigned char c2;
 	int frecuencia;
 	unsigned char code;
+	unsigned char code2;
 	int limite;
 }elemento;
 
