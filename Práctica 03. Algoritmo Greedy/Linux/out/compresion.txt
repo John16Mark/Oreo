@@ -30,3 +30,323 @@ user (Tiempo de procesamiento en CPU) 1.2667200000e-01 s
 sys (Tiempo en acciones de E/S)  1.2910000000e-03 s
 CPU/Wall   99.9952906061 % 
 
+
+
+    COMPRESIÓN
+    de archivo Algebra.pdf de 29591364 bytes
+
+real (Tiempo total)  3.0433318615 s
+user (Tiempo de procesamiento en CPU) 2.9547020000 s
+sys (Tiempo en acciones de E/S)  0.0889280000 s
+CPU/Wall   100.0097964507 % 
+
+
+real (Tiempo total)  3.0433318615e+00 s
+user (Tiempo de procesamiento en CPU) 2.9547020000e+00 s
+sys (Tiempo en acciones de E/S)  8.8928000000e-02 s
+CPU/Wall   100.0097964507 % 
+
+
+
+    COMPRESIÓN
+    de archivo audifonos.png de 2909697 bytes
+
+real (Tiempo total)  0.4321269989 s
+user (Tiempo de procesamiento en CPU) 0.4215420000 s
+sys (Tiempo en acciones de E/S)  0.0100890000 s
+CPU/Wall   99.8852191826 % 
+
+
+real (Tiempo total)  4.3212699890e-01 s
+user (Tiempo de procesamiento en CPU) 4.2154200000e-01 s
+sys (Tiempo en acciones de E/S)  1.0089000000e-02 s
+CPU/Wall   99.8852191826 % 
+
+
+
+    COMPRESIÓN
+    de archivo deuda.pptx de 155998 bytes
+
+real (Tiempo total)  0.0914850235 s
+user (Tiempo de procesamiento en CPU) 0.0914840000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   99.9988812392 % 
+
+
+real (Tiempo total)  9.1485023499e-02 s
+user (Tiempo de procesamiento en CPU) 9.1484000000e-02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   99.9988812392 % 
+
+
+
+    COMPRESIÓN
+    de archivo finanzas.pptx de 1853783 bytes
+
+real (Tiempo total)  0.3037819862 s
+user (Tiempo de procesamiento en CPU) 0.2997810000 s
+sys (Tiempo en acciones de E/S)  0.0040240000 s
+CPU/Wall   100.0075757499 % 
+
+
+real (Tiempo total)  3.0378198624e-01 s
+user (Tiempo de procesamiento en CPU) 2.9978100000e-01 s
+sys (Tiempo en acciones de E/S)  4.0240000000e-03 s
+CPU/Wall   100.0075757499 % 
+
+
+
+    COMPRESIÓN
+    de archivo green.bmp de 2995046 bytes
+
+real (Tiempo total)  0.2959399223 s
+user (Tiempo de procesamiento en CPU) 0.2877520000 s
+sys (Tiempo en acciones de E/S)  0.0078890000 s
+CPU/Wall   99.8989922244 % 
+
+
+real (Tiempo total)  2.9593992233e-01 s
+user (Tiempo de procesamiento en CPU) 2.8775200000e-01 s
+sys (Tiempo en acciones de E/S)  7.8890000000e-03 s
+CPU/Wall   99.8989922244 % 
+
+
+
+    COMPRESIÓN
+    de archivo lectura.pdf de 827679 bytes
+
+real (Tiempo total)  0.1758060455 s
+user (Tiempo de procesamiento en CPU) 0.1718640000 s
+sys (Tiempo en acciones de E/S)  0.0039040000 s
+CPU/Wall   99.9783593721 % 
+
+
+real (Tiempo total)  1.7580604553e-01 s
+user (Tiempo de procesamiento en CPU) 1.7186400000e-01 s
+sys (Tiempo en acciones de E/S)  3.9040000000e-03 s
+CPU/Wall   99.9783593721 % 
+
+
+
+    COMPRESIÓN
+    de archivo lorem.txt de 447 bytes
+
+real (Tiempo total)  0.0005440712 s
+user (Tiempo de procesamiento en CPU) 0.0005600000 s
+sys (Tiempo en acciones de E/S)  0.0000190000 s
+CPU/Wall   106.4198955302 % 
+
+
+real (Tiempo total)  5.4407119751e-04 s
+user (Tiempo de procesamiento en CPU) 5.6000000000e-04 s
+sys (Tiempo en acciones de E/S)  1.9000000000e-05 s
+CPU/Wall   106.4198955302 % 
+
+
+
+    COMPRESIÓN
+    de archivo negro.bmp de 65334 bytes
+
+real (Tiempo total)  0.0757730007 s
+user (Tiempo de procesamiento en CPU) 0.0757770000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0052779787 % 
+
+
+real (Tiempo total)  7.5773000717e-02 s
+user (Tiempo de procesamiento en CPU) 7.5777000000e-02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0052779787 % 
+
+
+
+    COMPRESIÓN
+    de archivo netflix.png de 11435 bytes
+
+real (Tiempo total)  0.0744400024 s
+user (Tiempo de procesamiento en CPU) 0.0744750000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   100.0470144512 % 
+
+
+real (Tiempo total)  7.4440002441e-02 s
+user (Tiempo de procesamiento en CPU) 7.4475000000e-02 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   100.0470144512 % 
+
+
+
+    COMPRESIÓN
+    de archivo p.txt de 25509 bytes
+
+real (Tiempo total)  0.0096650124 s
+user (Tiempo de procesamiento en CPU) 0.0040500000 s
+sys (Tiempo en acciones de E/S)  0.0056650000 s
+CPU/Wall   100.5172020327 % 
+
+
+real (Tiempo total)  9.6650123596e-03 s
+user (Tiempo de procesamiento en CPU) 4.0500000000e-03 s
+sys (Tiempo en acciones de E/S)  5.6650000000e-03 s
+CPU/Wall   100.5172020327 % 
+
+
+
+    COMPRESIÓN
+    de archivo snail.bmp de 196666 bytes
+
+real (Tiempo total)  0.0686991215 s
+user (Tiempo de procesamiento en CPU) 0.0648000000 s
+sys (Tiempo en acciones de E/S)  0.0038550000 s
+CPU/Wall   99.9357757796 % 
+
+
+real (Tiempo total)  6.8699121475e-02 s
+user (Tiempo de procesamiento en CPU) 6.4800000000e-02 s
+sys (Tiempo en acciones de E/S)  3.8550000000e-03 s
+CPU/Wall   99.9357757796 % 
+
+
+
+    COMPRESIÓN
+    de archivo wallpaper.jpg de 1709983 bytes
+
+real (Tiempo total)  0.2822129726 s
+user (Tiempo de procesamiento en CPU) 0.2726210000 s
+sys (Tiempo en acciones de E/S)  0.0095750000 s
+CPU/Wall   99.9939858750 % 
+
+
+real (Tiempo total)  2.8221297264e-01 s
+user (Tiempo de procesamiento en CPU) 2.7262100000e-01 s
+sys (Tiempo en acciones de E/S)  9.5750000000e-03 s
+CPU/Wall   99.9939858750 % 
+
+
+
+    COMPRESIÓN
+    de archivo z.zip de 35656116 bytes
+
+real (Tiempo total)  3.5998229980 s
+user (Tiempo de procesamiento en CPU) 3.5079530000 s
+sys (Tiempo en acciones de E/S)  0.0921390000 s
+CPU/Wall   100.0074726439 % 
+
+
+real (Tiempo total)  3.5998229980e+00 s
+user (Tiempo de procesamiento en CPU) 3.5079530000e+00 s
+sys (Tiempo en acciones de E/S)  9.2139000000e-02 s
+CPU/Wall   100.0074726439 % 
+
+
+
+    COMPRESIÓN
+    de archivo archivos.rar de 71613136 bytes
+
+real (Tiempo total)  7.0980291367 s
+user (Tiempo de procesamiento en CPU) 6.9305410000 s
+sys (Tiempo en acciones de E/S)  0.1681160000 s
+CPU/Wall   100.0088456011 % 
+
+
+real (Tiempo total)  7.0980291367e+00 s
+user (Tiempo de procesamiento en CPU) 6.9305410000e+00 s
+sys (Tiempo en acciones de E/S)  1.6811600000e-01 s
+CPU/Wall   100.0088456011 % 
+
+
+
+    COMPRESIÓN
+    de archivo drums.zip de 138918766 bytes
+
+real (Tiempo total)  13.4602270126 s
+user (Tiempo de procesamiento en CPU) 13.1359120000 s
+sys (Tiempo en acciones de E/S)  0.3260560000 s
+CPU/Wall   100.0129343091 % 
+
+
+real (Tiempo total)  1.3460227013e+01 s
+user (Tiempo de procesamiento en CPU) 1.3135912000e+01 s
+sys (Tiempo en acciones de E/S)  3.2605600000e-01 s
+CPU/Wall   100.0129343091 % 
+
+
+
+    COMPRESIÓN
+    de archivo kofw2020.zip de 1498893107 bytes
+
+real (Tiempo total)  165.7921562195 s
+user (Tiempo de procesamiento en CPU) 144.2384680000 s
+sys (Tiempo en acciones de E/S)  3.5828090000 s
+CPU/Wall   89.1605974436 % 
+
+
+real (Tiempo total)  1.6579215622e+02 s
+user (Tiempo de procesamiento en CPU) 1.4423846800e+02 s
+sys (Tiempo en acciones de E/S)  3.5828090000e+00 s
+CPU/Wall   89.1605974436 % 
+
+
+
+    COMPRESIÓN
+    de archivo melee.iso de 1459978240 bytes
+
+real (Tiempo total)  141.8407080173 s
+user (Tiempo de procesamiento en CPU) 127.6085520000 s
+sys (Tiempo en acciones de E/S)  3.2813440000 s
+CPU/Wall   92.2794998908 % 
+
+
+real (Tiempo total)  1.4184070802e+02 s
+user (Tiempo de procesamiento en CPU) 1.2760855200e+02 s
+sys (Tiempo en acciones de E/S)  3.2813440000e+00 s
+CPU/Wall   92.2794998908 % 
+
+
+
+    COMPRESIÓN
+    de archivo csm.zip de 1089438195 bytes
+
+real (Tiempo total)  119.6271228790 s
+user (Tiempo de procesamiento en CPU) 103.3547280000 s
+sys (Tiempo en acciones de E/S)  3.0786950000 s
+CPU/Wall   88.9709795225 % 
+
+
+real (Tiempo total)  1.1962712288e+02 s
+user (Tiempo de procesamiento en CPU) 1.0335472800e+02 s
+sys (Tiempo en acciones de E/S)  3.0786950000e+00 s
+CPU/Wall   88.9709795225 % 
+
+
+
+    COMPRESIÓN
+    de archivo Comercial.avi de 1652377600 bytes
+
+real (Tiempo total)  178.3582839966 s
+user (Tiempo de procesamiento en CPU) 152.7131720000 s
+sys (Tiempo en acciones de E/S)  4.3852090000 s
+CPU/Wall   88.0802267659 % 
+
+
+real (Tiempo total)  1.7835828400e+02 s
+user (Tiempo de procesamiento en CPU) 1.5271317200e+02 s
+sys (Tiempo en acciones de E/S)  4.3852090000e+00 s
+CPU/Wall   88.0802267659 % 
+
+
+
+    COMPRESIÓN
+    de archivo comics.zip de 1116096589 bytes
+
+real (Tiempo total)  143.2065210342 s
+user (Tiempo de procesamiento en CPU) 117.4193160000 s
+sys (Tiempo en acciones de E/S)  3.5281750000 s
+CPU/Wall   84.4566924233 % 
+
+
+real (Tiempo total)  1.4320652103e+02 s
+user (Tiempo de procesamiento en CPU) 1.1741931600e+02 s
+sys (Tiempo en acciones de E/S)  3.5281750000e+00 s
+CPU/Wall   84.4566924233 % 
+
