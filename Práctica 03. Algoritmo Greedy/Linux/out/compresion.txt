@@ -350,3 +350,67 @@ user (Tiempo de procesamiento en CPU) 1.1741931600e+02 s
 sys (Tiempo en acciones de E/S)  3.5281750000e+00 s
 CPU/Wall   84.4566924233 % 
 
+
+
+    COMPRESIÓN
+    de archivo t1.txt de 105 bytes
+
+real (Tiempo total)  0.0002770424 s
+user (Tiempo de procesamiento en CPU) 0.0002840000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   102.5113886403 % 
+
+
+real (Tiempo total)  2.7704238892e-04 s
+user (Tiempo de procesamiento en CPU) 2.8400000000e-04 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   102.5113886403 % 
+
+
+
+    COMPRESIÓN
+    de archivo t2.txt de 532 bytes
+
+real (Tiempo total)  0.0006868839 s
+user (Tiempo de procesamiento en CPU) 0.0007090000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   103.2197686914 % 
+
+
+real (Tiempo total)  6.8688392639e-04 s
+user (Tiempo de procesamiento en CPU) 7.0900000000e-04 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   103.2197686914 % 
+
+
+
+    COMPRESIÓN
+    de archivo t3.txt de 773 bytes
+
+real (Tiempo total)  0.0008339882 s
+user (Tiempo de procesamiento en CPU) 0.0008560000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   102.6393431675 % 
+
+
+real (Tiempo total)  8.3398818970e-04 s
+user (Tiempo de procesamiento en CPU) 8.5600000000e-04 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   102.6393431675 % 
+
+
+
+    COMPRESIÓN
+    de archivo t4.txt de 859 bytes
+
+real (Tiempo total)  0.0008490086 s
+user (Tiempo de procesamiento en CPU) 0.0008490000 s
+sys (Tiempo en acciones de E/S)  0.0000000000 s
+CPU/Wall   99.9989917439 % 
+
+
+real (Tiempo total)  8.4900856018e-04 s
+user (Tiempo de procesamiento en CPU) 8.4900000000e-04 s
+sys (Tiempo en acciones de E/S)  0.0000000000e+00 s
+CPU/Wall   99.9989917439 % 
+
